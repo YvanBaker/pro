@@ -1,0 +1,83 @@
+JFDML JFormDesigner: "7.0.2.4.305" Java: "11.0.6" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:203:p, par l {comp title:::p:390:p, par t:l::p {seq {comp loginButton:::p::p, space :p:52:p, comp registeredButton:::p::p, space ::65:x, comp resetButton:::p::p}, seq {par l:::p {comp label2::l:::x, comp label1::l:::x, comp label3::l:::x}, space s:::p, par l:::p {comp userNameTextField::::250:x, comp passwordField::::250:x, comp typeComboBox::l::250:x}}}}, space ::165:x}}"
+			"$verticalGroup": "par l {seq l {space :p:61:p, comp title:::p::p, space :p:62:p, par b {comp label1::b:p::p, comp userNameTextField::b:p::p}, space :p:46:p, par b {comp label2::b:p::p, comp passwordField::b:p::p}, space :p:44:p, par b {comp label3::b:p::p, comp typeComboBox::b:p::p}, space ::52:x, par l {par b:t {comp loginButton::b:p::p, comp registeredButton::b:p::p}, comp resetButton::t:p::p}, space :p:68:p}}"
+		} ) {
+			name: "this"
+			"font": new java.awt.Font( "黑体", 1, 16 )
+			"title": "登录界面"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "title"
+				"text": "     图书管登录"
+				"font": new java.awt.Font( "微软雅黑", 1, 30 )
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\github.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "用户名："
+				"font": new java.awt.Font( "楷体", 1, 14 )
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\user.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "密  码："
+				"font": new java.awt.Font( "楷体", 1, 14 )
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\password.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "账号类型："
+				"font": new java.awt.Font( "楷体", 1, 14 )
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\usertype.png" )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "userNameTextField"
+				"font": new java.awt.Font( "新宋体", 1, 14 )
+			} )
+			add( new FormComponent( "javax.swing.JPasswordField" ) {
+				name: "passwordField"
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "typeComboBox"
+				"selectedIndex": 0
+				"model": new javax.swing.DefaultComboBoxModel {
+					selectedItem: "SSDF"
+					addElement( "SSDF" )
+					addElement( "SDF" )
+					addElement( "SDF" )
+				}
+				auxiliary() {
+					"JavaCodeGenerator.typeParameters": "UserType"
+				}
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "resetButton"
+				"text": "重置"
+				"font": new java.awt.Font( "楷体", 1, 14 )
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\重置.png" )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "resetButtonActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "loginButton"
+				"text": "登录"
+				"font": new java.awt.Font( "楷体", 1, 14 )
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\登录.png" )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loginButtonActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "registeredButton"
+				"text": "注册"
+				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\注册.png" )
+				"font": new java.awt.Font( "楷体", 1, 16 )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "registeredButtonActionPerformed", true ) )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 10, 0 )
+			"size": new java.awt.Dimension( 760, 550 )
+		} )
+	}
+}
