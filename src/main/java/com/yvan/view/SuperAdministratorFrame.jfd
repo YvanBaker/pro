@@ -4,15 +4,19 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {space :0:778:x}"
-			"$verticalGroup": "par l {space :0:416:x}"
+			"$horizontalGroup": "par l {comp desktopPane::l::848:x}"
+			"$verticalGroup": "par l {comp desktopPane::t::566:x}"
 		} ) {
 			name: "this"
+			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
+				name: "desktopPane"
+			} )
 			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
 				name: "menuBar1"
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu1"
-					"text": "text"
+					"text": "用户管理"
+					"font": new java.awt.Font( "楷体", 1, 16 )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "menuItem1"
 						"text": "ni"
@@ -22,10 +26,32 @@ new FormModel {
 						"text": "ta"
 					} )
 				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu2"
+					"text": "图书管理"
+					"font": new java.awt.Font( "楷体", 1, 16 )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuItem3"
+						"text": "text"
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuItem4"
+						"text": "text"
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu3"
+					"text": "关于我们"
+					"font": new java.awt.Font( "楷体", 1, 16 )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuItem5"
+						"text": "关于我们"
+					} )
+				} )
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 780, 470 )
+			"size": new java.awt.Dimension( 850, 620 )
 		} )
 	}
 }

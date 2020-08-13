@@ -1,7 +1,6 @@
 package com.yvan;
 
-import com.yvan.util.JdbcUtil;
-import com.yvan.view.Login;
+import com.yvan.view.SuperAdministratorFrame;
 
 /**
  * Hello world!
@@ -11,8 +10,9 @@ public class App
 {
     public static void main( String[] args )
     {
-        JdbcUtil.getConn();
-        new Login().setVisible(true);
+
+//        new Login().setVisible(true);
+        new SuperAdministratorFrame().setVisible(true);
         System.out.println( "Hello World!" );
     }
 }
