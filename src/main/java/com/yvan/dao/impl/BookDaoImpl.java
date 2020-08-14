@@ -9,6 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoImpl extends BaseDao implements BookDao {
+
+    /**
+     * 保存一本书
+     *
+     * @param book 书
+     * @return false 失败
+     */
     @Override
     public boolean save(Book book) {
         String sql = "INSERT INTO book(book_name,author,press,publication_date,type,count,total) VALUE (?,?,?,?,?,?,?)";
@@ -56,8 +63,14 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         return book;
     }
 
+    /**
+     * 根据名字、作者、作者、类型模糊查询书籍信息
+     *
+     * @param str 字符串
+     * @return 书的集合
+     */
     @Override
-    public List<Book> fuzzyFindByNameAuthorPressType(String str) {
+    public List<Book> fuzzyFindBookByNameAuthorPressType(String str) {
         str = "%" + str + "%";
         String sql = "SELECT id,book_name,author,press,type from book where book_name LIKE ? or author LIKE ? or press LIKE ? or type LIKE ?";
         List<Object> list = new ArrayList<>();
@@ -82,5 +95,51 @@ public class BookDaoImpl extends BaseDao implements BookDao {
             closeAll();
         }
         return bookList;
+    }
+
+
+    @Override
+    public Integer findCountById(int id) {
+        Integer res = null;
+        String sql = "SELECT count from book where id = ?";
+        List<Object> list = new ArrayList<>();
+        list.add(id);
+        executeQuery(sql, list);
+        try {
+            while (rs.next()) {
+                res = rs.getInt("count");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return res;
+    }
+
+    @Override
+    public List<Book> findAll() {
+        List<Book> list = new ArrayList<>();
+        String sql = "Select * from book";
+        executeQuery(sql, new ArrayList<Object>());
+        try {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String bookName = rs.getString("book_name");
+                String author = rs.getString("author");
+                String press = rs.getString("press");
+                Timestamp publicationDate = rs.getTimestamp("publication_date");
+                String type = rs.getString("type");
+                int count = rs.getInt("count");
+                int times = rs.getInt("times");
+                int hasLended = rs.getInt("has_lended");
+                int total = rs.getInt("total");
+                boolean del = rs.getBoolean("del");
+                list.add(new Book(id, bookName, author, press, publicationDate, type, count, times, hasLended, total, del));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }

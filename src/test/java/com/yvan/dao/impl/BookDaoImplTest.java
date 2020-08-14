@@ -33,7 +33,7 @@ public class BookDaoImplTest extends TestCase {
      * 查询存在的值
      */
     public void testFuzzyFindByNameAuthorPressType() {
-        List<Book> bookList = bookDao.fuzzyFindByNameAuthorPressType("2");
+        List<Book> bookList = bookDao.fuzzyFindBookByNameAuthorPressType("2");
         assert (bookList.size() != 0);
     }
 
@@ -41,7 +41,20 @@ public class BookDaoImplTest extends TestCase {
      * 查询不存在的值
      */
     public void testFuzzyFindByNameAuthorPressTypeNull() {
-        List<Book> bookList = bookDao.fuzzyFindByNameAuthorPressType("zhnsdf");
+        List<Book> bookList = bookDao.fuzzyFindBookByNameAuthorPressType("zhnsdf");
         assert (bookList.size() == 0);
+    }
+
+    public void testFindCountByIdNull() {
+        assert bookDao.findCountById(1) == null;
+    }
+
+    public void testFindCountById() {
+        Integer count = bookDao.findCountById(17);
+        assert count != null;
+    }
+
+    public void testFindAll() {
+        assert bookDao.findAll() != null;
     }
 }

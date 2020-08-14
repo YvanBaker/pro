@@ -1,77 +1,165 @@
 package com.yvan.entity;
 
 
+import java.sql.Timestamp;
+
 public class Book {
 
-  private int id;
-  private String bid;
-  private String name;
-  private String type;
-  private String author;
-  private String times;
-  private String islend;
+    private int id;
+    private String bookName;
+    private String author;
+    private String press;
+    private Timestamp publicationDate;
+    private String type;
+    private int count;
+    private int times;
+    private int hasLended;
+    private int total;
+    private boolean del;
+
+    public Book(int id, String bookName, String author, String press, Timestamp publicationDate, String type) {
+        this.id = id;
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.publicationDate = publicationDate;
+        this.type = type;
+    }
+
+    public Book(int id, String bookName, String author, String press, String type) {
+        this.id = id;
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.type = type;
+    }
+
+    public Book(String bookName, String author, String press, Timestamp publicationDate, String type, int total) {
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.publicationDate = publicationDate;
+        this.type = type;
+        this.total = total;
+    }
+
+    public Book(String bookName, String author, String press, int total) {
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.total = total;
+    }
+
+    public Book(int id, String bookName, String author, String press, Timestamp publicationDate, String type, int count, int times, int hasLended, int total, boolean del) {
+        this.id = id;
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.publicationDate = publicationDate;
+        this.type = type;
+        this.count = count;
+        this.times = times;
+        this.hasLended = hasLended;
+        this.total = total;
+        this.del = del;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 
-  public int getId() {
-    return id;
-  }
+    public String getBookName() {
+        return bookName;
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
-
-
-  public String getBid() {
-    return bid;
-  }
-
-  public void setBid(String bid) {
-    this.bid = bid;
-  }
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
 
 
-  public String getName() {
-    return name;
-  }
+    public String getAuthor() {
+        return author;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
-  }
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
 
-  public String getAuthor() {
-    return author;
-  }
+    public String getPress() {
+        return press;
+    }
 
-  public void setAuthor(String author) {
-    this.author = author;
-  }
-
-
-  public String getTimes() {
-    return times;
-  }
-
-  public void setTimes(String times) {
-    this.times = times;
-  }
+    public void setPress(String press) {
+        this.press = press;
+    }
 
 
-  public String getIslend() {
-    return islend;
-  }
+    public Timestamp getPublicationDate() {
+        return publicationDate;
+    }
 
-  public void setIslend(String islend) {
-    this.islend = islend;
-  }
+    public void setPublicationDate(Timestamp publicationDate) {
+        this.publicationDate = publicationDate;
+    }
+
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
+    }
+
+
+    public int getHasLended() {
+        return hasLended;
+    }
+
+    public void setHasLended(int hasLended) {
+        this.hasLended = hasLended;
+    }
+
+
+    public int getTotal() {
+        return total;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+
+    public boolean getDel() {
+        return del;
+    }
+
+    public void setDel(boolean del) {
+        this.del = del;
+    }
 
 }

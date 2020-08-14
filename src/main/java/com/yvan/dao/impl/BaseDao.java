@@ -20,29 +20,11 @@ public class BaseDao {
         this.conn = JdbcUtil.getConn();
     }
 
-    /**
-     * 关闭Connection连接
-     */
-    public void closeConn() {
+
+    protected void closeAll() {
         if (conn != null) {
             try {
                 conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 关闭其他流
-     *
-     * @param ps
-     * @param rs
-     */
-    protected void closeIter(PreparedStatement ps, ResultSet rs) {
-        if (ps != null) {
-            try {
-                ps.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -54,54 +36,7 @@ public class BaseDao {
                 e.printStackTrace();
             }
         }
-    }
-
-    /**
-     * 关闭PreparedStatement流
-     *
-     * @param ps PreparedStatement流
-     */
-    protected void closePreparedStatement(PreparedStatement ps) {
         if (ps != null) {
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * 关闭ResultSet流
-     *
-     * @param rs ResultSet流
-     */
-    protected void closeResultSet(ResultSet rs) {
-        if (rs != null) {
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    protected void closeAll(){
-        if (conn != null) {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (rs != null){
-            try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        if (ps != null){
             try {
                 ps.close();
             } catch (SQLException e) {
@@ -127,7 +62,7 @@ public class BaseDao {
             for (Object o : list) {
                 ps.setObject(i++, o);
             }
-            rs =  ps.executeQuery();
+            rs = ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
