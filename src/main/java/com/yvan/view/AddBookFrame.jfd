@@ -1,0 +1,89 @@
+JFDML JFormDesigner: "7.0.2.4.305" Java: "11.0.6" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq {space :p:56:p, par l {comp label1::l:p:115:p, comp label3::l:p:132:p, comp label5::l:p:132:p}, par l {seq l {space :p:19:p, par l:::p {comp bookNameTextField::::243:x, comp pressTextField::::243:x}}, seq l {space s:::p, par l {comp button1:::p::p, comp publicationDatePicker:::p:244:p}}}, space :p:81:p, par l {seq {comp label2:::p:115:p, space s:::p, comp authorTextField:::p:161:p}, seq {comp label4:::p:115:p, space s:::p, comp totalTextField:::p:161:p}, seq l {par t {comp button2:::p::p, comp label6:::p:115:p}, space s:::p, comp typeTextField:::p:161:p}}, space ::110:x}}"
+			"$verticalGroup": "par l {seq l {space :p:95:p, par b {comp label1::b:p:34:p, comp bookNameTextField::b:p::p, comp label2::b:p:34:p, comp authorTextField::b:p::p}, space :p:53:p, par b {comp label3::b:p:34:p, comp pressTextField::b:p::p, comp label4::b:p:34:p, comp totalTextField::b:p::p}, space :p:46:p, par b {comp label5::b:p:34:p, comp publicationDatePicker::b:p::p, comp label6::b:p:34:p, comp typeTextField::b:p::p}, space :p:114:p, par b {comp button1::b:p::p, comp button2::b:p::p}, space ::130:x}}"
+		} ) {
+			name: "this"
+			"visible": true
+			"closable": true
+			"defaultCloseOperation": 1
+			"maximizable": true
+			"title": "添加图书"
+			"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "书籍名称："
+				"font": &Font0 new java.awt.Font( "新宋体", 1, 16 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/书.png" )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "bookNameTextField"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "书籍作者："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/作者.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "书籍出版社："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/出版社.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "书籍总数："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/计数.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label5"
+				"text": "书籍出版日期："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/日期.png" )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "pressTextField"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "authorTextField"
+			} )
+			add( new FormComponent( "org.jdesktop.swingx.JXDatePicker" ) {
+				name: "publicationDatePicker"
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label6"
+				"text": "书籍类型："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/类型.png" )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "totalTextField"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "typeTextField"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button1"
+				"text": "确认添加"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/确认.png" )
+				"font": &Font1 new java.awt.Font( "楷体", 1, 16 )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1ActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "button2"
+				"text": "重置"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/重置.png" )
+				"font": #Font1
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 935, 590 )
+		} )
+	}
+}

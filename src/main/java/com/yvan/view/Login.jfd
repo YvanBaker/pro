@@ -10,29 +10,31 @@ new FormModel {
 			name: "this"
 			"font": new java.awt.Font( "黑体", 1, 16 )
 			"title": "登录界面"
+			"defaultCloseOperation": 3
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/logo.png" )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "title"
 				"text": "     图书管登录"
 				"font": new java.awt.Font( "微软雅黑", 1, 30 )
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\github.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/github.png" )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "用户名："
 				"font": new java.awt.Font( "楷体", 1, 14 )
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\user.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/user.png" )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label2"
 				"text": "密  码："
 				"font": new java.awt.Font( "楷体", 1, 14 )
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\password.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/password.png" )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label3"
 				"text": "账号类型："
 				"font": new java.awt.Font( "楷体", 1, 14 )
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\usertype.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/usertype.png" )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "userNameTextField"
@@ -51,20 +53,20 @@ new FormModel {
 				name: "resetButton"
 				"text": "重置"
 				"font": new java.awt.Font( "楷体", 1, 14 )
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\重置.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/重置.png" )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "resetButtonActionPerformed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "loginButton"
 				"text": "登录"
 				"font": new java.awt.Font( "楷体", 1, 14 )
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\登录.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/登录.png" )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "loginButtonActionPerformed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "registeredButton"
 				"text": "注册"
-				"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\注册.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/注册.png" )
 				"font": new java.awt.Font( "楷体", 1, 16 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "registeredButtonActionPerformed", true ) )
 			} )

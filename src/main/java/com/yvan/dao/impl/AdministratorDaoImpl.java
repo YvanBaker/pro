@@ -3,9 +3,9 @@ package com.yvan.dao.impl;
 import com.yvan.dao.AdministratorDao;
 import com.yvan.entity.Administrator;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
 
@@ -18,15 +18,11 @@ public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
     @Override
     public Administrator findByName(String name) {
         Administrator administrator = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        getConn();
         String sql = "select id,name,password,type,del from administrator where name = ?";
-
+        List<Object> list = new ArrayList<>();
+        list.add(name);
+        executeQuery(sql,list);
         try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, name);
-            rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String password = rs.getString("password");
@@ -37,8 +33,7 @@ public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConn();
-            closeIter(ps, rs);
+            closeAll();
         }
 
         return administrator;

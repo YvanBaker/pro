@@ -4,10 +4,13 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {comp desktopPane::l::848:x}"
-			"$verticalGroup": "par l {comp desktopPane::t::566:x}"
+			"$horizontalGroup": "par l {comp desktopPane::l::1103:x}"
+			"$verticalGroup": "par l {comp desktopPane::l::704:x}"
 		} ) {
 			name: "this"
+			"defaultCloseOperation": 3
+			"title": "管理员主界面"
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/logo.png" )
 			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
 				name: "desktopPane"
 			} )
@@ -15,21 +18,32 @@ new FormModel {
 				name: "menuBar1"
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu1"
-					"text": "用户管理"
+					"text": "系统设置"
 					"font": new java.awt.Font( "楷体", 1, 16 )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/系统设置.png" )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "menuItem1"
-						"text": "ni"
+						"text": "修改密码"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/修改密码.png" )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem2"
-						"text": "ta"
+						name: "backToLogin"
+						"text": "返回登陆"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/返回.png" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "backToLoginActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "exit"
+						"text": "退出系统"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/退出系统.png" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "exitActionPerformed", true ) )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu2"
-					"text": "图书管理"
+					"text": "用户管理"
 					"font": new java.awt.Font( "楷体", 1, 16 )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/用户管理.png" )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "menuItem3"
 						"text": "text"
@@ -41,17 +55,38 @@ new FormModel {
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "menu3"
-					"text": "关于我们"
-					"font": new java.awt.Font( "楷体", 1, 16 )
+					"text": "图书管理"
+					"font": &Font0 new java.awt.Font( "楷体", 1, 16 )
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/图书管理.png" )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem5"
+						name: "addBook"
+						"text": "添加图书"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/添加.png" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addBookActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuItem7"
+						"text": "查看图书"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/查看.png" )
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "menu4"
+					"text": "帮助"
+					"font": #Font0
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/yvan/img/帮助.png" )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "menuItem6"
 						"text": "关于我们"
+						"icon": new com.jformdesigner.model.SwingIcon( 1, "G:\\zzb\\pro\\src\\img\\关于我们.png" )
+						"font": new java.awt.Font( "楷体", 1, 14 )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "menuItem6ActionPerformed", true ) )
 					} )
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 850, 620 )
+			"size": new java.awt.Dimension( 1105, 760 )
 		} )
 	}
 }

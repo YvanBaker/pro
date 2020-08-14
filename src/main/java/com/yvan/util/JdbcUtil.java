@@ -27,6 +27,11 @@ public class JdbcUtil {
         }
     }
 
+    /**
+     * 获取Connection对象
+     *
+     * @return Connection
+     */
     public static Connection getConn() {
         Connection connection = null;
         try {

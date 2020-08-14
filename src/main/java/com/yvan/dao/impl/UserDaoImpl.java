@@ -3,26 +3,20 @@ package com.yvan.dao.impl;
 import com.yvan.dao.UserDao;
 import com.yvan.entity.User;
 
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDaoImpl extends BaseDao implements UserDao {
 
     @Override
     public User findByName(String name) {
         User user = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        getConn();
-        String sql = "select id,name,password,point,balance,level,del,freeze,sum_money " +
-                "from user where name = ?";
+        String sql = "select id,name,password,point,balance,level,del,freeze,sum_money from user where name = ?";
+        List<Object> list = new ArrayList<>();
+        list.add(name);
+        executeQuery(sql, list);
         try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, name);
-            rs = ps.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String password = rs.getString("password");
@@ -37,30 +31,21 @@ public class UserDaoImpl extends BaseDao implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConn();
-            closeIter(ps, rs);
+            closeAll();
         }
         return user;
     }
 
     @Override
-    public boolean save(String name, String password,Timestamp timestamp) {
-        PreparedStatement ps = null;
+    public boolean save(String name, String password) {
         int res = -1;
         getConn();
-        String sql = "INSERT INTO user(name,password,creat_data) VALUE (?,?,?)";
-        try {
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, name);
-            ps.setString(2, password);
-            ps.setTimestamp(3,timestamp);
-            res = ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            closeConn();
-            closeIter(ps, null);
-        }
+        String sql = "INSERT INTO user (name,password) VALUE (?,?)";
+        List<Object> list = new ArrayList<>();
+        list.add(name);
+        list.add(password);
+        res = executeUpdate(sql, list);
+        closeAll();
         return res == 0 ? false : true;
     }
 }

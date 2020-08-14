@@ -23,7 +23,7 @@ public class Registered extends JFrame {
     /**
      * 重置输入框
      *
-     * @param e
+     * @param e 点击的按钮
      */
     private void resetButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
@@ -33,9 +33,9 @@ public class Registered extends JFrame {
     }
 
     /**
-     * 点击确定
+     * 点击确定的响应
      *
-     * @param e
+     * @param e 点击的按钮
      */
     private void registeredButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
@@ -59,16 +59,19 @@ public class Registered extends JFrame {
             return;
         }
         boolean flag = new UserBizImpl().registered(name, password);
-        if (!flag){
+        if (!flag) {
             JOptionPane.showMessageDialog(this, "用户名已存在，请重新命名！！");
             resetButtonActionPerformed(e);
             return;
         }
-        JOptionPane.showMessageDialog(this,"注册成功！！！");
+        JOptionPane.showMessageDialog(this, "注册成功！！！");
         resetButtonActionPerformed(e);
         return;
     }
 
+    /**
+     * 自动生成的窗体代码
+     */
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -85,27 +88,28 @@ public class Registered extends JFrame {
         //======== this ========
         setTitle("\u6ce8\u518c\u754c\u9762");
         setFont(new Font("\u9ed1\u4f53", Font.BOLD, 16));
+        setIconImage(new ImageIcon(getClass().getResource("/com/yvan/img/logo.png")).getImage());
         Container contentPane = getContentPane();
 
         //---- label1 ----
         label1.setText("\u7528\u6237\u540d\uff1a");
         label1.setFont(new Font("\u6977\u4f53", Font.BOLD, 14));
-        label1.setIcon(new ImageIcon("G:\\zzb\\pro\\src\\img\\user.png"));
+        label1.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/user.png")));
 
         //---- label2 ----
         label2.setText("\u5bc6  \u7801\uff1a");
         label2.setFont(new Font("\u6977\u4f53", Font.BOLD, 14));
-        label2.setIcon(new ImageIcon("G:\\zzb\\pro\\src\\img\\password.png"));
+        label2.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/password.png")));
 
         //---- label3 ----
         label3.setText("\u786e\u8ba4\u5bc6\u7801\uff1a");
         label3.setFont(new Font("\u6977\u4f53", Font.BOLD, 14));
-        label3.setIcon(new ImageIcon("G:\\zzb\\pro\\src\\img\\password.png"));
+        label3.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/password.png")));
 
         //---- registeredButton ----
         registeredButton.setText("\u786e\u8ba4");
         registeredButton.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
-        registeredButton.setIcon(new ImageIcon("G:\\zzb\\pro\\src\\img\\\u786e\u8ba4.png"));
+        registeredButton.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u786e\u8ba4.png")));
         registeredButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -116,7 +120,7 @@ public class Registered extends JFrame {
         //---- resetButton ----
         resetButton.setText("\u91cd\u7f6e");
         resetButton.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
-        resetButton.setIcon(new ImageIcon("G:\\zzb\\pro\\src\\img\\\u91cd\u7f6e.png"));
+        resetButton.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u91cd\u7f6e.png")));
         resetButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,7 +131,7 @@ public class Registered extends JFrame {
         //---- title ----
         title.setText("     \u7528\u6237\u6ce8\u518c");
         title.setFont(new Font("\u5fae\u8f6f\u96c5\u9ed1", Font.BOLD, 30));
-        title.setIcon(new ImageIcon("G:\\zzb\\pro\\src\\img\\github.png"));
+        title.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/github.png")));
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
