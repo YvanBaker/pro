@@ -1,18 +1,17 @@
 package com.yvan;
 
-import com.yvan.view.SuperAdministratorFrame;
+import com.yvan.view.Login;
 
 /**
  * Hello world!
- *
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
+public class App {
+    public static void main(String[] args) {
 
-//        new Login().setVisible(true);
-        new SuperAdministratorFrame().setVisible(true);
-        System.out.println( "Hello World!" );
+        Login login = new Login();
+//        login.setVisible(true);
+
+//        new SuperAdministratorFrame().setVisible(true);
+//        System.out.println( "Hello World!" );
     }
 }

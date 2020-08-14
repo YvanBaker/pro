@@ -43,13 +43,6 @@ new FormModel {
 			} )
 			add( new FormComponent( "javax.swing.JComboBox" ) {
 				name: "typeComboBox"
-				"selectedIndex": 0
-				"model": new javax.swing.DefaultComboBoxModel {
-					selectedItem: "SSDF"
-					addElement( "SSDF" )
-					addElement( "SDF" )
-					addElement( "SDF" )
-				}
 				auxiliary() {
 					"JavaCodeGenerator.typeParameters": "UserType"
 				}
