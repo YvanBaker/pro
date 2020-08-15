@@ -21,6 +21,23 @@ public class Registered extends JFrame {
     }
 
     /**
+     * 必填输入框为空判断
+     *
+     * @return true 空
+     */
+    private boolean isNll() {
+        if (StringUtil.isNull(userNameTextField.getText())) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("账户名"));
+            return true;
+        }
+        if (StringUtil.isNull(String.valueOf(passwordField.getPassword()))) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("密码"));
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 重置输入框
      *
      * @param e 点击的按钮
@@ -39,17 +56,12 @@ public class Registered extends JFrame {
      */
     private void registeredButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
+        if (isNll()) {
+            return;
+        }
         String name = userNameTextField.getText();
         String password = String.valueOf(passwordField.getPassword());
         String enterPassword = String.valueOf(enterPasswordField.getPassword());
-        if (StringUtil.isNull(name)) {
-            JOptionPane.showMessageDialog(this, "账户名不能为空！！");
-            return;
-        }
-        if (StringUtil.isNull(password)) {
-            JOptionPane.showMessageDialog(this, "密码不能为空！！");
-            return;
-        }
         if (StringUtil.isNull(enterPassword)) {
             JOptionPane.showMessageDialog(this, "请再次确认密码！！");
             return;
@@ -135,54 +147,54 @@ public class Registered extends JFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(139, 139, 139)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                        .addComponent(registeredButton)
-                        .addGroup(contentPaneLayout.createParallelGroup()
-                            .addComponent(label1, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label3, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(contentPaneLayout.createParallelGroup()
+                contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(65, 65, 65)
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addComponent(enterPasswordField, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(userNameTextField, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                                    .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(189, 189, 189)
-                            .addComponent(resetButton)))
-                    .addContainerGap(128, Short.MAX_VALUE))
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(188, Short.MAX_VALUE)
-                    .addComponent(title, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
-                    .addGap(100, 100, 100))
+                                .addGap(139, 139, 139)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                        .addComponent(registeredButton)
+                                        .addGroup(contentPaneLayout.createParallelGroup()
+                                                .addComponent(label1, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(label3, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(65, 65, 65)
+                                                .addGroup(contentPaneLayout.createParallelGroup()
+                                                        .addComponent(enterPasswordField, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(userNameTextField, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                                                                .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))))
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(189, 189, 189)
+                                                .addComponent(resetButton)))
+                                .addContainerGap(128, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                                .addContainerGap(188, Short.MAX_VALUE)
+                                .addComponent(title, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
+                                .addGap(100, 100, 100))
         );
         contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(title)
-                    .addGap(14, 14, 14)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(userNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(33, 33, 33)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(29, 29, 29)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(enterPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(registeredButton)
-                        .addComponent(resetButton))
-                    .addGap(28, 28, 28))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(title)
+                                .addGap(14, 14, 14)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(userNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(29, 29, 29)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(enterPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(registeredButton)
+                                        .addComponent(resetButton))
+                                .addGap(28, 28, 28))
         );
         pack();
         setLocationRelativeTo(getOwner());

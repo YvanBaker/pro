@@ -1,6 +1,10 @@
 package com.yvan.entity;
 
 
+/**
+ * @author Yvan
+ */
+
 public class BookType {
 
   private int id;

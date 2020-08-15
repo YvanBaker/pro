@@ -1,5 +1,9 @@
 package com.yvan.util;
 
+/**
+ * @author Yvan
+ */
+
 public class StringUtil {
     /**
      * 判断是否为空字符串
@@ -12,5 +16,9 @@ public class StringUtil {
             return true;
         }
         return false;
+    }
+
+    public static String isNullString(String str){
+        return str + "为空！！！";
     }
 }

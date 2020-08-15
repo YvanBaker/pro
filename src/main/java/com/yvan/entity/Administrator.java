@@ -3,6 +3,9 @@ package com.yvan.entity;
 
 import java.sql.Timestamp;
 
+/**
+ * @author Yvan
+ */
 public class Administrator {
 
   private int id;

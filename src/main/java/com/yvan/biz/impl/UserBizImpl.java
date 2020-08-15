@@ -5,6 +5,9 @@ import com.yvan.dao.UserDao;
 import com.yvan.dao.impl.UserDaoImpl;
 import com.yvan.entity.User;
 
+/**
+ * @author Yvan
+ */
 
 public class UserBizImpl implements UserBiz {
     private UserDao userDao = new UserDaoImpl();

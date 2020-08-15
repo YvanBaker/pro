@@ -4,6 +4,10 @@ import com.yvan.entity.Book;
 
 import java.util.List;
 
+/**
+ * @author Yvan
+ */
+
 public interface BookDao {
 
     /**

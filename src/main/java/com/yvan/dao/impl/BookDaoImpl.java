@@ -8,6 +8,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Yvan
+ */
+
 public class BookDaoImpl extends BaseDao implements BookDao {
 
     /**
@@ -18,13 +22,14 @@ public class BookDaoImpl extends BaseDao implements BookDao {
      */
     @Override
     public boolean save(Book book) {
-        String sql = "INSERT INTO book(book_name,author,press,publication_date,type,count,total) VALUE (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO book(book_name,author,press,publication_date,type,book_deposit,count,total) VALUE (?,?,?,?,?,?,?,?)";
         List<Object> list = new ArrayList<>();
         list.add(book.getBookName());
         list.add(book.getAuthor());
         list.add(book.getPress());
         list.add(book.getPublicationDate());
         list.add(book.getType());
+        list.add(book.getBookDeposit());
         list.add(book.getTotal());
         list.add(book.getTotal());
         int i = executeUpdate(sql, list);
@@ -53,7 +58,8 @@ public class BookDaoImpl extends BaseDao implements BookDao {
                 String press = rs.getString("press");
                 Timestamp publicationDate = rs.getTimestamp("publication_date");
                 String type = rs.getString("type");
-                book = new Book(id, bookName, author, press, publicationDate, type);
+                float bookDeposit = rs.getFloat("book_deposit");
+                book = new Book(id, bookName, author, press, publicationDate, type,bookDeposit);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,7 +102,6 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         }
         return bookList;
     }
-
 
     @Override
     public Integer findCountById(int id) {

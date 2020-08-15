@@ -3,6 +3,10 @@ package com.yvan.entity;
 
 import java.sql.Timestamp;
 
+/**
+ * @author Yvan
+ */
+
 public class Book {
 
     private int id;
@@ -11,19 +15,21 @@ public class Book {
     private String press;
     private Timestamp publicationDate;
     private String type;
+    private float bookDeposit;
     private int count;
     private int times;
     private int hasLended;
     private int total;
     private boolean del;
 
-    public Book(int id, String bookName, String author, String press, Timestamp publicationDate, String type) {
+    public Book(int id, String bookName, String author, String press, Timestamp publicationDate, String type, float bookDeposit) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
         this.press = press;
         this.publicationDate = publicationDate;
         this.type = type;
+        this.bookDeposit = bookDeposit;
     }
 
     public Book(int id, String bookName, String author, String press, String type) {
@@ -34,12 +40,13 @@ public class Book {
         this.type = type;
     }
 
-    public Book(String bookName, String author, String press, Timestamp publicationDate, String type, int total) {
+    public Book(String bookName, String author, String press, Timestamp publicationDate, String type, float bookDeposit,int total) {
         this.bookName = bookName;
         this.author = author;
         this.press = press;
         this.publicationDate = publicationDate;
         this.type = type;
+        this.bookDeposit = bookDeposit;
         this.total = total;
     }
 
@@ -153,8 +160,15 @@ public class Book {
         this.total = total;
     }
 
+    public float getBookDeposit() {
+        return bookDeposit;
+    }
 
-    public boolean getDel() {
+    public void setBookDeposit(float bookDeposit) {
+        this.bookDeposit = bookDeposit;
+    }
+
+    public boolean isDel() {
         return del;
     }
 

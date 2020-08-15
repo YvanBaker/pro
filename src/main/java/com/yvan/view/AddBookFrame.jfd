@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:56:p, par l {comp label1::l:p:115:p, comp label3::l:p:132:p, comp label5::l:p:132:p}, par l {seq l {space :p:19:p, par l:::p {comp bookNameTextField::::243:x, comp pressTextField::::243:x}}, seq l {space s:::p, par l {comp button1:::p::p, comp publicationDatePicker:::p:244:p}}}, space :p:81:p, par l {seq {comp label2:::p:115:p, space s:::p, comp authorTextField:::p:161:p}, seq {comp label4:::p:115:p, space s:::p, comp totalTextField:::p:161:p}, seq l {par t {comp button2:::p::p, comp label6:::p:115:p}, space s:::p, comp typeTextField:::p:161:p}}, space ::110:x}}"
-			"$verticalGroup": "par l {seq l {space :p:95:p, par b {comp label1::b:p:34:p, comp bookNameTextField::b:p::p, comp label2::b:p:34:p, comp authorTextField::b:p::p}, space :p:53:p, par b {comp label3::b:p:34:p, comp pressTextField::b:p::p, comp label4::b:p:34:p, comp totalTextField::b:p::p}, space :p:46:p, par b {comp label5::b:p:34:p, comp publicationDatePicker::b:p::p, comp label6::b:p:34:p, comp typeTextField::b:p::p}, space :p:114:p, par b {comp button1::b:p::p, comp button2::b:p::p}, space ::130:x}}"
+			"$horizontalGroup": "par l {seq l {space :p:56:p, par l {comp label1::l:p:115:p, comp label3::l:p:132:p, comp label5::l:p:145:p, comp label7::l:p::p}, space s:::p, par l {seq {par l {comp add::l:p::p, par l {comp pressTextField::t:p:243:p, comp bookNameTextField::t:p:243:p}, comp publicationDatePicker:::p:244:p}, space :p:58:p, par l {seq {comp label2:::p:115:p, space s:::p, comp authorTextField:::p:161:p}, seq {comp label4:::p:115:p, space s:::p, comp totalTextField:::p:161:p}, seq l {par t {comp label6:::p:115:p, comp button2:::p::p}, space s:::p, comp typeTextField:::p:161:p}}}, comp bookDepositTextField:::p:244:p}, space ::120:x}}"
+			"$verticalGroup": "par l {seq l {space :p:95:p, par b {comp label1::b:p:34:p, comp label2::b:p:34:p, comp authorTextField::b:p::p, comp bookNameTextField::b:p::p}, space :p:53:p, par b {comp label3::b:p:34:p, comp label4::b:p:34:p, comp totalTextField::b:p::p, comp pressTextField::b:p::p}, space :p:46:p, par b {comp label6::b:p:34:p, comp typeTextField::b:p::p, comp label5::b:p:34:p, comp publicationDatePicker::b:p::p}, space :p:41:p, par b {comp label7::b:p:34:p, comp bookDepositTextField::b:p::p}, space :p:41:p, par b {comp add::b:p::p, comp button2::b:p::p}, space ::128:x}}"
 		} ) {
 			name: "this"
 			"visible": true
@@ -45,7 +45,7 @@ new FormModel {
 				name: "label5"
 				"text": "书籍出版日期："
 				"font": #Font0
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/日期.png" )
+				"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/img/日期.png" )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "pressTextField"
@@ -69,17 +69,26 @@ new FormModel {
 				name: "typeTextField"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button1"
+				name: "add"
 				"text": "确认添加"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/确认.png" )
 				"font": &Font1 new java.awt.Font( "楷体", 1, 16 )
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "button1ActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "addActionPerformed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button2"
 				"text": "重置"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/重置.png" )
 				"font": #Font1
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label7"
+				"text": "书籍押金："
+				"font": #Font0
+				"icon": #SwingIcon0
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "bookDepositTextField"
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

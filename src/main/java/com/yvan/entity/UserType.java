@@ -1,7 +1,16 @@
 package com.yvan.entity;
 
+/**
+ * @author Yvan
+ */
+
 public enum UserType {
-    USER("用户"), ADMINISTRATOR("普通管理"), SUPERADMINISTRATOR("超级管理");
+    //用户
+    USER("用户"),
+    //普通管理
+    ADMINISTRATOR("普通管理"),
+    //超级管理
+    SUPERADMINISTRATOR("超级管理");
 
     private String type;
 

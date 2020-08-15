@@ -15,6 +15,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * @author unknown
@@ -28,9 +30,8 @@ public class Login extends JFrame {
     }
 
 
-
     /**
-     * 重置输入
+     * 点击重置按钮时的响应
      *
      * @param e 点击的按钮
      */
@@ -42,9 +43,8 @@ public class Login extends JFrame {
     }
 
 
-
     /**
-     * 注册按钮点击响应事件
+     * 点击注册按钮响应事件
      *
      * @param e 点击的按钮
      */
@@ -54,20 +54,30 @@ public class Login extends JFrame {
     }
 
     /**
-     * 点击登录按钮响应事件
+     * 判断输入框是否为空
      *
-     * @param e 点击的按钮
+     * @return
      */
-    private void loginButtonActionPerformed(ActionEvent e) {
+    private boolean isNull() {
+        if (StringUtil.isNull(userNameTextField.getText())) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("用户名"));
+            return true;
+        }
+        if (StringUtil.isNull(String.valueOf(passwordField.getPassword()))) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("密码"));
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 点击登录按钮响应事件
+     */
+    private void loginButtonActionPerformed() {
         // TODO add your code here
         String userName = userNameTextField.getText();
         String password = String.valueOf(passwordField.getPassword());
-        if (StringUtil.isNull(userName)) {
-            JOptionPane.showMessageDialog(this, "账户不能为空！！");
-            return;
-        }
-        if (StringUtil.isNull(password)) {
-            JOptionPane.showMessageDialog(this, "密码不能为空！！");
+        if (isNull()) {
             return;
         }
         UserType type = (UserType) typeComboBox.getSelectedItem();
@@ -93,6 +103,9 @@ public class Login extends JFrame {
      * @param password 用户密码
      */
     private void userLogin(String userName, String password) {
+        if (isNull()) {
+            return;
+        }
         user = new UserBizImpl().login(userName, password);
         if (user == null) {
             JOptionPane.showMessageDialog(this, "账户或密码错误！！");
@@ -135,6 +148,21 @@ public class Login extends JFrame {
         }
         this.dispose();
         new SuperAdministratorFrame().setVisible(true);
+    }
+
+    private void loginButtonKeyPressed(KeyEvent e) {
+        // TODO add your code here
+        if (KeyEvent.getKeyText(e.getKeyCode()).compareToIgnoreCase("enter") == 0) {
+            loginButtonActionPerformed();
+        }
+    }
+
+    private void thisKeyPressed(KeyEvent e) {
+        // TODO add your code here
+    }
+
+    private void loginButtonActionPerformed(ActionEvent e) {
+        // TODO add your code here
     }
 
     /**
@@ -205,6 +233,12 @@ public class Login extends JFrame {
                 loginButtonActionPerformed(e);
             }
         });
+        loginButton.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                loginButtonKeyPressed(e);
+            }
+        });
 
         //---- registeredButton ----
         registeredButton.setText("\u6ce8\u518c");
@@ -220,54 +254,54 @@ public class Login extends JFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(203, 203, 203)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(title, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
-                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addComponent(loginButton)
-                                .addGap(52, 52, 52)
-                                .addComponent(registeredButton)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                                .addComponent(resetButton))
-                            .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(label2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(label1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(userNameTextField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(typeComboBox, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))))
-                    .addContainerGap(165, Short.MAX_VALUE))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                .addGap(203, 203, 203)
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addComponent(title, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                                        .addComponent(loginButton)
+                                                        .addGap(52, 52, 52)
+                                                        .addComponent(registeredButton)
+                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                                                        .addComponent(resetButton))
+                                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(label2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(label1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addGap(18, 18, 18)
+                                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(userNameTextField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                                                .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                                                .addComponent(typeComboBox, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))))
+                                .addContainerGap(165, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(61, 61, 61)
-                    .addComponent(title)
-                    .addGap(62, 62, 62)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label1)
-                        .addComponent(userNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(46, 46, 46)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label2)
-                        .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(44, 44, 44)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label3)
-                        .addComponent(typeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(loginButton)
-                            .addComponent(registeredButton))
-                        .addComponent(resetButton, GroupLayout.Alignment.TRAILING))
-                    .addGap(68, 68, 68))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(title)
+                                .addGap(62, 62, 62)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label1)
+                                        .addComponent(userNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(46, 46, 46)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label2)
+                                        .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(44, 44, 44)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label3)
+                                        .addComponent(typeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(loginButton)
+                                                .addComponent(registeredButton))
+                                        .addComponent(resetButton, GroupLayout.Alignment.TRAILING))
+                                .addGap(68, 68, 68))
         );
         pack();
         setLocationRelativeTo(getOwner());
@@ -277,7 +311,7 @@ public class Login extends JFrame {
         typeComboBox.setModel(new DefaultComboBoxModel<>(new UserType[]{
                 UserType.USER,
                 UserType.ADMINISTRATOR,
-                UserType.ADMINISTRATOR
+                UserType.SUPERADMINISTRATOR
         }));
     }
 

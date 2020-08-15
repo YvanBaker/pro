@@ -1,5 +1,8 @@
 package com.yvan.entity;
 
+/**
+ * @author Yvan
+ */
 
 public class Freeze {
 

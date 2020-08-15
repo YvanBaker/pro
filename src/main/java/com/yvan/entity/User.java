@@ -3,6 +3,10 @@ package com.yvan.entity;
 
 import java.sql.Timestamp;
 
+/**
+ * @author Yvan
+ */
+
 public class User {
 
     private int id;

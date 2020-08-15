@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * @author Yvan
+ */
+
 public class BaseDao {
     protected Connection conn;
     protected PreparedStatement ps;
