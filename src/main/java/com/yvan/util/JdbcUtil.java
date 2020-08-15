@@ -7,6 +7,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Jdbc工具类
+ *
+ * @author Yvans
+ */
 public class JdbcUtil {
     private static String DRIVER;
     private static String URL;
@@ -14,7 +19,7 @@ public class JdbcUtil {
     private static String PASSWORD;
 
     static {
-        InputStream is = JdbcUtil.class.getResourceAsStream("jdbc.properties");
+        InputStream is = JdbcUtil.class.getResourceAsStream("../../../application.properties");
         Properties properties = new Properties();
         try {
             properties.load(is);
@@ -37,9 +42,7 @@ public class JdbcUtil {
         try {
             Class.forName(DRIVER);
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return connection;

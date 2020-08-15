@@ -29,12 +29,12 @@ public class SuperAdministratorFrame extends JFrame {
         info.append("电话：12345678901");
         String[] button = {"ok", "一会"};
         JOptionPane.showOptionDialog(this, info, "关于我们", JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.DEFAULT_OPTION, new ImageIcon(getClass().getResource("/com/yvan/img/logo.png")), button, null);
+                JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/com/yvan/img/logo.png")), button, null);
     }
 
     /**
      * 选择添加图书的响应
-     *   在desktopPane中添加一个子窗口
+     * 在desktopPane中添加一个子窗口
      *
      * @param e 点击的按钮
      */
@@ -86,7 +86,7 @@ public class SuperAdministratorFrame extends JFrame {
         //======== this ========
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("\u7ba1\u7406\u5458\u4e3b\u754c\u9762");
-        setIconImage(new ImageIcon(getClass().getResource("/com/yvan/img/logo.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
         Container contentPane = getContentPane();
 
         //======== menuBar1 ========
@@ -96,16 +96,16 @@ public class SuperAdministratorFrame extends JFrame {
             {
                 menu1.setText("\u7cfb\u7edf\u8bbe\u7f6e");
                 menu1.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
-                menu1.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u7cfb\u7edf\u8bbe\u7f6e.png")));
+                menu1.setIcon(new ImageIcon(getClass().getResource("/img/\u7cfb\u7edf\u8bbe\u7f6e.png")));
 
                 //---- menuItem1 ----
                 menuItem1.setText("\u4fee\u6539\u5bc6\u7801");
-                menuItem1.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u4fee\u6539\u5bc6\u7801.png")));
+                menuItem1.setIcon(new ImageIcon(getClass().getResource("/img/\u4fee\u6539\u5bc6\u7801.png")));
                 menu1.add(menuItem1);
 
                 //---- backToLogin ----
                 backToLogin.setText("\u8fd4\u56de\u767b\u9646");
-                backToLogin.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u8fd4\u56de.png")));
+                backToLogin.setIcon(new ImageIcon(getClass().getResource("/img/\u8fd4\u56de.png")));
                 backToLogin.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -116,7 +116,7 @@ public class SuperAdministratorFrame extends JFrame {
 
                 //---- exit ----
                 exit.setText("\u9000\u51fa\u7cfb\u7edf");
-                exit.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u9000\u51fa\u7cfb\u7edf.png")));
+                exit.setIcon(new ImageIcon(getClass().getResource("/img/\u9000\u51fa\u7cfb\u7edf.png")));
                 exit.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -131,7 +131,7 @@ public class SuperAdministratorFrame extends JFrame {
             {
                 menu2.setText("\u7528\u6237\u7ba1\u7406");
                 menu2.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
-                menu2.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u7528\u6237\u7ba1\u7406.png")));
+                menu2.setIcon(new ImageIcon(getClass().getResource("/img/\u7528\u6237\u7ba1\u7406.png")));
 
                 //---- menuItem3 ----
                 menuItem3.setText("text");
@@ -147,11 +147,11 @@ public class SuperAdministratorFrame extends JFrame {
             {
                 menu3.setText("\u56fe\u4e66\u7ba1\u7406");
                 menu3.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
-                menu3.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u56fe\u4e66\u7ba1\u7406.png")));
+                menu3.setIcon(new ImageIcon(getClass().getResource("/img/\u56fe\u4e66\u7ba1\u7406.png")));
 
                 //---- addBook ----
                 addBook.setText("\u6dfb\u52a0\u56fe\u4e66");
-                addBook.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u6dfb\u52a0.png")));
+                addBook.setIcon(new ImageIcon(getClass().getResource("/img/\u6dfb\u52a0.png")));
                 addBook.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -162,7 +162,7 @@ public class SuperAdministratorFrame extends JFrame {
 
                 //---- menuItem7 ----
                 menuItem7.setText("\u67e5\u770b\u56fe\u4e66");
-                menuItem7.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u67e5\u770b.png")));
+                menuItem7.setIcon(new ImageIcon(getClass().getResource("/img/\u67e5\u770b.png")));
                 menu3.add(menuItem7);
             }
             menuBar1.add(menu3);
@@ -171,11 +171,11 @@ public class SuperAdministratorFrame extends JFrame {
             {
                 menu4.setText("\u5e2e\u52a9");
                 menu4.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
-                menu4.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u5e2e\u52a9.png")));
+                menu4.setIcon(new ImageIcon(getClass().getResource("/img/\u5e2e\u52a9.png")));
 
                 //---- menuItem6 ----
                 menuItem6.setText("\u5173\u4e8e\u6211\u4eec");
-                menuItem6.setIcon(new ImageIcon("G:\\zzb\\pro\\src\\img\\\u5173\u4e8e\u6211\u4eec.png"));
+                menuItem6.setIcon(new ImageIcon(getClass().getResource("/img/\u5173\u4e8e\u6211\u4eec.png")));
                 menuItem6.setFont(new Font("\u6977\u4f53", Font.BOLD, 14));
                 menuItem6.addActionListener(new ActionListener() {
                     @Override
@@ -192,12 +192,12 @@ public class SuperAdministratorFrame extends JFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
+                contentPaneLayout.createParallelGroup()
+                        .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
         );
         contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
+                contentPaneLayout.createParallelGroup()
+                        .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
         );
         pack();
         setLocationRelativeTo(getOwner());

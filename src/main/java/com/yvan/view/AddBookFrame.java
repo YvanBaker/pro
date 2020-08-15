@@ -67,36 +67,36 @@ public class AddBookFrame extends JInternalFrame {
         //---- label1 ----
         label1.setText("\u4e66\u7c4d\u540d\u79f0\uff1a");
         label1.setFont(new Font("\u65b0\u5b8b\u4f53", Font.BOLD, 16));
-        label1.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u4e66.png")));
+        label1.setIcon(new ImageIcon(getClass().getResource("/img/\u4e66.png")));
 
         //---- label2 ----
         label2.setText("\u4e66\u7c4d\u4f5c\u8005\uff1a");
         label2.setFont(new Font("\u65b0\u5b8b\u4f53", Font.BOLD, 16));
-        label2.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u4f5c\u8005.png")));
+        label2.setIcon(new ImageIcon(getClass().getResource("/img/\u4f5c\u8005.png")));
 
         //---- label3 ----
         label3.setText("\u4e66\u7c4d\u51fa\u7248\u793e\uff1a");
         label3.setFont(new Font("\u65b0\u5b8b\u4f53", Font.BOLD, 16));
-        label3.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u51fa\u7248\u793e.png")));
+        label3.setIcon(new ImageIcon(getClass().getResource("/img/\u51fa\u7248\u793e.png")));
 
         //---- label4 ----
         label4.setText("\u4e66\u7c4d\u603b\u6570\uff1a");
         label4.setFont(new Font("\u65b0\u5b8b\u4f53", Font.BOLD, 16));
-        label4.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u8ba1\u6570.png")));
+        label4.setIcon(new ImageIcon(getClass().getResource("/img/\u8ba1\u6570.png")));
 
         //---- label5 ----
         label5.setText("\u4e66\u7c4d\u51fa\u7248\u65e5\u671f\uff1a");
         label5.setFont(new Font("\u65b0\u5b8b\u4f53", Font.BOLD, 16));
-        label5.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u65e5\u671f.png")));
+        label5.setIcon(new ImageIcon(getClass().getResource("/img/\u65e5\u671f.png")));
 
         //---- label6 ----
         label6.setText("\u4e66\u7c4d\u7c7b\u578b\uff1a");
         label6.setFont(new Font("\u65b0\u5b8b\u4f53", Font.BOLD, 16));
-        label6.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u7c7b\u578b.png")));
+        label6.setIcon(new ImageIcon(getClass().getResource("/img/\u7c7b\u578b.png")));
 
         //---- button1 ----
         button1.setText("\u786e\u8ba4\u6dfb\u52a0");
-        button1.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u786e\u8ba4.png")));
+        button1.setIcon(new ImageIcon(getClass().getResource("/img/\u786e\u8ba4.png")));
         button1.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
         button1.addActionListener(new ActionListener() {
             @Override
@@ -107,7 +107,7 @@ public class AddBookFrame extends JInternalFrame {
 
         //---- button2 ----
         button2.setText("\u91cd\u7f6e");
-        button2.setIcon(new ImageIcon(getClass().getResource("/com/yvan/img/\u91cd\u7f6e.png")));
+        button2.setIcon(new ImageIcon(getClass().getResource("/img/\u91cd\u7f6e.png")));
         button2.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
