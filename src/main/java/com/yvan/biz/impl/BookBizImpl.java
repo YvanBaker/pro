@@ -6,6 +6,7 @@ import com.yvan.dao.impl.BookDaoImpl;
 import com.yvan.entity.Book;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,13 +16,13 @@ import java.util.List;
 
 public class BookBizImpl implements BookBiz {
 
-    private BookDao bookDao = new BookDaoImpl();
+    private final BookDao bookDao = new BookDaoImpl();
 
     @Override
     public boolean add(String bookName, String author, String press, int total, Date publicationDate, String type, float bookDeposit) {
         Timestamp pu = new Timestamp(publicationDate.getTime());
         Book book = bookDao.findByNameAuthor(bookName, press);
-        book = new Book(bookName, author, press, pu, type, bookDeposit,total);
+        book = new Book(bookName, author, press, pu, type, bookDeposit, total);
 
         return bookDao.save(book);
     }
@@ -33,6 +34,31 @@ public class BookBizImpl implements BookBiz {
 
     @Override
     public List<Book> findByString(String str) {
-        return null;
+        List<Book> resList = new ArrayList<>();
+        List<Book> dataBook = bookDao.fuzzyFindBookByNameAuthorPressType(str);
+        for (Book book : dataBook) {
+            if (!book.isDel()) {
+                resList.add(book);
+            }
+        }
+        return resList;
+    }
+
+    @Override
+    public List<Book> findAll() {
+        List<Book> resBook = new ArrayList<>();
+        List<Book> dataBook = bookDao.findAll();
+        for (Book book : dataBook) {
+            if (!book.isDel()) {
+                resBook.add(book);
+            }
+        }
+        return resBook;
+    }
+
+    @Override
+    public boolean delBook(int id) {
+        int res = bookDao.delBook(id);
+        return res == 0 ? false : true;
     }
 }

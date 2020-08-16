@@ -2,6 +2,7 @@ package com.yvan.dao.impl;
 
 import com.yvan.dao.BookDao;
 import com.yvan.entity.Book;
+import com.yvan.util.SqlUtil;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -14,12 +15,6 @@ import java.util.List;
 
 public class BookDaoImpl extends BaseDao implements BookDao {
 
-    /**
-     * 保存一本书
-     *
-     * @param book 书
-     * @return false 失败
-     */
     @Override
     public boolean save(Book book) {
         String sql = "INSERT INTO book(book_name,author,press,publication_date,type,book_deposit,count,total) VALUE (?,?,?,?,?,?,?,?)";
@@ -37,13 +32,6 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         return i == 0 ? false : true;
     }
 
-    /**
-     * 根据名字和作者查询一本书
-     *
-     * @param bookName 书名
-     * @param author   作者
-     * @return Book对象
-     */
     @Override
     public Book findByNameAuthor(String bookName, String author) {
         String sql = "SELECT * FROM book where book_name = ? and author = ?";
@@ -59,7 +47,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
                 Timestamp publicationDate = rs.getTimestamp("publication_date");
                 String type = rs.getString("type");
                 float bookDeposit = rs.getFloat("book_deposit");
-                book = new Book(id, bookName, author, press, publicationDate, type,bookDeposit);
+                book = new Book(id, bookName, author, press, publicationDate, type, bookDeposit);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,16 +57,11 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         return book;
     }
 
-    /**
-     * 根据名字、作者、作者、类型模糊查询书籍信息
-     *
-     * @param str 字符串
-     * @return 书的集合
-     */
     @Override
     public List<Book> fuzzyFindBookByNameAuthorPressType(String str) {
         str = "%" + str + "%";
-        String sql = "SELECT id,book_name,author,press,type from book where book_name LIKE ? or author LIKE ? or press LIKE ? or type LIKE ?";
+        String sql = "SELECT id,book_name,author,press,publication_date,type,book_deposit,total,count,times,has_lended,del " +
+                "from book where book_name LIKE ? or author LIKE ? or press LIKE ? or type LIKE ?";
         List<Object> list = new ArrayList<>();
         List<Book> bookList = new ArrayList<>();
         list.add(str);
@@ -92,8 +75,15 @@ public class BookDaoImpl extends BaseDao implements BookDao {
                 String bookName = rs.getString("book_name");
                 String author = rs.getString("author");
                 String press = rs.getString("press");
+                Timestamp publicationDate = rs.getTimestamp("publication_date");
                 String type = rs.getString("type");
-                bookList.add(new Book(id, bookName, author, press, type));
+                float bookDeposit = rs.getFloat("book_deposit");
+                int total = rs.getInt("total");
+                int count = rs.getInt("count");
+                int times = rs.getInt("times");
+                int hasLended = rs.getInt("has_lended");
+                boolean del = rs.getBoolean("del");
+                bookList.add(new Book(id, bookName, author, press, bookDeposit, publicationDate, type, count, times, hasLended, total, del));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -133,6 +123,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
                 String bookName = rs.getString("book_name");
                 String author = rs.getString("author");
                 String press = rs.getString("press");
+                float bookDeposit = rs.getFloat("book_deposit");
                 Timestamp publicationDate = rs.getTimestamp("publication_date");
                 String type = rs.getString("type");
                 int count = rs.getInt("count");
@@ -140,11 +131,26 @@ public class BookDaoImpl extends BaseDao implements BookDao {
                 int hasLended = rs.getInt("has_lended");
                 int total = rs.getInt("total");
                 boolean del = rs.getBoolean("del");
-                list.add(new Book(id, bookName, author, press, publicationDate, type, count, times, hasLended, total, del));
+                list.add(new Book(id, bookName, author, press, bookDeposit, publicationDate, type, count, times, hasLended, total, del));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return list;
+    }
+
+    @Override
+    public int delBook(int id) {
+        String table = "book";
+        String field = "del = ?,count = ?";
+        String term = "id = ?";
+        String sql = SqlUtil.update(table, field, term);
+        List<Object> list = new ArrayList<>();
+        list.add(true);
+        list.add(0);
+        list.add(id);
+        int res = executeUpdate(sql, list);
+        closeAll();
+        return res;
     }
 }

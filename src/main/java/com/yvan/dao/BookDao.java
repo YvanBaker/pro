@@ -49,4 +49,13 @@ public interface BookDao {
      * @return 书籍集合
      */
     public List<Book> findAll();
+
+    /**
+     * 将书籍删除
+     * 伪删除，将 del 字段设置成1
+     *
+     * @param id 书籍id
+     * @return 数据库条数
+     */
+    public int delBook(int id);
 }

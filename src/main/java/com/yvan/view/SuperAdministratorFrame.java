@@ -57,9 +57,27 @@ public class SuperAdministratorFrame extends JFrame {
         this.dispose();
     }
 
+    /**
+     * 选择退出系统的响应
+     *
+     * @param e 事件
+     */
     private void exitActionPerformed(ActionEvent e) {
         // TODO add your code here
         System.exit(0);
+    }
+
+    /**
+     * 点击查看书籍的响应
+     *
+     * @param e 事件
+     */
+    private void showBookMenuItemActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        BookUpData bookUpData = new BookUpData();
+        bookUpData.pack();
+        bookUpData.setVisible(true);
+        desktopPane.add(bookUpData);
     }
 
     /**
@@ -78,7 +96,7 @@ public class SuperAdministratorFrame extends JFrame {
         menuItem4 = new JMenuItem();
         menu3 = new JMenu();
         addBook = new JMenuItem();
-        menuItem7 = new JMenuItem();
+        showBookMenuItem = new JMenuItem();
         menu4 = new JMenu();
         menuItem6 = new JMenuItem();
         desktopPane = new JDesktopPane();
@@ -160,10 +178,16 @@ public class SuperAdministratorFrame extends JFrame {
                 });
                 menu3.add(addBook);
 
-                //---- menuItem7 ----
-                menuItem7.setText("\u67e5\u770b\u56fe\u4e66");
-                menuItem7.setIcon(new ImageIcon(getClass().getResource("/img/\u67e5\u770b.png")));
-                menu3.add(menuItem7);
+                //---- showBookMenuItem ----
+                showBookMenuItem.setText("\u67e5\u770b\u56fe\u4e66");
+                showBookMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u67e5\u770b.png")));
+                showBookMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        showBookMenuItemActionPerformed(e);
+                    }
+                });
+                menu3.add(showBookMenuItem);
             }
             menuBar1.add(menu3);
 
@@ -192,12 +216,14 @@ public class SuperAdministratorFrame extends JFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 1103, Short.MAX_VALUE)
+            contentPaneLayout.createParallelGroup()
+                .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 1888, Short.MAX_VALUE)
         );
         contentPaneLayout.setVerticalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE)
+                    .addContainerGap())
         );
         pack();
         setLocationRelativeTo(getOwner());
@@ -216,7 +242,7 @@ public class SuperAdministratorFrame extends JFrame {
     private JMenuItem menuItem4;
     private JMenu menu3;
     private JMenuItem addBook;
-    private JMenuItem menuItem7;
+    private JMenuItem showBookMenuItem;
     private JMenu menu4;
     private JMenuItem menuItem6;
     private JDesktopPane desktopPane;

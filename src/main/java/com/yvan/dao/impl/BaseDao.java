@@ -1,6 +1,7 @@
 package com.yvan.dao.impl;
 
 import com.yvan.util.JdbcUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,7 +57,7 @@ public class BaseDao {
      * @param list 参数列表
      * @return 执行条数
      */
-    protected void executeQuery(String sql, List<Object> list) {
+    protected void executeQuery(String sql, @NotNull List<Object> list) {
         ps = null;
         rs = null;
         getConn();
@@ -79,7 +80,7 @@ public class BaseDao {
      * @param list 参数列表
      * @return ResultSet集合
      */
-    protected int executeUpdate(String sql, List<Object> list) {
+    protected int executeUpdate(String sql, @NotNull List<Object> list) {
         int res = 0;
         getConn();
         try {

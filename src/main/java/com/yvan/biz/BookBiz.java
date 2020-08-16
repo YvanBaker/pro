@@ -40,4 +40,13 @@ public interface BookBiz {
      * @return book的集合
      */
     public List<Book> findByString(String str);
+
+    /**
+     * 查询所有没有删除的书籍
+     *
+     * @return book的集合
+     */
+    public List<Book> findAll();
+
+    public boolean delBook(int id);
 }

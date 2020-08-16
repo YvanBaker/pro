@@ -55,6 +55,13 @@ public class BookDaoImplTest extends TestCase {
     }
 
     public void testFindAll() {
-        assert bookDao.findAll() != null;
+        assertNotNull(bookDao.findAll());
+    }
+
+    public void testFuzzyFindBookByNameAuthorPressType() {
+    }
+
+    public void testDelBook() {
+        assertTrue(bookDao.delBook(15) != 0);
     }
 }

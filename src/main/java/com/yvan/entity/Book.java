@@ -57,11 +57,12 @@ public class Book {
         this.total = total;
     }
 
-    public Book(int id, String bookName, String author, String press, Timestamp publicationDate, String type, int count, int times, int hasLended, int total, boolean del) {
+    public Book(int id, String bookName, String author, String press, float bookDeposit,Timestamp publicationDate, String type, int count, int times, int hasLended, int total, boolean del) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
         this.press = press;
+        this.bookDeposit = bookDeposit;
         this.publicationDate = publicationDate;
         this.type = type;
         this.count = count;
