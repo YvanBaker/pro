@@ -40,7 +40,7 @@ public class Book {
         this.type = type;
     }
 
-    public Book(String bookName, String author, String press, Timestamp publicationDate, String type, float bookDeposit,int total) {
+    public Book(String bookName, String author, String press, Timestamp publicationDate, String type, float bookDeposit, int total) {
         this.bookName = bookName;
         this.author = author;
         this.press = press;
@@ -57,7 +57,18 @@ public class Book {
         this.total = total;
     }
 
-    public Book(int id, String bookName, String author, String press, float bookDeposit,Timestamp publicationDate, String type, int count, int times, int hasLended, int total, boolean del) {
+    public Book(int id, String bookName, String author, String press, Timestamp publicationDate, String type, float bookDeposit, int count) {
+        this.id = id;
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.publicationDate = publicationDate;
+        this.type = type;
+        this.bookDeposit = bookDeposit;
+        this.count = count;
+    }
+
+    public Book(int id, String bookName, String author, String press, float bookDeposit, Timestamp publicationDate, String type, int count, int times, int hasLended, int total, boolean del) {
         this.id = id;
         this.bookName = bookName;
         this.author = author;
@@ -177,4 +188,51 @@ public class Book {
         this.del = del;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Book)) {
+            return false;
+        }
+
+        Book book = (Book) o;
+
+        if (getId() != book.getId()) {
+            return false;
+        }
+        if (Float.compare(book.getBookDeposit(), getBookDeposit()) != 0) {
+            return false;
+        }
+        if (getCount() != book.getCount()) {
+            return false;
+        }
+        if (getBookName() != null ? !getBookName().equals(book.getBookName()) : book.getBookName() != null) {
+            return false;
+        }
+        if (getAuthor() != null ? !getAuthor().equals(book.getAuthor()) : book.getAuthor() != null) {
+            return false;
+        }
+        if (getPress() != null ? !getPress().equals(book.getPress()) : book.getPress() != null) {
+            return false;
+        }
+        if (getPublicationDate() != null ? !getPublicationDate().equals(book.getPublicationDate()) : book.getPublicationDate() != null) {
+            return false;
+        }
+        return getType() != null ? getType().equals(book.getType()) : book.getType() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId();
+        result = 31 * result + (getBookName() != null ? getBookName().hashCode() : 0);
+        result = 31 * result + (getAuthor() != null ? getAuthor().hashCode() : 0);
+        result = 31 * result + (getPress() != null ? getPress().hashCode() : 0);
+        result = 31 * result + (getPublicationDate() != null ? getPublicationDate().hashCode() : 0);
+        result = 31 * result + (getType() != null ? getType().hashCode() : 0);
+        result = 31 * result + (getBookDeposit() != +0.0f ? Float.floatToIntBits(getBookDeposit()) : 0);
+        result = 31 * result + getCount();
+        return result;
+    }
 }

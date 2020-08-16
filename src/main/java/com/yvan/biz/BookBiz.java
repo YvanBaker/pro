@@ -23,7 +23,7 @@ public interface BookBiz {
      * @param bookDeposit     押金
      * @return true 成功保存
      */
-    public boolean add(String bookName, String author, String press, int count, Date publicationDate, String type, float bookDeposit);
+    boolean add(String bookName, String author, String press, int count, Date publicationDate, String type, float bookDeposit);
 
     /**
      * 添加书籍数据的业务逻辑
@@ -31,7 +31,7 @@ public interface BookBiz {
      * @param book book
      * @return true 保存成功
      */
-    public boolean add(Book book);
+    boolean add(Book book);
 
     /**
      * 根据输入的字符串查新书籍
@@ -39,14 +39,31 @@ public interface BookBiz {
      * @param str 字符串
      * @return book的集合
      */
-    public List<Book> findByString(String str);
+    List<Book> findByString(String str);
 
     /**
      * 查询所有没有删除的书籍
      *
      * @return book的集合
      */
-    public List<Book> findAll();
+    List<Book> findAll();
 
-    public boolean delBook(int id);
+    /**
+     * 根据 id 删除书籍
+     * 伪删除
+     *
+     * @param id id
+     * @return false 失败
+     */
+    boolean delBook(int id);
+
+    /**
+     * 根据 id 修改书籍信息
+     *
+     * @param id   id
+     * @param book book信息
+     * @return false 失败
+     */
+    boolean updateBookInfo(int id, Book book);
+
 }

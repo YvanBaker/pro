@@ -1,18 +1,20 @@
 package com.yvan.entity;
 
+
 /**
  * @author Yvan
  */
-
 public class Record {
 
   private int id;
-  private String uid;
-  private String bid;
-  private String lendTime;
-  private String returnTime;
-  private String returnTerm;
-  private String isrenew;
+  private int uid;
+  private int bid;
+  private java.sql.Timestamp lendTime;
+  private java.sql.Timestamp returnTime;
+  private double returnTerm;
+  private java.sql.Timestamp actualTime;
+  private boolean isRenew;
+  private boolean isReturn;
 
 
   public int getId() {
@@ -24,57 +26,75 @@ public class Record {
   }
 
 
-  public String getUid() {
+  public int getUid() {
     return uid;
   }
 
-  public void setUid(String uid) {
+  public void setUid(int uid) {
     this.uid = uid;
   }
 
 
-  public String getBid() {
+  public int getBid() {
     return bid;
   }
 
-  public void setBid(String bid) {
+  public void setBid(int bid) {
     this.bid = bid;
   }
 
 
-  public String getLendTime() {
+  public java.sql.Timestamp getLendTime() {
     return lendTime;
   }
 
-  public void setLendTime(String lendTime) {
+  public void setLendTime(java.sql.Timestamp lendTime) {
     this.lendTime = lendTime;
   }
 
 
-  public String getReturnTime() {
+  public java.sql.Timestamp getReturnTime() {
     return returnTime;
   }
 
-  public void setReturnTime(String returnTime) {
+  public void setReturnTime(java.sql.Timestamp returnTime) {
     this.returnTime = returnTime;
   }
 
 
-  public String getReturnTerm() {
+  public double getReturnTerm() {
     return returnTerm;
   }
 
-  public void setReturnTerm(String returnTerm) {
+  public void setReturnTerm(double returnTerm) {
     this.returnTerm = returnTerm;
   }
 
 
-  public String getIsrenew() {
-    return isrenew;
+  public java.sql.Timestamp getActualTime() {
+    return actualTime;
   }
 
-  public void setIsrenew(String isrenew) {
-    this.isrenew = isrenew;
+  public void setActualTime(java.sql.Timestamp actualTime) {
+    this.actualTime = actualTime;
+  }
+
+
+  public boolean getIsRenew() {
+    return isRenew;
+  }
+
+  public void setIsRenew(boolean isRenew) {
+    this.isRenew = isRenew;
+  }
+
+
+  public boolean getIsReturn() {
+    return isReturn;
+  }
+
+  public void setIsReturn(boolean isReturn) {
+    this.isReturn = isReturn;
   }
 
 }

@@ -16,7 +16,7 @@ public interface BookDao {
      * @param book 书
      * @return false 失败
      */
-    public boolean save(Book book);
+    boolean save(Book book);
 
     /**
      * 根据名字和作者查询一本书
@@ -25,7 +25,7 @@ public interface BookDao {
      * @param author   作者
      * @return Book对象
      */
-    public Book findByNameAuthor(String bookName, String author);
+    Book findByNameAuthor(String bookName, String author);
 
     /**
      * 根据名字、作者、作者、类型模糊查询书籍信息
@@ -33,22 +33,22 @@ public interface BookDao {
      * @param str 字符串
      * @return 书的集合
      */
-    public List<Book> fuzzyFindBookByNameAuthorPressType(String str);
+    List<Book> fuzzyFindBookByNameAuthorPressType(String str);
 
     /**
      * 根据id查询剩余数量
      *
-     * @param id
-     * @return
+     * @param id id
+     * @return null 查询不到
      */
-    public Integer findCountById(int id);
+    Integer findCountById(int id);
 
     /**
      * 查询所有数据信息
      *
      * @return 书籍集合
      */
-    public List<Book> findAll();
+    List<Book> findAll();
 
     /**
      * 将书籍删除
@@ -57,5 +57,14 @@ public interface BookDao {
      * @param id 书籍id
      * @return 数据库条数
      */
-    public int delBook(int id);
+    int delBook(int id);
+
+    /**
+     * 更新书籍信息
+     *
+     * @param id   id
+     * @param book 书
+     * @return 影响数量
+     */
+    int updateBook(int id, Book book);
 }

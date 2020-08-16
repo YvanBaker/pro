@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,9 +32,47 @@ import java.util.Vector;
 
 public class BookUpData extends JInternalFrame {
     private final BookBiz bookBiz = new BookBizImpl();
+    private List<Book> bookList;
 
     public BookUpData() {
         initComponents();
+    }
+
+    private boolean isNull() {
+        if (StringUtil.isNull(idTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "请选择要修改的书！！");
+            return true;
+        }
+        if (StringUtil.isNull(bookNameTextField.getText().trim())) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("书名"));
+            return true;
+        }
+        if (StringUtil.isNull(authorTextField.getText().trim())) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("作者"));
+            return true;
+        }
+        if (StringUtil.isNull(pressTextField.getText().trim())) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("出版社"));
+            return true;
+        }
+        if (publicationDatePicker.getDate() == null) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("出版时间"));
+            return true;
+        }
+        if (StringUtil.isNull(bookDepositTextField.getText())) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("书籍押金"));
+            return true;
+        }
+        if (StringUtil.isNull(typeTextField.getText())) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("书籍类型"));
+            return true;
+        }
+        if (StringUtil.isNull(bookDepositTextField.getText())) {
+            JOptionPane.showMessageDialog(this, StringUtil.isNullString("在馆数量"));
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -42,22 +81,20 @@ public class BookUpData extends JInternalFrame {
      * @param e 事件
      */
     private void bookInfoAncestorAdded(AncestorEvent e) {
-        // TODO add your code here
-        List<Book> bookList = bookBiz.findAll();
-        setTable(bookList);
+        bookList = bookBiz.findAll();
+        setTable();
     }
 
     /**
      * 设置表格显示
-     *
-     * @param bookList 显示的数据
      */
-    private void setTable(List<Book> bookList) {
+    private void setTable() {
         DefaultTableModel bookInfoModel = (DefaultTableModel) bookInfo.getModel();
         bookInfoModel.setRowCount(0);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         for (Book book : bookList) {
-            Vector vector = new Vector();
+            Vector<java.io.Serializable> vector;
+            vector = new Vector<>();
             vector.add(book.getId());
             vector.add(book.getBookName());
             vector.add(book.getAuthor());
@@ -71,7 +108,6 @@ public class BookUpData extends JInternalFrame {
             vector.add(book.getHasLended());
             bookInfoModel.addRow(vector);
         }
-        System.out.println(1111);
     }
 
     /**
@@ -80,14 +116,12 @@ public class BookUpData extends JInternalFrame {
      * @param e 事件
      */
     private void inquireButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
-        List<Book> list = bookBiz.findByString(strTextField.getText());
-        System.out.println(list);
-        if (list == null) {
+        bookList = bookBiz.findByString(strTextField.getText());
+        if (bookList == null) {
             JOptionPane.showMessageDialog(this, "查询不到该书籍！！");
             return;
         }
-        setTable(list);
+        setTable();
     }
 
     /**
@@ -96,7 +130,6 @@ public class BookUpData extends JInternalFrame {
      * @param e 事件
      */
     private void bookInfoMouseClicked(MouseEvent e) {
-        // TODO add your code here
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date publicationData = null;
         DefaultTableModel bookInfoModel = (DefaultTableModel) bookInfo.getModel();
@@ -129,7 +162,6 @@ public class BookUpData extends JInternalFrame {
      * @param e 事件
      */
     private void deleteButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         String idText = idTextField.getText();
         if (StringUtil.isNull(idText)) {
             JOptionPane.showMessageDialog(this, "请选择要删除的书籍！！");
@@ -147,6 +179,50 @@ public class BookUpData extends JInternalFrame {
         JOptionPane.showMessageDialog(this, "删除成功！！");
         inquireButtonActionPerformed(e);
     }
+
+    /**
+     * 点击修改的响应
+     *
+     * @param e 事件
+     */
+    private void enterButtonActionPerformed(ActionEvent e) {
+        if (isNull()) {
+            return;
+        }
+        int id = Integer.parseInt(idTextField.getText());
+        String bookName = bookNameTextField.getText();
+        String author = authorTextField.getText();
+        String press = pressTextField.getText();
+        Date date = publicationDatePicker.getDate();
+        Timestamp publicationDate = new Timestamp(date.getTime());
+        float bookDeposit;
+        try {
+            bookDeposit = Float.parseFloat(bookDepositTextField.getText());
+        } catch (NumberFormatException exception) {
+            JOptionPane.showMessageDialog(this, "书籍押金输入不合法！！");
+            return;
+        }
+        String type = typeTextField.getText();
+        int count;
+        try {
+            count = Integer.parseInt(countTextField.getText());
+        } catch (NumberFormatException exception) {
+            JOptionPane.showMessageDialog(this, "在库数量输入不合法！！");
+            return;
+        }
+        Book newBook = new Book(id, bookName, author, press, publicationDate, type, bookDeposit, count);
+        if (bookList.get(bookInfo.getSelectedRow()).equals(newBook)) {
+            JOptionPane.showMessageDialog(this, "书籍数据没有变化，无法修改！！");
+            return;
+        }
+        boolean flag = bookBiz.updateBookInfo(newBook.getId(), newBook);
+        if (!flag) {
+            JOptionPane.showMessageDialog(this, "存在同名同作者的图书！！");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "修改成功！！");
+    }
+
 
     /**
      * 自动生成的可视化主体
@@ -182,6 +258,7 @@ public class BookUpData extends JInternalFrame {
         setVisible(true);
         setClosable(true);
         setMaximizable(true);
+        setTitle("\u67e5\u770b\u56fe\u4e66");
         Container contentPane = getContentPane();
 
         //---- label1 ----
@@ -205,25 +282,23 @@ public class BookUpData extends JInternalFrame {
 
             //---- bookInfo ----
             bookInfo.setModel(new DefaultTableModel(
-                    new Object[][]{
-                            {null, null, null, null, null, null, null, null, null, null, null},
-                    },
-                    new String[]{
-                            "id", "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u4e66\u7c4d\u6570\u91cf", "\u5728\u9986\u6570\u91cf", "\u5df2\u501f\u51fa\u6570\u91cf", "\u603b\u501f\u51fa\u6570\u91cf"
-                    }
+                new Object[][] {
+                    {null, null, null, null, null, null, null, null, null, null, null},
+                },
+                new String[] {
+                    "id", "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u4e66\u7c4d\u6570\u91cf", "\u5728\u9986\u6570\u91cf", "\u5df2\u501f\u51fa\u6570\u91cf", "\u603b\u501f\u51fa\u6570\u91cf"
+                }
             ) {
-                Class<?>[] columnTypes = new Class<?>[]{
-                        Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Integer.class, Integer.class, Integer.class, Integer.class
+                Class<?>[] columnTypes = new Class<?>[] {
+                    Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Integer.class, Integer.class, Integer.class, Integer.class
                 };
-                boolean[] columnEditable = new boolean[]{
-                        false, false, false, false, false, false, false, false, false, false, false
+                boolean[] columnEditable = new boolean[] {
+                    false, false, false, false, false, false, false, false, false, false, false
                 };
-
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
                 }
-
                 @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return columnEditable[columnIndex];
@@ -237,14 +312,10 @@ public class BookUpData extends JInternalFrame {
                 public void ancestorAdded(AncestorEvent e) {
                     bookInfoAncestorAdded(e);
                 }
-
                 @Override
-                public void ancestorMoved(AncestorEvent e) {
-                }
-
+                public void ancestorMoved(AncestorEvent e) {}
                 @Override
-                public void ancestorRemoved(AncestorEvent e) {
-                }
+                public void ancestorRemoved(AncestorEvent e) {}
             });
             bookInfo.addMouseListener(new MouseAdapter() {
                 @Override
@@ -302,6 +373,12 @@ public class BookUpData extends JInternalFrame {
         enterButton.setText("\u786e\u8ba4\u4fee\u6539");
         enterButton.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
         enterButton.setIcon(new ImageIcon(getClass().getResource("/img/\u786e\u8ba4.png")));
+        enterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enterButtonActionPerformed(e);
+            }
+        });
 
         //---- deleteButton ----
         deleteButton.setText("\u5220\u9664");
@@ -317,99 +394,99 @@ public class BookUpData extends JInternalFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(32, 32, 32)
-                                                .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(47, 47, 47)
-                                                .addComponent(inquireButton))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 883, GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(contentPaneLayout.createParallelGroup()
-                                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                                .addGap(99, 99, 99)
-                                                                .addGroup(contentPaneLayout.createParallelGroup()
-                                                                        .addComponent(label2, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                                                        .addComponent(label3, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                                                        .addComponent(label4, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                                                        .addComponent(label5, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                                                        .addComponent(label6, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                                                        .addComponent(label7, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                                                        .addComponent(label8, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                                                        .addComponent(label9, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)))
-                                                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
-                                                                .addComponent(enterButton)))))
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addGap(55, 55, 55)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(idTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                                        .addComponent(bookNameTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                                        .addComponent(pressTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                                        .addComponent(authorTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                                        .addComponent(bookDepositTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                                        .addComponent(typeTextField, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                                        .addComponent(countTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                                                        .addComponent(publicationDatePicker, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addGap(103, 103, 103)
-                                                .addComponent(deleteButton)))
-                                .addGap(191, 191, 191))
+            contentPaneLayout.createParallelGroup()
+                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                    .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+                            .addGap(32, 32, 32)
+                            .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
+                            .addGap(47, 47, 47)
+                            .addComponent(inquireButton))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 883, GroupLayout.PREFERRED_SIZE)
+                            .addGroup(contentPaneLayout.createParallelGroup()
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addGap(99, 99, 99)
+                                    .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addComponent(label2, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(label3, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(label4, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(label5, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(label6, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(label7, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(label8, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(label9, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)))
+                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                                    .addComponent(enterButton)))))
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(55, 55, 55)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                .addComponent(idTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(bookNameTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(pressTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(authorTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(bookDepositTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(typeTextField, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(countTextField, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(publicationDatePicker, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(185, 185, 185)
+                            .addComponent(deleteButton)))
+                    .addGap(191, 191, 191))
         );
         contentPaneLayout.setVerticalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                .addGap(52, 52, 52)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(inquireButton))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addGap(24, 24, 24)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(label2)
-                                                        .addComponent(idTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(42, 42, 42)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(label3)
-                                                        .addComponent(bookNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(45, 45, 45)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(label4)
-                                                        .addComponent(authorTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(41, 41, 41)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(label5)
-                                                        .addComponent(pressTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(53, 53, 53)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(label6)
-                                                        .addComponent(publicationDatePicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(50, 50, 50)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(label7)
-                                                        .addComponent(bookDepositTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(55, 55, 55)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(label8)
-                                                        .addComponent(typeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(55, 55, 55)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(label9)
-                                                        .addComponent(countTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                                .addGap(18, 18, 18)
-                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(enterButton)
-                                                        .addComponent(deleteButton)))
-                                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 695, GroupLayout.PREFERRED_SIZE))
-                                .addGap(31, 31, 31))
+            contentPaneLayout.createParallelGroup()
+                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                    .addGap(52, 52, 52)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(inquireButton))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(24, 24, 24)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label2)
+                                .addComponent(idTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(42, 42, 42)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label3)
+                                .addComponent(bookNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(45, 45, 45)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label4)
+                                .addComponent(authorTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(41, 41, 41)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label5)
+                                .addComponent(pressTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(53, 53, 53)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label6)
+                                .addComponent(publicationDatePicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(50, 50, 50)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label7)
+                                .addComponent(bookDepositTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(55, 55, 55)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label8)
+                                .addComponent(typeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(55, 55, 55)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label9)
+                                .addComponent(countTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                            .addGap(34, 34, 34)
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(enterButton)
+                                .addComponent(deleteButton)))
+                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 695, GroupLayout.PREFERRED_SIZE))
+                    .addGap(31, 31, 31))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }

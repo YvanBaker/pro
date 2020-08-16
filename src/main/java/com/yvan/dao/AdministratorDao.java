@@ -14,7 +14,15 @@ public interface AdministratorDao {
      * @param name 查询的名字
      * @return 查询出的用户
      */
-    public Administrator findByName(String name);
+    Administrator findByName(String name);
+
+    /**
+     * 根据 id 查询数据
+     *
+     * @param id id
+     * @return administrator 对象
+     */
+    Administrator findAllById(int id);
 
     /**
      * 更改 administrator 密码
@@ -24,7 +32,7 @@ public interface AdministratorDao {
      * @param newPassword   新的密码
      * @return 新的administrator对象
      */
-    public Administrator changePassword(Administrator administrator, String newPassword);
+    int changePassword(Administrator administrator, String newPassword);
 
     /**
      * 保存 administrator对象
@@ -33,5 +41,5 @@ public interface AdministratorDao {
      * @param administrator administrator 对象
      * @return true 成功保存
      */
-    public boolean save(Administrator administrator);
+    boolean save(Administrator administrator);
 }

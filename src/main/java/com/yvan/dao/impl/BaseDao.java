@@ -55,11 +55,9 @@ public class BaseDao {
      *
      * @param sql  sql语句
      * @param list 参数列表
-     * @return 执行条数
+     *
      */
     protected void executeQuery(String sql, @NotNull List<Object> list) {
-        ps = null;
-        rs = null;
         getConn();
         try {
             ps = conn.prepareStatement(sql);
@@ -67,6 +65,16 @@ public class BaseDao {
             for (Object o : list) {
                 ps.setObject(i++, o);
             }
+            rs = ps.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void executeQuery(String sql){
+        getConn();
+        try {
+            ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();

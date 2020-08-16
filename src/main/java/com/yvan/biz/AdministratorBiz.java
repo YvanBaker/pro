@@ -8,12 +8,29 @@ import com.yvan.entity.Administrator;
 public interface AdministratorBiz {
 
     /**
-     * 管理员登录
+     * 管理员登录的业务逻辑
      *
      * @param name     账户名
      * @param password 密码
      * @param type     账户类型
      * @return 登录成功返回一个管理员账号
      */
-    public Administrator login(String name, String password, String type);
+    Administrator login(String name, String password, String type);
+
+    /**
+     * 更改密码的业务逻辑
+     *
+     * @param administrator 账户
+     * @param newPassword   新密码
+     * @return false 失败
+     */
+    boolean changePassword(Administrator administrator, String newPassword);
+
+    /**
+     * 根据 id 更新 Administrator 用户信息
+     *
+     * @param id id
+     * @return Administrator 对象
+     */
+    Administrator updateAdministrator(int id);
 }

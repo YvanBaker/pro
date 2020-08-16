@@ -22,9 +22,10 @@ new FormModel {
 					"font": new java.awt.Font( "楷体", 1, 16 )
 					"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/系统设置.png" )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
-						name: "menuItem1"
+						name: "changePasswordMenuItem"
 						"text": "修改密码"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/修改密码.png" )
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "changePasswordMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "backToLogin"
@@ -69,6 +70,16 @@ new FormModel {
 						"text": "查看图书"
 						"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/查看.png" )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "showBookMenuItemActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "borrowBookMenuItem"
+						"text": "借书"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/借书.png" )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "returnBookMenuItem"
+						"text": "还书"
+						"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/图书归还.png" )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {

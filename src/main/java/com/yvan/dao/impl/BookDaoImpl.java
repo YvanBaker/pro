@@ -3,6 +3,7 @@ package com.yvan.dao.impl;
 import com.yvan.dao.BookDao;
 import com.yvan.entity.Book;
 import com.yvan.util.SqlUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -29,7 +30,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         list.add(book.getTotal());
         int i = executeUpdate(sql, list);
         closeAll();
-        return i == 0 ? false : true;
+        return i != 0;
     }
 
     @Override
@@ -101,9 +102,8 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         list.add(id);
         executeQuery(sql, list);
         try {
-            while (rs.next()) {
-                res = rs.getInt("count");
-            }
+            rs.next();
+            res = rs.getInt("count");
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -116,7 +116,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
     public List<Book> findAll() {
         List<Book> list = new ArrayList<>();
         String sql = "Select * from book";
-        executeQuery(sql, new ArrayList<Object>());
+        executeQuery(sql);
         try {
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -135,6 +135,8 @@ public class BookDaoImpl extends BaseDao implements BookDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeAll();
         }
         return list;
     }
@@ -148,6 +150,26 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         List<Object> list = new ArrayList<>();
         list.add(true);
         list.add(0);
+        list.add(id);
+        int res = executeUpdate(sql, list);
+        closeAll();
+        return res;
+    }
+
+    @Override
+    public int updateBook(int id, @NotNull Book book) {
+        String table = "book";
+        String field = "book_name = ?, author = ?, press = ?, publication_date = ?, type = ?, book_deposit = ?, count = ?";
+        String term = "id = ?";
+        String sql = SqlUtil.update(table, field, term);
+        List<Object> list = new ArrayList<>();
+        list.add(book.getBookName());
+        list.add(book.getAuthor());
+        list.add(book.getPress());
+        list.add(book.getPublicationDate());
+        list.add(book.getType());
+        list.add(book.getBookDeposit());
+        list.add(book.getCount());
         list.add(id);
         int res = executeUpdate(sql, list);
         closeAll();

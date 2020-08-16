@@ -10,7 +10,7 @@ import com.yvan.entity.User;
  */
 
 public class UserBizImpl implements UserBiz {
-    private UserDao userDao = new UserDaoImpl();
+    private final UserDao userDao = new UserDaoImpl();
 
     @Override
     public boolean registered(String name, String password) {
@@ -32,5 +32,16 @@ public class UserBizImpl implements UserBiz {
             return null;
         }
         return user;
+    }
+
+    @Override
+    public boolean changePassword(User user, String newPassword) {
+        int i = userDao.changePassword(user,newPassword);
+        return i > 0;
+    }
+
+    @Override
+    public User updateUser(int id) {
+        return userDao.findAllById(id);
     }
 }

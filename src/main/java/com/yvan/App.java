@@ -1,5 +1,6 @@
 package com.yvan;
 
+import com.yvan.entity.Administrator;
 import com.yvan.view.SuperAdministratorFrame;
 
 /**
@@ -11,7 +12,7 @@ public class App {
 
 //        Login login = new Login();
 //        login.setVisible(true);
-        new SuperAdministratorFrame().setVisible(true);
+        new SuperAdministratorFrame(new Administrator(1,"admin","123","超级管理")).setVisible(true);
 
     }
 }

@@ -4,6 +4,13 @@
 
 package com.yvan.view;
 
+import com.yvan.biz.AdministratorBiz;
+import com.yvan.biz.UserBiz;
+import com.yvan.biz.impl.AdministratorBizImpl;
+import com.yvan.biz.impl.UserBizImpl;
+import com.yvan.entity.Administrator;
+import com.yvan.entity.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +20,22 @@ import java.awt.event.ActionListener;
  * @author unknown
  */
 public class SuperAdministratorFrame extends JFrame {
+    private Administrator administrator;
+    private User user;
+    private final AdministratorBiz administratorBiz = new AdministratorBizImpl();
+    private final UserBiz userBiz = new UserBizImpl();
+
     public SuperAdministratorFrame() {
+        initComponents();
+    }
+
+    public SuperAdministratorFrame(Administrator administrator) {
+        this.administrator = administrator;
+        initComponents();
+    }
+
+    public SuperAdministratorFrame(User user) {
+        this.user = user;
         initComponents();
     }
 
@@ -23,7 +45,6 @@ public class SuperAdministratorFrame extends JFrame {
      * @param e 点击的按钮
      */
     private void menuItem6ActionPerformed(ActionEvent e) {
-        // TODO add your code here
         StringBuffer info = new StringBuffer(" -- Yvan -- 出品\n");
         info.append("邮箱：1565924134@qq.com\n");
         info.append("电话：12345678901");
@@ -39,7 +60,6 @@ public class SuperAdministratorFrame extends JFrame {
      * @param e 点击的按钮
      */
     private void addBookActionPerformed(ActionEvent e) {
-        // TODO add your code here
         AddBookFrame addBookFrame = new AddBookFrame();
         addBookFrame.pack();
         addBookFrame.setVisible(true);
@@ -52,7 +72,6 @@ public class SuperAdministratorFrame extends JFrame {
      * @param e 点击的按钮
      */
     private void backToLoginActionPerformed(ActionEvent e) {
-        // TODO add your code here
         new Login().setVisible(true);
         this.dispose();
     }
@@ -63,7 +82,6 @@ public class SuperAdministratorFrame extends JFrame {
      * @param e 事件
      */
     private void exitActionPerformed(ActionEvent e) {
-        // TODO add your code here
         System.exit(0);
     }
 
@@ -73,11 +91,29 @@ public class SuperAdministratorFrame extends JFrame {
      * @param e 事件
      */
     private void showBookMenuItemActionPerformed(ActionEvent e) {
-        // TODO add your code here
         BookUpData bookUpData = new BookUpData();
         bookUpData.pack();
         bookUpData.setVisible(true);
         desktopPane.add(bookUpData);
+    }
+
+    /**
+     * 点击修改密码的响应
+     *
+     * @param e 事件
+     */
+    private void changePasswordMenuItemActionPerformed(ActionEvent e) {
+        ChangePasswordFrame changePasswordFrame;
+        if (administrator != null){
+            administrator = administratorBiz.updateAdministrator(administrator.getId());
+            changePasswordFrame = new ChangePasswordFrame(administrator);
+        } else {
+            user = userBiz.updateUser(user.getId());
+            changePasswordFrame = new ChangePasswordFrame(user);
+        }
+        changePasswordFrame.pack();
+        changePasswordFrame.setVisible(true);
+        desktopPane.add(changePasswordFrame);
     }
 
     /**
@@ -88,7 +124,7 @@ public class SuperAdministratorFrame extends JFrame {
         // Generated using JFormDesigner Evaluation license - unknown
         menuBar1 = new JMenuBar();
         menu1 = new JMenu();
-        menuItem1 = new JMenuItem();
+        changePasswordMenuItem = new JMenuItem();
         backToLogin = new JMenuItem();
         exit = new JMenuItem();
         menu2 = new JMenu();
@@ -97,6 +133,8 @@ public class SuperAdministratorFrame extends JFrame {
         menu3 = new JMenu();
         addBook = new JMenuItem();
         showBookMenuItem = new JMenuItem();
+        borrowBookMenuItem = new JMenuItem();
+        returnBookMenuItem = new JMenuItem();
         menu4 = new JMenu();
         menuItem6 = new JMenuItem();
         desktopPane = new JDesktopPane();
@@ -116,10 +154,16 @@ public class SuperAdministratorFrame extends JFrame {
                 menu1.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
                 menu1.setIcon(new ImageIcon(getClass().getResource("/img/\u7cfb\u7edf\u8bbe\u7f6e.png")));
 
-                //---- menuItem1 ----
-                menuItem1.setText("\u4fee\u6539\u5bc6\u7801");
-                menuItem1.setIcon(new ImageIcon(getClass().getResource("/img/\u4fee\u6539\u5bc6\u7801.png")));
-                menu1.add(menuItem1);
+                //---- changePasswordMenuItem ----
+                changePasswordMenuItem.setText("\u4fee\u6539\u5bc6\u7801");
+                changePasswordMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u4fee\u6539\u5bc6\u7801.png")));
+                changePasswordMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        changePasswordMenuItemActionPerformed(e);
+                    }
+                });
+                menu1.add(changePasswordMenuItem);
 
                 //---- backToLogin ----
                 backToLogin.setText("\u8fd4\u56de\u767b\u9646");
@@ -188,6 +232,16 @@ public class SuperAdministratorFrame extends JFrame {
                     }
                 });
                 menu3.add(showBookMenuItem);
+
+                //---- borrowBookMenuItem ----
+                borrowBookMenuItem.setText("\u501f\u4e66");
+                borrowBookMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u501f\u4e66.png")));
+                menu3.add(borrowBookMenuItem);
+
+                //---- returnBookMenuItem ----
+                returnBookMenuItem.setText("\u8fd8\u4e66");
+                returnBookMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u56fe\u4e66\u5f52\u8fd8.png")));
+                menu3.add(returnBookMenuItem);
             }
             menuBar1.add(menu3);
 
@@ -234,7 +288,7 @@ public class SuperAdministratorFrame extends JFrame {
     // Generated using JFormDesigner Evaluation license - unknown
     private JMenuBar menuBar1;
     private JMenu menu1;
-    private JMenuItem menuItem1;
+    private JMenuItem changePasswordMenuItem;
     private JMenuItem backToLogin;
     private JMenuItem exit;
     private JMenu menu2;
@@ -243,6 +297,8 @@ public class SuperAdministratorFrame extends JFrame {
     private JMenu menu3;
     private JMenuItem addBook;
     private JMenuItem showBookMenuItem;
+    private JMenuItem borrowBookMenuItem;
+    private JMenuItem returnBookMenuItem;
     private JMenu menu4;
     private JMenuItem menuItem6;
     private JDesktopPane desktopPane;
