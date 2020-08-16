@@ -46,7 +46,7 @@ new FormModel {
 				name: "label5"
 				"text": "书籍出版日期："
 				"font": #Font0
-				"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/img/日期.png" )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/日期.png" )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "pressTextField"
@@ -87,7 +87,7 @@ new FormModel {
 				name: "label7"
 				"text": "书籍押金："
 				"font": #Font0
-				"icon": #SwingIcon0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/押金.png" )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
 				name: "bookDepositTextField"

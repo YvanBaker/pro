@@ -207,7 +207,7 @@ public class AddBookFrame extends JInternalFrame {
         //---- label7 ----
         label7.setText("\u4e66\u7c4d\u62bc\u91d1\uff1a");
         label7.setFont(new Font("\u65b0\u5b8b\u4f53", Font.BOLD, 16));
-        label7.setIcon(new ImageIcon(getClass().getResource("/img/\u65e5\u671f.png")));
+        label7.setIcon(new ImageIcon(getClass().getResource("/img/\u62bc\u91d1.png")));
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);

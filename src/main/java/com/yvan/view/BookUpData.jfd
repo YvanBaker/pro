@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {par l {seq {space :p:124:p, comp label1:::p:107:p, space :p:32:p, comp strTextField:::p:305:p, space :p:47:p, comp inquireButton:::p::p}, seq l {space :p:33:p, comp scrollPane1:::p:883:p}}, space ::684:x}}"
-			"$verticalGroup": "par l {seq l {space :p:52:p, par b {comp label1::b:p:38:p, comp strTextField::b:p::p, comp inquireButton::b:p::p}, space :p:49:p, comp scrollPane1:::p:695:p, space ::31:x}}"
+			"$horizontalGroup": "par l {seq t {space :33::x, par t {seq t {comp label1:::p:107:p, space :p:32:p, comp strTextField:::p:305:p, space :p:47:p, comp inquireButton:::p::p}, seq t {comp scrollPane1:::p:883:p, par l {seq {space :p:99:p, par l {comp label2::l::134:x, comp label3::l::134:x, comp label4::l::134:x, comp label5::l::134:x, comp label6::l::134:x, comp label7::l::134:x, comp label8::l::134:x, comp label9::l::134:x}}, seq t {space ::111:x, comp enterButton:::p::p}}}}, par l {seq {space :p:55:p, par l:::p {comp idTextField::::232:x, comp bookNameTextField::l::232:x, comp pressTextField::l::232:x, comp authorTextField::l::232:x, comp bookDepositTextField::l::232:x, comp typeTextField::t::232:x, comp countTextField::l::232:x, comp publicationDatePicker::t::232:x}}, seq l {space :p:103:p, comp deleteButton:::p::p}}, space :p:191:p}}"
+			"$verticalGroup": "par l {seq t {space :p:52:p, par b {comp label1::b:p:38:p, comp strTextField::b:p::p, comp inquireButton::b:p::p}, space ::49:x, par l {seq l {space :p:24:p, par b {comp label2::b:p::p, comp idTextField::b:p::p}, space :p:42:p, par b {comp label3::b:p::p, comp bookNameTextField::b:p::p}, space :p:45:p, par b {comp label4::b:p::p, comp authorTextField::b:p::p}, space :p:41:p, par b {comp label5::b:p::p, comp pressTextField::b:p::p}, space :p:53:p, par b {comp label6::b:p::p, comp publicationDatePicker::b:p::p}, space :p:50:p, par b {comp label7::b:p::p, comp bookDepositTextField::b:p::p}, space :p:55:p, par b {comp label8::b:p::p, comp typeTextField::b:p::p}, space :p:55:p, par b {comp label9::b:p::p, comp countTextField::b:p::p}, space s:::p, par b {comp enterButton::b:p::p, comp deleteButton::b:p::p}}, comp scrollPane1:::p:695:p}, space :p:31:p}}"
 		} ) {
 			name: "this"
 			"visible": true
@@ -31,7 +31,21 @@ new FormModel {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "bookInfo"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+							add( null )
+						} )
+					}, new java.util.Vector {
 						add( "id" )
 						add( "书名" )
 						add( "作者" )
@@ -56,17 +70,17 @@ new FormModel {
 						add( class java.lang.Integer )
 						add( class java.lang.Integer )
 					}, new java.util.Vector {
-						add( null )
-						add( null )
-						add( null )
-						add( null )
-						add( null )
-						add( null )
-						add( null )
-						add( null )
-						add( null )
-						add( null )
-						add( null )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
+						add( false )
 					}, new java.util.Vector {
 						add( null )
 						add( null )
@@ -84,7 +98,94 @@ new FormModel {
 					"fillsViewportHeight": true
 					"selectionMode": 0
 					addEvent( new FormEvent( "javax.swing.event.AncestorListener", "ancestorAdded", "bookInfoAncestorAdded", true ) )
+					addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "bookInfoMouseClicked", true ) )
 				} )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "书籍ID："
+				"font": &Font0 new java.awt.Font( "楷体", 1, 18 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/id.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label3"
+				"text": "书籍名称："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/书.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label4"
+				"text": "书籍作者："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/作者.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label5"
+				"text": "出版社："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/出版社.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label6"
+				"text": "出版日期："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/日期.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label7"
+				"text": "书籍押金："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/押金.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label8"
+				"text": "类型："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/类型.png" )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label9"
+				"text": "在馆数量："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/计数.png" )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "idTextField"
+				"editable": false
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "bookNameTextField"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "authorTextField"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "pressTextField"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "bookDepositTextField"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "countTextField"
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "typeTextField"
+			} )
+			add( new FormComponent( "org.jdesktop.swingx.JXDatePicker" ) {
+				name: "publicationDatePicker"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "enterButton"
+				"text": "确认修改"
+				"font": &Font1 new java.awt.Font( "楷体", 1, 16 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/确认.png" )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "deleteButton"
+				"text": "删除"
+				"font": #Font1
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/删 除.png" )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "deleteButtonActionPerformed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
