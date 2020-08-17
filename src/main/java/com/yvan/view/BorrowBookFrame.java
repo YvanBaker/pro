@@ -5,11 +5,12 @@
 package com.yvan.view;
 
 import com.yvan.biz.BookBiz;
-import com.yvan.biz.BorrowBookBiz;
+import com.yvan.biz.RecordBookBiz;
 import com.yvan.biz.impl.BookBizImpl;
-import com.yvan.biz.impl.BorrowBookBizImpl;
+import com.yvan.biz.impl.RecordBookBizImpl;
 import com.yvan.entity.Book;
 import com.yvan.entity.User;
+import com.yvan.util.StringUtil;
 
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
@@ -28,7 +29,7 @@ import java.util.Vector;
  */
 public class BorrowBookFrame extends JInternalFrame {
     private final BookBiz bookBiz = new BookBizImpl();
-    private final BorrowBookBiz borrowBookBiz = new BorrowBookBizImpl();
+    private final RecordBookBiz recordBookBiz = new RecordBookBizImpl();
     private User user;
     private List<Book> bookList;
 
@@ -47,6 +48,9 @@ public class BorrowBookFrame extends JInternalFrame {
      * @param e 事件
      */
     private void inquireButtonActionPerformed(ActionEvent e) {
+        if (StringUtil.isNull(strTextField.getText())) {
+            strTextField.setText("");
+        }
         bookList = bookBiz.findByString(strTextField.getText());
         if (bookList == null) {
             JOptionPane.showMessageDialog(this, "查询不到该书籍！！");
@@ -103,7 +107,7 @@ public class BorrowBookFrame extends JInternalFrame {
             return;
         }
         Book book = bookList.get(bookInfo.getSelectedRow());
-        int i = borrowBookBiz.borrow(book, user);
+        int i = recordBookBiz.borrow(book, user);
         //1 失败 没有书; 2 库存不足; 3 金额不足 ; 4 借书记录保存失败； 5 成功
         switch (i) {
             case 1:
@@ -116,9 +120,12 @@ public class BorrowBookFrame extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "账号余额不足，请及时充值！！");
                 break;
             case 4:
-                JOptionPane.showMessageDialog(this, "未知原因失败，请重新操作！！");
+                JOptionPane.showMessageDialog(this, "存在该类书籍没有还！！");
                 break;
             case 5:
+                JOptionPane.showMessageDialog(this, "未知原因失败，请重新操作！！");
+                break;
+            case 6:
                 JOptionPane.showMessageDialog(this, "借阅成功！！");
                 break;
             default:
@@ -197,7 +204,6 @@ public class BorrowBookFrame extends JInternalFrame {
                 @Override
                 public void ancestorAdded(AncestorEvent e) {
                     bookInfoAncestorAdded(e);
-                    bookInfoAncestorAdded(e);
                 }
 
                 @Override
@@ -213,7 +219,7 @@ public class BorrowBookFrame extends JInternalFrame {
 
         //---- borrowButton ----
         borrowButton.setText("\u501f\u9605");
-        borrowButton.setIcon(new ImageIcon(getClass().getResource("/img/\u67e5\u8be2.png")));
+        borrowButton.setIcon(new ImageIcon(getClass().getResource("/img/\u501f\u4e66.png")));
         borrowButton.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
         borrowButton.addActionListener(new ActionListener() {
             @Override

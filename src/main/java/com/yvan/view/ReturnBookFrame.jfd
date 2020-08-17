@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {par l {seq {space :p:103:p, comp label1:::p:107:p, space :p:30:p, comp strTextField:::p:305:p, space :p:40:p, comp inquireButton:::p::p, space :p:43:p, comp borrowButton:::p::p}, seq l {space :p:37:p, comp scrollPane1:::p:802:p}}, space ::51:x}}"
-			"$verticalGroup": "par l {seq t {space :p:40:p, par b {comp label1::b:p:38:p, comp strTextField::b:p::p, comp inquireButton::b:p::p, comp borrowButton::b:p::p}, space ::45:x, comp scrollPane1:::p:528:p, space :p:39:p}}"
+			"$horizontalGroup": "par l {seq {par l:::p {seq {space :p:105:p, comp label1:::p::p, space s:::p, comp strTextField:::p:305:p, space :p:56:p, comp inquireButton:::p::p, space :::x, comp returnButton:::p::p}, seq {space :p:67:p, comp scrollPane1:::p:802:p}}, space ::76:x}}"
+			"$verticalGroup": "par l {seq l {space :p:42:p, par b {comp label1::b:p:38:p, comp strTextField::b:p::p, comp inquireButton::b:p::p, comp returnButton::b:p::p}, space :p:35:p, comp scrollPane1:::p:528:p, space ::72:x}}"
 		} ) {
 			name: "this"
 			"visible": true
@@ -13,7 +13,7 @@ new FormModel {
 			"maximizable": true
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
-				"text": "书籍查询："
+				"text": "借阅记录查询："
 				"font": new java.awt.Font( "楷体", 1, 16 )
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/图书管理.png" )
 			} )
@@ -32,36 +32,24 @@ new FormModel {
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "bookInfo"
 					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
-						add( "id" )
 						add( "书名" )
 						add( "作者" )
-						add( "出版社" )
-						add( "出版日期" )
-						add( "类型" )
-						add( "书籍押金" )
-						add( "在馆数量" )
+						add( "借阅时间" )
+						add( "交押金金额" )
+						add( "是否续借过" )
 					}, new java.util.Vector {
 						add( null )
 						add( null )
 						add( null )
 						add( null )
-						add( class java.lang.Object )
-						add( null )
-						add( class java.lang.Float )
-						add( class java.lang.Integer )
+						add( class java.lang.Boolean )
 					}, new java.util.Vector {
 						add( false )
 						add( false )
 						add( false )
 						add( false )
 						add( false )
-						add( false )
-						add( false )
-						add( false )
 					}, new java.util.Vector {
-						add( null )
-						add( null )
-						add( null )
 						add( null )
 						add( null )
 						add( null )
@@ -75,15 +63,15 @@ new FormModel {
 				} )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "borrowButton"
-				"text": "借阅"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/借书.png" )
+				name: "returnButton"
+				"text": "归还图书"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/图书归还.png" )
 				"font": #Font0
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "borrowButtonActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "returnButtonActionPerformed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 890, 710 )
+			"size": new java.awt.Dimension( 945, 735 )
 		} )
 	}
 }

@@ -54,4 +54,13 @@ public interface UserDao {
      * @return 条数
      */
     int updatePointBalance(int id, float point, double balance);
+
+    /**
+     * 修改 余额
+     *
+     * @param id      id
+     * @param balance 修改后的余额
+     * @return 条数
+     */
+    int updateBalance(int id, double balance);
 }

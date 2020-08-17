@@ -20,4 +20,8 @@ public class RecordDaoImplTest extends TestCase {
         Timestamp re = new Timestamp(time);
         assertTrue(recordDao.save(15, 1, lend, re, 123) > 0);
     }
+
+    public void testFindAllByUid() {
+        assertNotNull(recordDao.findAllByUid(1));
+    }
 }

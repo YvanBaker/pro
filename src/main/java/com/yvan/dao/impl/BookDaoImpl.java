@@ -113,6 +113,24 @@ public class BookDaoImpl extends BaseDao implements BookDao {
     }
 
     @Override
+    public Integer findTimesById(int id) {
+        Integer res = null;
+        String sql = "SELECT times from book where id = ?";
+        List<Object> list = new ArrayList<>();
+        list.add(id);
+        executeQuery(sql, list);
+        try {
+            rs.next();
+            res = rs.getInt("times");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return res;
+    }
+
+    @Override
     public List<Book> findAll() {
         List<Book> list = new ArrayList<>();
         String sql = "Select * from book";
@@ -184,6 +202,34 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         String sql = SqlUtil.update(table, field, term);
         List<Object> list = new ArrayList<>();
         list.add(count);
+        list.add(id);
+        int res = executeUpdate(sql,list);
+        closeAll();
+        return res;
+    }
+
+    @Override
+    public int updateTimes(int id, int times) {
+        String table = "book";
+        String field = "times = ?";
+        String term = "id = ?";
+        String sql = SqlUtil.update(table, field, term);
+        List<Object> list = new ArrayList<>();
+        list.add(times);
+        list.add(id);
+        int res = executeUpdate(sql,list);
+        closeAll();
+        return res;
+    }
+
+    @Override
+    public int updateHasLended(int id, int hasLended) {
+        String table = "book";
+        String field = "has_lended = ?";
+        String term = "id = ?";
+        String sql = SqlUtil.update(table, field, term);
+        List<Object> list = new ArrayList<>();
+        list.add(hasLended);
         list.add(id);
         int res = executeUpdate(sql,list);
         closeAll();

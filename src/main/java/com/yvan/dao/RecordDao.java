@@ -1,6 +1,9 @@
 package com.yvan.dao;
 
+import com.yvan.entity.RecordView;
+
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author Yvan
@@ -21,4 +24,57 @@ public interface RecordDao {
      * @return 条数
      */
     int save(int bookId, int userId, Timestamp lendTime, Timestamp returnTime, float deposit);
+
+    /**
+     * 根据 用户id 查询记录
+     *
+     * @param uid 用户 id
+     * @return record 记录
+     */
+    List<RecordView> findAllByUid(int uid);
+
+    /**
+     * 根据 用户id 和 书id 查询记录
+     *
+     * @param uid 用户id
+     * @param bid 书 id
+     * @return 结果集
+     */
+    List<RecordView> findIdByUidBid(int uid, int bid);
+
+    /**
+     * 根据 用户id 和 字符串 查询记录
+     *
+     * @param uid 用户id
+     * @param str 字符串
+     * @return record 记录
+     */
+    List<RecordView> findAllByStr(int uid, String str);
+
+    /**
+     * 修改还书状态
+     *
+     * @param id       记录id
+     * @param isReturn 状态
+     * @return 影响条数
+     */
+    int updateIsReturn(int id, boolean isReturn);
+
+    /**
+     * 根据 id 修改 实际还书时间
+     *
+     * @param id         id
+     * @param actualTime 修改后的值
+     * @return 条数
+     */
+    int updateActualTime(int id, Timestamp actualTime);
+
+    /**
+     * 修改 实际退款金额
+     *
+     * @param id         id
+     * @param returnTerm 修改后金额
+     * @return 条数
+     */
+    int updateReturnTerm(int id, float returnTerm);
 }

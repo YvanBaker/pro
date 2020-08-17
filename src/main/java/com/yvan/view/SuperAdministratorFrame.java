@@ -130,6 +130,18 @@ public class SuperAdministratorFrame extends JFrame {
     }
 
     /**
+     * 点击还书的响应
+     *
+     * @param e 事件
+     */
+    private void returnBookMenuItemActionPerformed(ActionEvent e) {
+        ReturnBookFrame returnBookFrame = new ReturnBookFrame(user);
+        returnBookFrame.pack();
+        returnBookFrame.setVisible(true);
+        desktopPane.add(returnBookFrame);
+    }
+
+    /**
      * 自动生成窗体的代码
      */
     private void initComponents() {
@@ -260,6 +272,12 @@ public class SuperAdministratorFrame extends JFrame {
                 //---- returnBookMenuItem ----
                 returnBookMenuItem.setText("\u8fd8\u4e66");
                 returnBookMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u56fe\u4e66\u5f52\u8fd8.png")));
+                returnBookMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        returnBookMenuItemActionPerformed(e);
+                    }
+                });
                 menu3.add(returnBookMenuItem);
             }
             menuBar1.add(menu3);

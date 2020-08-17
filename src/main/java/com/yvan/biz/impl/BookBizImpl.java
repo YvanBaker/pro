@@ -40,7 +40,7 @@ public class BookBizImpl implements BookBiz {
         List<Book> resList = new ArrayList<>();
         List<Book> dataBook = bookDao.fuzzyFindBookByNameAuthorPressType(str);
         for (Book book : dataBook) {
-            if (book.isDel()) {
+            if (!book.isDel()) {
                 resList.add(book);
             }
         }
@@ -52,7 +52,7 @@ public class BookBizImpl implements BookBiz {
         List<Book> resBook = new ArrayList<>();
         List<Book> dataBook = bookDao.findAll();
         for (Book book : dataBook) {
-            if (book.isDel()) {
+            if (!book.isDel()) {
                 resBook.add(book);
             }
         }

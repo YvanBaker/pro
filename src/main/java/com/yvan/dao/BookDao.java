@@ -44,6 +44,14 @@ public interface BookDao {
     Integer findCountById(int id);
 
     /**
+     * 根据 id 查询 借出的数量
+     *
+     * @param id id
+     * @return null 查询不到
+     */
+    Integer findTimesById(int id);
+
+    /**
      * 查询所有数据信息
      *
      * @return 书籍集合
@@ -76,4 +84,22 @@ public interface BookDao {
      * @return 条数
      */
     int updateCount(int id, int count);
+
+    /**
+     * 更新 被借出数量 字段
+     *
+     * @param id    书 id
+     * @param times 更改后的值
+     * @return 条数
+     */
+    int updateTimes(int id, int times);
+
+    /**
+     * 更新 has_lended 字段
+     *
+     * @param id        书 id
+     * @param hasLended 更改后的值
+     * @return 条数
+     */
+    int updateHasLended(int id, int hasLended);
 }
