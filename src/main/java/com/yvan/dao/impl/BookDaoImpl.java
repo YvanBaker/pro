@@ -175,4 +175,18 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         closeAll();
         return res;
     }
+
+    @Override
+    public int updateCount(int id, int count) {
+        String table = "book";
+        String field = "count = ?";
+        String term = "id = ?";
+        String sql = SqlUtil.update(table, field, term);
+        List<Object> list = new ArrayList<>();
+        list.add(count);
+        list.add(id);
+        int res = executeUpdate(sql,list);
+        closeAll();
+        return res;
+    }
 }

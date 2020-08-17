@@ -94,4 +94,19 @@ public class UserDaoImpl extends BaseDao implements UserDao {
         closeAll();
         return res;
     }
+
+    @Override
+    public int updatePointBalance(int id, float point, double balance) {
+        String table = "user";
+        String field = "point = ?, balance = ?";
+        String term = "id = ?";
+        String sql = SqlUtil.update(table, field, term);
+        List<Object> list = new ArrayList<>();
+        list.add(point);
+        list.add(balance);
+        list.add(id);
+        int res = executeUpdate(sql,list);
+        closeAll();
+        return res;
+    }
 }

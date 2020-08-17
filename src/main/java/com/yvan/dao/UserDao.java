@@ -44,4 +44,14 @@ public interface UserDao {
      * @return 影响条数
      */
     int changePassword(User user, String newPassword);
+
+    /**
+     * 修改 Point Balance 字段
+     *
+     * @param id      用户id
+     * @param point   修改积分
+     * @param balance 修改后的余额
+     * @return 条数
+     */
+    int updatePointBalance(int id, float point, double balance);
 }

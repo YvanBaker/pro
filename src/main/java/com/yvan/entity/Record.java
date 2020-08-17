@@ -1,9 +1,6 @@
 package com.yvan.entity;
 
 
-/**
- * @author Yvan
- */
 public class Record {
 
   private int id;
@@ -11,7 +8,8 @@ public class Record {
   private int bid;
   private java.sql.Timestamp lendTime;
   private java.sql.Timestamp returnTime;
-  private double returnTerm;
+  private float deposit;
+  private float returnTerm;
   private java.sql.Timestamp actualTime;
   private boolean isRenew;
   private boolean isReturn;
@@ -62,11 +60,20 @@ public class Record {
   }
 
 
-  public double getReturnTerm() {
+  public float getDeposit() {
+    return deposit;
+  }
+
+  public void setDeposit(float deposit) {
+    this.deposit = deposit;
+  }
+
+
+  public float getReturnTerm() {
     return returnTerm;
   }
 
-  public void setReturnTerm(double returnTerm) {
+  public void setReturnTerm(float returnTerm) {
     this.returnTerm = returnTerm;
   }
 

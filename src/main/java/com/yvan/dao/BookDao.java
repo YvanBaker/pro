@@ -67,4 +67,13 @@ public interface BookDao {
      * @return 影响数量
      */
     int updateBook(int id, Book book);
+
+    /**
+     * 更新 在馆数量 字段
+     *
+     * @param id    书 id
+     * @param count 更改后的值
+     * @return 条数
+     */
+    int updateCount(int id, int count);
 }

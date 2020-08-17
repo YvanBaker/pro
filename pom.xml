@@ -25,12 +25,15 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- mysql数据库驱动依赖 8.x -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
         </dependency>
 
+        <!-- swing时间组件依赖  -->
         <dependency>
             <groupId>org.swinglabs.swingx</groupId>
             <artifactId>swingx-core</artifactId>
@@ -41,6 +44,8 @@
             <artifactId>xstream</artifactId>
             <version>1.4.10</version>
         </dependency>
+
+        <!-- NotNull 依赖 -->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations-java5</artifactId>

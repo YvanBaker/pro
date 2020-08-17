@@ -3,46 +3,52 @@ package com.yvan.entity;
 
 import java.sql.Timestamp;
 
-/**
- * @author Yvan
- */
-
 public class User {
 
     private int id;
     private String name;
     private String password;
-    private double point;
+    private float point;
     private double balance;
     private int level;
-    private boolean del;
     private double sumMoney;
-    private Timestamp creatData;
+    private boolean del;
+    private java.sql.Timestamp creatData;
     private boolean freeze;
 
-    public User(int id, String name, String password) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-    }
-
-    public User(int id, String name, String password, Timestamp creatData) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.creatData = creatData;
-    }
-
-    public User(int id, String name, String password, double point, double balance, int level, boolean del, double sumMoney, boolean freeze) {
+    public User(int id, String name, String password, float point, double balance, int level,  boolean del,double sumMoney, boolean freeze) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.point = point;
         this.balance = balance;
         this.level = level;
-        this.del = del;
         this.sumMoney = sumMoney;
+        this.del = del;
         this.freeze = freeze;
+    }
+
+    public User(int id, String name, String password, float point, double balance, int level, double sumMoney, boolean del, Timestamp creatData, boolean freeze) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.point = point;
+        this.balance = balance;
+        this.level = level;
+        this.sumMoney = sumMoney;
+        this.del = del;
+        this.creatData = creatData;
+        this.freeze = freeze;
+    }
+
+    public User(int id, String name, String password, float point, double balance, int level, double sumMoney) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.point = point;
+        this.balance = balance;
+        this.level = level;
+        this.sumMoney = sumMoney;
     }
 
     public int getId() {
@@ -72,11 +78,11 @@ public class User {
     }
 
 
-    public double getPoint() {
+    public float getPoint() {
         return point;
     }
 
-    public void setPoint(double point) {
+    public void setPoint(float point) {
         this.point = point;
     }
 
@@ -99,21 +105,21 @@ public class User {
     }
 
 
-    public boolean getDel() {
-        return del;
-    }
-
-    public void setDel(boolean del) {
-        this.del = del;
-    }
-
-
     public double getSumMoney() {
         return sumMoney;
     }
 
     public void setSumMoney(double sumMoney) {
         this.sumMoney = sumMoney;
+    }
+
+
+    public boolean getDel() {
+        return del;
+    }
+
+    public void setDel(boolean del) {
+        this.del = del;
     }
 
 

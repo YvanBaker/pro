@@ -39,6 +39,7 @@ public class SuperAdministratorFrame extends JFrame {
         initComponents();
     }
 
+
     /**
      * 选择关于我们的响应
      *
@@ -104,7 +105,7 @@ public class SuperAdministratorFrame extends JFrame {
      */
     private void changePasswordMenuItemActionPerformed(ActionEvent e) {
         ChangePasswordFrame changePasswordFrame;
-        if (administrator != null){
+        if (administrator != null) {
             administrator = administratorBiz.updateAdministrator(administrator.getId());
             changePasswordFrame = new ChangePasswordFrame(administrator);
         } else {
@@ -114,6 +115,18 @@ public class SuperAdministratorFrame extends JFrame {
         changePasswordFrame.pack();
         changePasswordFrame.setVisible(true);
         desktopPane.add(changePasswordFrame);
+    }
+
+    /**
+     * 点击借书的响应
+     *
+     * @param e 事件
+     */
+    private void borrowBookMenuItemActionPerformed(ActionEvent e) {
+        BorrowBookFrame borrowBookFrame = new BorrowBookFrame(user);
+        borrowBookFrame.pack();
+        borrowBookFrame.setVisible(true);
+        desktopPane.add(borrowBookFrame);
     }
 
     /**
@@ -236,6 +249,12 @@ public class SuperAdministratorFrame extends JFrame {
                 //---- borrowBookMenuItem ----
                 borrowBookMenuItem.setText("\u501f\u4e66");
                 borrowBookMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u501f\u4e66.png")));
+                borrowBookMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        borrowBookMenuItemActionPerformed(e);
+                    }
+                });
                 menu3.add(borrowBookMenuItem);
 
                 //---- returnBookMenuItem ----

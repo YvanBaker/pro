@@ -4,6 +4,13 @@
 
 package com.yvan.view;
 
+import com.yvan.biz.BookBiz;
+import com.yvan.biz.BorrowBookBiz;
+import com.yvan.biz.impl.BookBizImpl;
+import com.yvan.biz.impl.BorrowBookBizImpl;
+import com.yvan.entity.Book;
+import com.yvan.entity.User;
+
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -11,26 +18,118 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * @author unknown
  */
 public class BorrowBookFrame extends JInternalFrame {
+    private final BookBiz bookBiz = new BookBizImpl();
+    private final BorrowBookBiz borrowBookBiz = new BorrowBookBizImpl();
+    private User user;
+    private List<Book> bookList;
+
     public BorrowBookFrame() {
         initComponents();
     }
 
+    public BorrowBookFrame(User user) {
+        this.user = user;
+        initComponents();
+    }
+
+    /**
+     * 点击查询的响应
+     *
+     * @param e 事件
+     */
     private void inquireButtonActionPerformed(ActionEvent e) {
+        bookList = bookBiz.findByString(strTextField.getText());
+        if (bookList == null) {
+            JOptionPane.showMessageDialog(this, "查询不到该书籍！！");
+            return;
+        }
+        setTable();
     }
 
+    /**
+     * 表格初始加载时的事件
+     *
+     * @param e 事件
+     */
     private void bookInfoAncestorAdded(AncestorEvent e) {
+        bookList = bookBiz.findAll();
+        if (bookList.isEmpty()) {
+            System.out.println("没有查到书籍");
+        }
+        setTable();
+
     }
 
-    private void bookInfoMouseClicked(MouseEvent e) {
+    /**
+     * 设置表格数据
+     */
+    private void setTable() {
+        DefaultTableModel bookInfoModel = (DefaultTableModel) bookInfo.getModel();
+        bookInfoModel.setRowCount(0);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        for (Book book : bookList) {
+            Vector<Serializable> vector;
+            vector = new Vector<>();
+            vector.add(book.getId());
+            vector.add(book.getBookName());
+            vector.add(book.getAuthor());
+            vector.add(book.getPress());
+            vector.add(simpleDateFormat.format(book.getPublicationDate()));
+            vector.add(book.getType());
+            vector.add(book.getBookDeposit());
+            vector.add(book.getCount());
+            bookInfoModel.addRow(vector);
+        }
     }
 
+    /**
+     * 点击借书的响应
+     *
+     * @param e 事件
+     */
+    private void borrowButtonActionPerformed(ActionEvent e) {
+        int select = bookInfo.getSelectedRow();
+        if (select == -1) {
+            JOptionPane.showMessageDialog(this, "请选择图书借阅！！");
+            return;
+        }
+        Book book = bookList.get(bookInfo.getSelectedRow());
+        int i = borrowBookBiz.borrow(book, user);
+        //1 失败 没有书; 2 库存不足; 3 金额不足 ; 4 借书记录保存失败； 5 成功
+        switch (i) {
+            case 1:
+                JOptionPane.showMessageDialog(this, "库中没有该书籍，请重新查询！！");
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(this, "没有在馆图书！！");
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(this, "账号余额不足，请及时充值！！");
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(this, "未知原因失败，请重新操作！！");
+                break;
+            case 5:
+                JOptionPane.showMessageDialog(this, "借阅成功！！");
+                break;
+            default:
+                break;
+        }
+        inquireButtonActionPerformed(e);
+    }
+
+    /**
+     * 自动生成的窗体代码
+     */
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -39,9 +138,12 @@ public class BorrowBookFrame extends JInternalFrame {
         inquireButton = new JButton();
         scrollPane1 = new JScrollPane();
         bookInfo = new JTable();
+        borrowButton = new JButton();
 
         //======== this ========
         setVisible(true);
+        setClosable(true);
+        setMaximizable(true);
         Container contentPane = getContentPane();
 
         //---- label1 ----
@@ -65,23 +167,24 @@ public class BorrowBookFrame extends JInternalFrame {
 
             //---- bookInfo ----
             bookInfo.setModel(new DefaultTableModel(
-                new Object[][] {
-                    {null, null, null, null, null, null, null, null, null, null, null},
-                },
-                new String[] {
-                    "id", "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u4e66\u7c4d\u6570\u91cf", "\u5728\u9986\u6570\u91cf", "\u5df2\u501f\u51fa\u6570\u91cf", "\u603b\u501f\u51fa\u6570\u91cf"
-                }
+                    new Object[][]{
+                    },
+                    new String[]{
+                            "id", "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u5728\u9986\u6570\u91cf"
+                    }
             ) {
-                Class<?>[] columnTypes = new Class<?>[] {
-                    Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Integer.class, Integer.class, Integer.class, Integer.class
+                Class<?>[] columnTypes = new Class<?>[]{
+                        Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Integer.class
                 };
-                boolean[] columnEditable = new boolean[] {
-                    false, false, false, false, false, false, false, false, false, false, false
+                boolean[] columnEditable = new boolean[]{
+                        false, false, false, false, false, false, false, false
                 };
+
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
                 }
+
                 @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return columnEditable[columnIndex];
@@ -94,50 +197,63 @@ public class BorrowBookFrame extends JInternalFrame {
                 @Override
                 public void ancestorAdded(AncestorEvent e) {
                     bookInfoAncestorAdded(e);
+                    bookInfoAncestorAdded(e);
                 }
+
                 @Override
-                public void ancestorMoved(AncestorEvent e) {}
+                public void ancestorMoved(AncestorEvent e) {
+                }
+
                 @Override
-                public void ancestorRemoved(AncestorEvent e) {}
-            });
-            bookInfo.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    bookInfoMouseClicked(e);
+                public void ancestorRemoved(AncestorEvent e) {
                 }
             });
             scrollPane1.setViewportView(bookInfo);
         }
 
+        //---- borrowButton ----
+        borrowButton.setText("\u501f\u9605");
+        borrowButton.setIcon(new ImageIcon(getClass().getResource("/img/\u67e5\u8be2.png")));
+        borrowButton.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
+        borrowButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                borrowButtonActionPerformed(e);
+            }
+        });
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup()
+                contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(154, 154, 154)
-                            .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
-                            .addGap(44, 44, 44)
-                            .addComponent(inquireButton))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(51, 51, 51)
-                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 753, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(86, Short.MAX_VALUE))
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(103, 103, 103)
+                                                .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(30, 30, 30)
+                                                .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(40, 40, 40)
+                                                .addComponent(inquireButton)
+                                                .addGap(43, 43, 43)
+                                                .addComponent(borrowButton))
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(37, 37, 37)
+                                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(51, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap(12, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(inquireButton))
-                    .addGap(18, 18, 18)
-                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 553, GroupLayout.PREFERRED_SIZE)
-                    .addGap(69, 69, 69))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(inquireButton)
+                                        .addComponent(borrowButton))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -149,5 +265,6 @@ public class BorrowBookFrame extends JInternalFrame {
     private JButton inquireButton;
     private JScrollPane scrollPane1;
     private JTable bookInfo;
+    private JButton borrowButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

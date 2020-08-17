@@ -50,6 +50,14 @@ public class Book {
         this.total = total;
     }
 
+    public Book(int id, String bookName, String author, String press, float bookDeposit) {
+        this.id = id;
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.bookDeposit = bookDeposit;
+    }
+
     public Book(String bookName, String author, String press, int total) {
         this.bookName = bookName;
         this.author = author;
