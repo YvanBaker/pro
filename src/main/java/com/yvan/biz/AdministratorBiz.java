@@ -8,6 +8,16 @@ import com.yvan.entity.Administrator;
 public interface AdministratorBiz {
 
     /**
+     * 管理员注册的业务逻辑
+     *
+     * @param name     用户名
+     * @param password 密码
+     * @param type     类型
+     * @return true 成功注册
+     */
+    boolean registered(String name, String password, String type);
+
+    /**
      * 管理员登录的业务逻辑
      *
      * @param name     账户名

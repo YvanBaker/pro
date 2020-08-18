@@ -17,7 +17,6 @@ import java.util.Date;
 /**
  * @author unknown
  */
-@SuppressWarnings("ALL") // 忽略警告
 public class AddBookFrame extends JInternalFrame {
     public AddBookFrame() {
         initComponents();
@@ -61,13 +60,36 @@ public class AddBookFrame extends JInternalFrame {
     }
 
     /**
+     * 不合法检测
+     *
+     * @return false 合法
+     */
+    public boolean isNotLegal() {
+        if (StringUtil.isNotLegal(bookNameTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "书名存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        if (StringUtil.isNotLegal(authorTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "作者名存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        if (StringUtil.isNotLegal(pressTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "出版社存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 点击确认添加时的响应
      *
      * @param e 点击事件
      */
     private void addActionPerformed(ActionEvent e) {
-        // TODO add your code here
         if (isNull()) {
+            return;
+        }
+        if (isNotLegal()) {
             return;
         }
         String bookName = bookNameTextField.getText();

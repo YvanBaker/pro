@@ -46,6 +46,12 @@ public class Administrator {
         this.type = type;
     }
 
+    public Administrator(String name, String password, String type) {
+        this.name = name;
+        this.password = password;
+        this.type = type;
+    }
+
     public int getId() {
         return id;
     }

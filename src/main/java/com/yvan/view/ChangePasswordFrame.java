@@ -10,6 +10,7 @@ import com.yvan.biz.impl.AdministratorBizImpl;
 import com.yvan.biz.impl.UserBizImpl;
 import com.yvan.entity.Administrator;
 import com.yvan.entity.User;
+import com.yvan.util.Md5Util;
 
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
@@ -94,7 +95,7 @@ public class ChangePasswordFrame extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "未知原因修改失败！！！");
                 return;
             }
-            administrator.setPassword(newPassword);
+            administrator.setPassword(Md5Util.MD5(newPassword));
             JOptionPane.showMessageDialog(this, "恭喜修改成功，请小心保存密码！！！");
             resetButtonActionPerformed(e);
             return;
@@ -116,7 +117,7 @@ public class ChangePasswordFrame extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "未知原因修改失败！！！");
             return;
         }
-        user.setPassword(newPassword);
+        user.setPassword(Md5Util.MD5(newPassword));
         JOptionPane.showMessageDialog(this, "恭喜修改成功，请小心保存密码！！！");
         resetButtonActionPerformed(e);
     }
@@ -167,10 +168,14 @@ public class ChangePasswordFrame extends JInternalFrame {
             public void ancestorAdded(AncestorEvent e) {
                 userLabelAncestorAdded(e);
             }
+
             @Override
-            public void ancestorMoved(AncestorEvent e) {}
+            public void ancestorMoved(AncestorEvent e) {
+            }
+
             @Override
-            public void ancestorRemoved(AncestorEvent e) {}
+            public void ancestorRemoved(AncestorEvent e) {
+            }
         });
 
         //---- enterButton ----
@@ -198,53 +203,53 @@ public class ChangePasswordFrame extends JInternalFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup()
+                contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(151, 151, 151)
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label1, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label3, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label4, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
-                            .addGap(53, 53, 53)
-                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                .addComponent(userLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(oldPassdwordTextField)
-                                .addComponent(newPasswordField)
-                                .addComponent(enterPasswordField, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(200, 200, 200)
-                            .addComponent(enterButton)
-                            .addGap(153, 153, 153)
-                            .addComponent(resetButton)))
-                    .addContainerGap(231, Short.MAX_VALUE))
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(151, 151, 151)
+                                                .addGroup(contentPaneLayout.createParallelGroup()
+                                                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(label4, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
+                                                .addGap(53, 53, 53)
+                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(userLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(oldPassdwordTextField)
+                                                        .addComponent(newPasswordField)
+                                                        .addComponent(enterPasswordField, GroupLayout.PREFERRED_SIZE, 297, GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(200, 200, 200)
+                                                .addComponent(enterButton)
+                                                .addGap(153, 153, 153)
+                                                .addComponent(resetButton)))
+                                .addContainerGap(231, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(65, 65, 65)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(userLabel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-                    .addGap(41, 41, 41)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(oldPassdwordTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(48, 48, 48)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(newPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(34, 34, 34)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label4, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(enterPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(31, 31, 31)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(enterButton)
-                        .addComponent(resetButton))
-                    .addContainerGap(41, Short.MAX_VALUE))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                .addGap(65, 65, 65)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(userLabel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(oldPassdwordTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(48, 48, 48)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(newPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(34, 34, 34)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label4, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(enterPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(31, 31, 31)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(enterButton)
+                                        .addComponent(resetButton))
+                                .addContainerGap(41, Short.MAX_VALUE))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }

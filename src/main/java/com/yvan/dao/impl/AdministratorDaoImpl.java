@@ -79,8 +79,20 @@ public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
     }
 
     @Override
-    public boolean save(Administrator administrator) {
-        return false;
+    public int save(@NotNull Administrator administrator) {
+        String table = "administrator";
+        String field = "name,password,type,del,create_time";
+        String term = "?,?,?,?,?";
+        String sql = SqlUtil.insert(table, field, term);
+        List<Object> list = new ArrayList<>();
+        list.add(administrator.getName());
+        list.add(administrator.getPassword());
+        list.add(administrator.getType());
+        list.add(administrator.getDel());
+        list.add(administrator.getCreateTime());
+        int res = executeUpdate(sql,list);
+        closeAll();
+        return res;
     }
 
 }

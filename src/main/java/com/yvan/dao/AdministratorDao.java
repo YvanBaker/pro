@@ -41,5 +41,5 @@ public interface AdministratorDao {
      * @param administrator administrator 对象
      * @return true 成功保存
      */
-    boolean save(Administrator administrator);
+    int save(Administrator administrator);
 }

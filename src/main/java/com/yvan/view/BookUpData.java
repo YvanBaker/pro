@@ -38,6 +38,11 @@ public class BookUpData extends JInternalFrame {
         initComponents();
     }
 
+    /**
+     * 输入为空判断
+     *
+     * @return true 为空
+     */
     private boolean isNull() {
         if (StringUtil.isNull(idTextField.getText())) {
             JOptionPane.showMessageDialog(this, "请选择要修改的书！！");
@@ -72,6 +77,27 @@ public class BookUpData extends JInternalFrame {
             return true;
         }
 
+        return false;
+    }
+
+    /**
+     * 不合法检测
+     *
+     * @return true 不合法
+     */
+    public boolean isNotLegal() {
+        if (StringUtil.isNotLegal(bookNameTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "书名存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        if (StringUtil.isNotLegal(authorTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "作者名存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        if (StringUtil.isNotLegal(pressTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "出版社存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
         return false;
     }
 

@@ -38,6 +38,19 @@ public class Registered extends JFrame {
     }
 
     /**
+     * 不合法检测
+     *
+     * @return false 合法
+     */
+    public boolean isNotLegal() {
+        if (StringUtil.isNotLegal(userNameTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "用户名存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 重置输入框
      *
      * @param e 点击的按钮
@@ -55,8 +68,10 @@ public class Registered extends JFrame {
      * @param e 点击的按钮
      */
     private void registeredButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         if (isNll()) {
+            return;
+        }
+        if (isNotLegal()){
             return;
         }
         String name = userNameTextField.getText();
