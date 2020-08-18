@@ -140,7 +140,7 @@ public class Login extends JFrame {
             return;
         }
         this.dispose();
-        new SuperAdministratorFrame().setVisible(true);
+        new SuperAdministratorFrame(user).setVisible(true);
     }
 
     /**
@@ -162,7 +162,7 @@ public class Login extends JFrame {
             return;
         }
         this.dispose();
-        new SuperAdministratorFrame().setVisible(true);
+        new SuperAdministratorFrame(administrator).setVisible(true);
     }
 
     private void loginButtonKeyPressed(KeyEvent e) {

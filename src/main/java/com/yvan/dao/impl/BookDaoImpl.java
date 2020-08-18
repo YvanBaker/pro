@@ -102,8 +102,9 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         list.add(id);
         executeQuery(sql, list);
         try {
-            rs.next();
-            res = rs.getInt("count");
+            while (rs.next()) {
+                res = rs.getInt("count");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -120,8 +121,9 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         list.add(id);
         executeQuery(sql, list);
         try {
-            rs.next();
-            res = rs.getInt("times");
+            while (rs.next()) {
+                res = rs.getInt("times");
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -203,7 +205,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         List<Object> list = new ArrayList<>();
         list.add(count);
         list.add(id);
-        int res = executeUpdate(sql,list);
+        int res = executeUpdate(sql, list);
         closeAll();
         return res;
     }
@@ -217,7 +219,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         List<Object> list = new ArrayList<>();
         list.add(times);
         list.add(id);
-        int res = executeUpdate(sql,list);
+        int res = executeUpdate(sql, list);
         closeAll();
         return res;
     }
@@ -231,7 +233,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         List<Object> list = new ArrayList<>();
         list.add(hasLended);
         list.add(id);
-        int res = executeUpdate(sql,list);
+        int res = executeUpdate(sql, list);
         closeAll();
         return res;
     }

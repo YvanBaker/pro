@@ -25,17 +25,18 @@ public class UserDaoImpl extends BaseDao implements UserDao {
     private User createUser() {
         User user = null;
         try {
-            rs.next();
-            int id = rs.getInt("id");
-            String name = rs.getString("name");
-            String password = rs.getString("password");
-            float point = rs.getFloat("point");
-            double balance = rs.getDouble("balance");
-            int level = rs.getInt("level");
-            boolean del = rs.getBoolean("del");
-            boolean freeze = rs.getBoolean("freeze");
-            double sumMoney = rs.getDouble("sum_money");
-            user = new User(id, name, password, point, balance, level, del, sumMoney, freeze);
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String password = rs.getString("password");
+                float point = rs.getFloat("point");
+                double balance = rs.getDouble("balance");
+                int level = rs.getInt("level");
+                boolean del = rs.getBoolean("del");
+                boolean freeze = rs.getBoolean("freeze");
+                double sumMoney = rs.getDouble("sum_money");
+                user = new User(id, name, password, point, balance, level, del, sumMoney, freeze);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,7 +106,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
         list.add(point);
         list.add(balance);
         list.add(id);
-        int res = executeUpdate(sql,list);
+        int res = executeUpdate(sql, list);
         closeAll();
         return res;
     }
@@ -119,7 +120,7 @@ public class UserDaoImpl extends BaseDao implements UserDao {
         List<Object> list = new ArrayList<>();
         list.add(balance);
         list.add(id);
-        int res = executeUpdate(sql,list);
+        int res = executeUpdate(sql, list);
         closeAll();
         return res;
     }

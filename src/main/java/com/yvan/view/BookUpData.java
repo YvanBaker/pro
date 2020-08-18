@@ -215,6 +215,9 @@ public class BookUpData extends JInternalFrame {
         if (isNull()) {
             return;
         }
+        if (isNotLegal()){
+            return;
+        }
         int id = Integer.parseInt(idTextField.getText());
         String bookName = bookNameTextField.getText();
         String author = authorTextField.getText();
@@ -247,6 +250,7 @@ public class BookUpData extends JInternalFrame {
             return;
         }
         JOptionPane.showMessageDialog(this, "修改成功！！");
+        inquireButtonActionPerformed(e);
     }
 
 
