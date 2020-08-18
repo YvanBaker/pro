@@ -115,4 +115,10 @@ public class RecordBookBizImpl implements RecordBookBiz {
         return resRecord;
     }
 
+    @Override
+    public boolean renewBook(RecordView record, User user) {
+
+        return false;
+    }
+
 }

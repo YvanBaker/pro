@@ -77,4 +77,21 @@ public interface RecordDao {
      * @return 条数
      */
     int updateReturnTerm(int id, float returnTerm);
+
+    /**
+     * 更改 renew 状态为 true
+     *
+     * @param id id
+     * @return 条数
+     */
+    int updateRenewTrue(int id);
+
+    /**
+     * 修改 应该归还时间
+     *
+     * @param id   id
+     * @param time 时间
+     * @return 条数
+     */
+    int updateReturnTime(int id, Timestamp time);
 }

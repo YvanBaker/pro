@@ -6,6 +6,7 @@ package com.yvan.view;
 
 import com.yvan.biz.impl.BookBizImpl;
 import com.yvan.util.StringUtil;
+import com.yvan.util.TimeUtil;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
@@ -75,6 +76,10 @@ public class AddBookFrame extends JInternalFrame {
         }
         if (StringUtil.isNotLegal(pressTextField.getText())) {
             JOptionPane.showMessageDialog(this, "出版社存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        if (TimeUtil.timeMoreCurrent(publicationDatePicker.getDate())) {
+            JOptionPane.showMessageDialog(this, "出版时间不可以是未来！！！");
             return true;
         }
         return false;

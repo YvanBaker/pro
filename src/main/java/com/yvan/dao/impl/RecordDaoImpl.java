@@ -145,4 +145,26 @@ public class RecordDaoImpl extends BaseDao implements RecordDao {
         closeAll();
         return res;
     }
+
+    @Override
+    public int updateRenewTrue(int id) {
+        String sql = SqlUtil.update("record", "is_renew = ?", "id = ?");
+        List<Object> list = new ArrayList<>();
+        list.add(true);
+        list.add(id);
+        int res = executeUpdate(sql, list);
+        closeAll();
+        return res;
+    }
+
+    @Override
+    public int updateReturnTime(int id, Timestamp time) {
+        String sql = SqlUtil.update("record", "return_time = ?", "id = ?");
+        List<Object> list = new ArrayList<>();
+        list.add(time);
+        list.add(id);
+        int res = executeUpdate(sql, list);
+        closeAll();
+        return res;
+    }
 }

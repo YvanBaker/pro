@@ -48,4 +48,13 @@ public interface RecordBookBiz {
      * @return 记录集合
      */
     List<RecordView> findNotReturnByString(User user, String str);
+
+    /**
+     * 续借书的业务逻辑
+     *
+     * @param record 记录
+     * @param user   用户
+     * @return false 失败
+     */
+    boolean renewBook(RecordView record, User user);
 }

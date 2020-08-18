@@ -8,6 +8,7 @@ import com.yvan.biz.BookBiz;
 import com.yvan.biz.impl.BookBizImpl;
 import com.yvan.entity.Book;
 import com.yvan.util.StringUtil;
+import com.yvan.util.TimeUtil;
 import org.jdesktop.swingx.JXDatePicker;
 
 import javax.swing.*;
@@ -33,6 +34,7 @@ import java.util.Vector;
 public class BookUpData extends JInternalFrame {
     private final BookBiz bookBiz = new BookBizImpl();
     private List<Book> bookList;
+    private int selectRow;
 
     public BookUpData() {
         initComponents();
@@ -96,6 +98,10 @@ public class BookUpData extends JInternalFrame {
         }
         if (StringUtil.isNotLegal(pressTextField.getText())) {
             JOptionPane.showMessageDialog(this, "出版社存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        if (TimeUtil.timeMoreCurrent(publicationDatePicker.getDate())) {
+            JOptionPane.showMessageDialog(this, "出版时间不可以是未来！！！");
             return true;
         }
         return false;
@@ -180,6 +186,7 @@ public class BookUpData extends JInternalFrame {
         typeTextField.setText(type);
         bookDepositTextField.setText("" + bookDeposit);
         countTextField.setText("" + count);
+        selectRow = bookInfo.getSelectedRow();
     }
 
     /**
@@ -240,7 +247,7 @@ public class BookUpData extends JInternalFrame {
             return;
         }
         Book newBook = new Book(id, bookName, author, press, publicationDate, type, bookDeposit, count);
-        if (bookList.get(bookInfo.getSelectedRow()).equals(newBook)) {
+        if (bookList.get(selectRow).equals(newBook)) {
             JOptionPane.showMessageDialog(this, "书籍数据没有变化，无法修改！！");
             return;
         }

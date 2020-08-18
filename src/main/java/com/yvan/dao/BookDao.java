@@ -28,6 +28,15 @@ public interface BookDao {
     Book findByNameAuthor(String bookName, String author);
 
     /**
+     * 根据名字和作者查询一本书
+     *
+     * @param bookName 书名
+     * @param author   作者
+     * @return Book 集合
+     */
+    List<Book> findByNameAuthorList(String bookName, String author);
+
+    /**
      * 根据名字、作者、作者、类型模糊查询书籍信息
      *
      * @param str 字符串

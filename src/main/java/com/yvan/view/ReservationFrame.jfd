@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {par l {seq {space :p:84:p, comp label1:::p:107:p, space :p:31:p, comp strTextField:::p:305:p, space :p:35:p, comp inquireButton:::p::p, space :p:53:p, comp borrowButton:::p::p, space :p:43:p, comp reservationButton:::p::p}, seq l {space :p:37:p, comp scrollPane1:::p:923:p}}, space ::110:x}}"
-			"$verticalGroup": "par l {seq t {space :p:40:p, par b {comp reservationButton::b:p::p, comp borrowButton::b:p::p, comp inquireButton::b:p::p, comp strTextField::b:p::p, comp label1::b:p:38:p}, space ::44:x, comp scrollPane1:::p:528:p, space :p:40:p}}"
+			"$horizontalGroup": "par l {seq t {space ::130:x, comp scrollPane1:::p:923:p, space :p:112:p}, seq l {space :p:206:p, par t {comp label1:::p:107:p, comp label2:::p:107:p}, space s:::p, par l:::p {comp datePicker::::305:x, comp strTextField::::305:x}, space :p:86:p, par l {comp reservationButton:::p::p, comp inquireButton:::p::p}, space ::355:x}}"
+			"$verticalGroup": "par l {seq l {space ::49:x, par b {comp label1::b:p:38:p, comp strTextField::b:p::p, comp inquireButton::b:p::p}, space :p:23:p, par b {comp reservationButton::b:p::p, comp datePicker::b:p::p, comp label2::b:p:38:p}, space :p:30:p, comp scrollPane1:::p:528:p, space :p:39:p}}"
 		} ) {
 			name: "this"
 			"visible": true
@@ -14,42 +14,37 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "书籍查询："
-				"font": new java.awt.Font( "楷体", 1, 16 )
+				"font": &Font0 new java.awt.Font( "楷体", 1, 16 )
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/图书管理.png" )
 			} )
-			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "strTextField"
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "reservationButton"
+				"text": "预约"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/借书.png" )
+				"font": new java.awt.Font( "楷体", 1, 16 )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "reservationButtonActionPerformed", true ) )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "inquireButton"
 				"text": "查询"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/查询.png" )
-				"font": &Font0 new java.awt.Font( "楷体", 1, 16 )
+				"font": new java.awt.Font( "楷体", 1, 16 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "inquireButtonActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "strTextField"
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "bookInfo"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
-						add( new java.util.Vector {
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-							add( null )
-						} )
-					}, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
 						add( "书名" )
 						add( "作者" )
 						add( "出版社" )
 						add( "出版日期" )
 						add( "类型" )
 						add( "书籍押金" )
-						add( "在馆数量" )
 						add( "收藏" )
 					}, new java.util.Vector {
 						add( null )
@@ -58,7 +53,6 @@ new FormModel {
 						add( class java.lang.Object )
 						add( null )
 						add( class java.lang.Float )
-						add( class java.lang.Integer )
 						add( class java.lang.Boolean )
 					}, new java.util.Vector {
 						add( false )
@@ -67,10 +61,8 @@ new FormModel {
 						add( false )
 						add( false )
 						add( false )
-						add( false )
 						add( null )
 					}, new java.util.Vector {
-						add( null )
 						add( null )
 						add( null )
 						add( null )
@@ -86,24 +78,18 @@ new FormModel {
 					addEvent( new FormEvent( "java.beans.PropertyChangeListener", "propertyChange", "bookInfoPropertyChange", true ) )
 				} )
 			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "borrowButton"
-				"text": "借阅"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/借书.png" )
-				"font": #Font0
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "borrowButtonActionPerformed", true ) )
+			add( new FormComponent( "org.jdesktop.swingx.JXDatePicker" ) {
+				name: "datePicker"
 			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "reservationButton"
-				"text": "预约"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/借书.png" )
-				"font": new java.awt.Font( "楷体", 1, 16 )
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "reservationButtonActionPerformed", true ) )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "预约时间："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/预约.png" )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 1070, 710 )
+			"size": new java.awt.Dimension( 1165, 765 )
 		} )
 	}
 }
-

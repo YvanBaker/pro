@@ -40,6 +40,7 @@ public class BookDaoImpl extends BaseDao implements BookDao {
         list.add(bookName);
         list.add(author);
         executeQuery(sql, list);
+
         Book book = null;
         try {
             while (rs.next()) {
@@ -48,7 +49,8 @@ public class BookDaoImpl extends BaseDao implements BookDao {
                 Timestamp publicationDate = rs.getTimestamp("publication_date");
                 String type = rs.getString("type");
                 float bookDeposit = rs.getFloat("book_deposit");
-                book = new Book(id, bookName, author, press, publicationDate, type, bookDeposit);
+                boolean del = rs.getBoolean("del");
+                book = new Book(id, bookName, author, press, publicationDate, type, bookDeposit,del);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,6 +58,29 @@ public class BookDaoImpl extends BaseDao implements BookDao {
             closeAll();
         }
         return book;
+    }
+
+    @Override
+    public List<Book> findByNameAuthorList(String bookName, String author) {
+        String sql = SqlUtil.select("id,press,publication_date,type,book_deposit","book","book_name = ? and author = ?");
+        List<Book> resList = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
+        list.add(bookName);
+        list.add(author);
+        executeQuery(sql, list);
+        try{
+            while (rs.next()){
+                int id = rs.getInt("id");
+                String press = rs.getString("press");
+                Timestamp publicationDate = rs.getTimestamp("publication_date");
+                String type = rs.getString("type");
+                float bookDeposit = rs.getFloat("book_deposit");
+                resList.add(new Book(id, bookName, author, press, publicationDate, type, bookDeposit));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return resList;
     }
 
     @Override

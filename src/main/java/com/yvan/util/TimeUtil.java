@@ -4,6 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 
 /**
@@ -49,5 +50,48 @@ public class TimeUtil {
     @Contract(pure = true)
     public static long getDay(@NotNull java.sql.Date date, int count) {
         return date.getTime() + count * DAY;
+    }
+
+    /**
+     * 获取时间
+     *
+     * @return Timestamp
+     */
+    @NotNull
+    @Contract(" -> new")
+    public static Timestamp getTime() {
+        return new Timestamp(System.currentTimeMillis());
+    }
+
+    /**
+     * 小于当前时间
+     *
+     * @param date 时间
+     * @return true 小于当前时间
+     */
+    public static boolean timeLessCurrent(@NotNull Date date) {
+        return date.getTime() <= System.currentTimeMillis();
+    }
+
+    /**
+     * 大于当前时间
+     *
+     * @param date 时间
+     * @return 大于当前时间
+     */
+    public static boolean timeMoreCurrent(@NotNull Date date) {
+        return date.getTime() >= System.currentTimeMillis();
+    }
+
+    /**
+     * Date 转 Timestamp 类型
+     *
+     * @param date date
+     * @return Timestamp 类型
+     */
+    @NotNull
+    @Contract("_ -> new")
+    public static Timestamp dataTurnTimestamp(@NotNull Date date) {
+        return new Timestamp(date.getTime());
     }
 }

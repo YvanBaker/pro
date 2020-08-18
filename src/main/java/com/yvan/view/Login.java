@@ -56,7 +56,7 @@ public class Login extends JFrame {
     /**
      * 判断输入框是否为空
      *
-     * @return
+     * @return true 为空
      */
     private boolean isNull() {
         if (StringUtil.isNull(userNameTextField.getText())) {
@@ -118,9 +118,6 @@ public class Login extends JFrame {
      * @param password 用户密码
      */
     private void userLogin(String userName, String password) {
-        if (isNull()) {
-            return;
-        }
         user = new UserBizImpl().login(userName, password);
         if (user == null) {
             JOptionPane.showMessageDialog(this, "账户或密码错误！！");
@@ -172,6 +169,11 @@ public class Login extends JFrame {
     }
 
 
+    /**
+     * 登录点击响应
+     *
+     * @param e 事件
+     */
     private void loginButtonActionPerformed(ActionEvent e) {
         loginButtonActionPerformed();
     }

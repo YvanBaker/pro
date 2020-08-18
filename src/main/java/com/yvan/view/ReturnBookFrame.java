@@ -18,7 +18,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
 
@@ -45,7 +44,6 @@ public class ReturnBookFrame extends JInternalFrame {
     private void setTable() {
         DefaultTableModel bookInfoModel = (DefaultTableModel) bookInfo.getModel();
         bookInfoModel.setRowCount(0);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         for (RecordView recordView : recordViewList) {
             Vector<Serializable> vector = new Vector<>();
             vector.add(recordView.getBookName());
@@ -114,6 +112,7 @@ public class ReturnBookFrame extends JInternalFrame {
         scrollPane1 = new JScrollPane();
         bookInfo = new JTable();
         returnButton = new JButton();
+        button = new JButton();
 
         //======== this ========
         setVisible(true);
@@ -190,25 +189,30 @@ public class ReturnBookFrame extends JInternalFrame {
             }
         });
 
+        //---- button ----
+        button.setText("\u7eed\u501f");
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(105, 105, 105)
+                            .addGap(67, 67, 67)
                             .addComponent(label1)
                             .addGap(18, 18, 18)
                             .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
-                            .addGap(56, 56, 56)
+                            .addGap(40, 40, 40)
                             .addComponent(inquireButton)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(returnButton))
+                            .addGap(35, 35, 35)
+                            .addComponent(returnButton, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+                            .addGap(28, 28, 28)
+                            .addComponent(button))
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(67, 67, 67)
-                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 802, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(76, Short.MAX_VALUE))
+                            .addGap(29, 29, 29)
+                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 889, GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(27, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -218,10 +222,11 @@ public class ReturnBookFrame extends JInternalFrame {
                         .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                         .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(inquireButton)
-                        .addComponent(returnButton))
-                    .addGap(35, 35, 35)
+                        .addComponent(returnButton)
+                        .addComponent(button))
+                    .addGap(36, 36, 36)
                     .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(72, Short.MAX_VALUE))
+                    .addContainerGap(71, Short.MAX_VALUE))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -234,5 +239,6 @@ public class ReturnBookFrame extends JInternalFrame {
     private JScrollPane scrollPane1;
     private JTable bookInfo;
     private JButton returnButton;
+    private JButton button;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

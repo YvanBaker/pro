@@ -1,15 +1,16 @@
 package com.yvan.entity;
 
+
 /**
  * @author Yvan
  */
-
 public class Freeze {
 
   private int id;
-  private String uid;
-  private String freezetime;
-  private String unfreezetime;
+  private int uid;
+  private java.sql.Timestamp freezeTime;
+  private java.sql.Timestamp unfreezeTime;
+  private boolean flag;
 
 
   public int getId() {
@@ -21,30 +22,39 @@ public class Freeze {
   }
 
 
-  public String getUid() {
+  public int getUid() {
     return uid;
   }
 
-  public void setUid(String uid) {
+  public void setUid(int uid) {
     this.uid = uid;
   }
 
 
-  public String getFreezetime() {
-    return freezetime;
+  public java.sql.Timestamp getFreezeTime() {
+    return freezeTime;
   }
 
-  public void setFreezetime(String freezetime) {
-    this.freezetime = freezetime;
+  public void setFreezeTime(java.sql.Timestamp freezeTime) {
+    this.freezeTime = freezeTime;
   }
 
 
-  public String getUnfreezetime() {
-    return unfreezetime;
+  public java.sql.Timestamp getUnfreezeTime() {
+    return unfreezeTime;
   }
 
-  public void setUnfreezetime(String unfreezetime) {
-    this.unfreezetime = unfreezetime;
+  public void setUnfreezeTime(java.sql.Timestamp unfreezeTime) {
+    this.unfreezeTime = unfreezeTime;
+  }
+
+
+  public boolean getFlag() {
+    return flag;
+  }
+
+  public void setFlag(boolean flag) {
+    this.flag = flag;
   }
 
 }

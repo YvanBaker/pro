@@ -21,6 +21,7 @@ public class Book {
     private int hasLended;
     private int total;
     private boolean del;
+    private boolean collection;
 
     public Book(int id, String bookName, String author, String press, Timestamp publicationDate, String type, float bookDeposit) {
         this.id = id;
@@ -74,6 +75,17 @@ public class Book {
         this.type = type;
         this.bookDeposit = bookDeposit;
         this.count = count;
+    }
+
+    public Book(int id, String bookName, String author, String press, Timestamp publicationDate, String type, float bookDeposit, boolean del) {
+        this.id = id;
+        this.bookName = bookName;
+        this.author = author;
+        this.press = press;
+        this.publicationDate = publicationDate;
+        this.type = type;
+        this.bookDeposit = bookDeposit;
+        this.del = del;
     }
 
     public Book(int id, String bookName, String author, String press, float bookDeposit, Timestamp publicationDate, String type, int count, int times, int hasLended, int total, boolean del) {
@@ -229,6 +241,14 @@ public class Book {
             return false;
         }
         return getType() != null ? getType().equals(book.getType()) : book.getType() == null;
+    }
+
+    public boolean isCollection() {
+        return collection;
+    }
+
+    public void setCollection(boolean collection) {
+        this.collection = collection;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.yvan.biz;
 
 import com.yvan.entity.Book;
+import com.yvan.entity.User;
 
 import java.util.Date;
 import java.util.List;
@@ -42,11 +43,46 @@ public interface BookBiz {
     List<Book> findByString(String str);
 
     /**
+     * 根据字符串查找数据，有没有收藏
+     *
+     * @param str  字符串
+     * @param user 用户
+     * @return book 集合
+     */
+    List<Book> findByString(String str, User user);
+
+    /**
+     * 根据字符串查找数据，有没有收藏, 且 count 等于 0
+     *
+     * @param str  字符串
+     * @param user 用户
+     * @return count 为 0的数据
+     */
+    List<Book> findCountZoneByString(String str, User user);
+
+
+    /**
      * 查询所有没有删除的书籍
      *
      * @return book的集合
      */
     List<Book> findAll();
+
+    /**
+     * 根据用户查找，是否有没有收藏
+     *
+     * @param user 用户
+     * @return book 集合
+     */
+    List<Book> findAll(User user);
+
+    /**
+     * 根据用户查找，是否有没有收藏，且count字段为0
+     *
+     * @param user 用户
+     * @return book 集合 count 字段为 0
+     */
+    List<Book> findCountZero(User user);
 
     /**
      * 根据 id 删除书籍

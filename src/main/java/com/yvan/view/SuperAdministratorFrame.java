@@ -51,7 +51,7 @@ public class SuperAdministratorFrame extends JFrame {
         info.append("电话：12345678901");
         String[] button = {"ok", "一会"};
         JOptionPane.showOptionDialog(this, info, "关于我们", JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/com/yvan/img/logo.png")), button, null);
+                JOptionPane.PLAIN_MESSAGE, new ImageIcon(getClass().getResource("/img/logo.png")), button, null);
     }
 
     /**
@@ -142,6 +142,19 @@ public class SuperAdministratorFrame extends JFrame {
     }
 
     /**
+     * 点击预约的响应
+     *
+     * @param e 事件
+     */
+    private void reservatioMenuItemActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        ReservationFrame reservationFrame = new ReservationFrame(user);
+        reservationFrame.pack();
+        reservationFrame.setVisible(true);
+        desktopPane.add(reservationFrame);
+    }
+
+    /**
      * 自动生成窗体的代码
      */
     private void initComponents() {
@@ -160,6 +173,7 @@ public class SuperAdministratorFrame extends JFrame {
         showBookMenuItem = new JMenuItem();
         borrowBookMenuItem = new JMenuItem();
         returnBookMenuItem = new JMenuItem();
+        reservatioMenuItem = new JMenuItem();
         menu4 = new JMenu();
         menuItem6 = new JMenuItem();
         desktopPane = new JDesktopPane();
@@ -221,11 +235,11 @@ public class SuperAdministratorFrame extends JFrame {
                 menu2.setIcon(new ImageIcon(getClass().getResource("/img/\u7528\u6237\u7ba1\u7406.png")));
 
                 //---- menuItem3 ----
-                menuItem3.setText("text");
+                menuItem3.setText("\u7ba1\u7406\u5458\u6ce8\u518c");
                 menu2.add(menuItem3);
 
                 //---- menuItem4 ----
-                menuItem4.setText("text");
+                menuItem4.setText("\u666e\u901a\u7528\u6237\u7ba1\u7406");
                 menu2.add(menuItem4);
             }
             menuBar1.add(menu2);
@@ -279,6 +293,17 @@ public class SuperAdministratorFrame extends JFrame {
                     }
                 });
                 menu3.add(returnBookMenuItem);
+
+                //---- reservatioMenuItem ----
+                reservatioMenuItem.setText("\u9884\u7ea6");
+                reservatioMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u9884\u7ea6.png")));
+                reservatioMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        reservatioMenuItemActionPerformed(e);
+                    }
+                });
+                menu3.add(reservatioMenuItem);
             }
             menuBar1.add(menu3);
 
@@ -336,6 +361,7 @@ public class SuperAdministratorFrame extends JFrame {
     private JMenuItem showBookMenuItem;
     private JMenuItem borrowBookMenuItem;
     private JMenuItem returnBookMenuItem;
+    private JMenuItem reservatioMenuItem;
     private JMenu menu4;
     private JMenuItem menuItem6;
     private JDesktopPane desktopPane;
