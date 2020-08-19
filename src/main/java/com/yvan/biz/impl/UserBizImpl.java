@@ -18,7 +18,7 @@ public class UserBizImpl implements UserBiz {
         if (userDao.findByName(name) != null) {
             return false;
         }
-        password = Md5Util.MD5(password);
+        password = Md5Util.md5(password);
         return userDao.save(name, password);
     }
 
@@ -28,7 +28,7 @@ public class UserBizImpl implements UserBiz {
         if (user == null) {
             return null;
         }
-        password = Md5Util.MD5(password);
+        password = Md5Util.md5(password);
         String dataPassword = user.getPassword();
         assert password != null;
         if (!password.equals(dataPassword)) {
@@ -39,7 +39,7 @@ public class UserBizImpl implements UserBiz {
 
     @Override
     public boolean changePassword(User user, String newPassword) {
-        newPassword = Md5Util.MD5(newPassword);
+        newPassword = Md5Util.md5(newPassword);
         int i = userDao.changePassword(user,newPassword);
         return i > 0;
     }

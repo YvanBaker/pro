@@ -22,7 +22,7 @@ public class AdministratorBizImpl implements AdministratorBiz {
         if (administrator.getType().equals(type)) {
             return false;
         }
-        password = Md5Util.MD5(password);
+        password = Md5Util.md5(password);
         Timestamp data = new Timestamp(System.currentTimeMillis());
         administrator = new Administrator(name, password, type, false, data);
         return administratorDao.save(administrator) > 0;
@@ -34,9 +34,10 @@ public class AdministratorBizImpl implements AdministratorBiz {
         if (administrator == null) {
             return null;
         }
-        password = Md5Util.MD5(password);
+        password = Md5Util.md5(password);
         String dataPassword = administrator.getPassword();
         String dataType = administrator.getType();
+        assert password != null;
         if (!password.equals(dataPassword) || !type.equals(dataType)) {
             return null;
         }
@@ -45,7 +46,7 @@ public class AdministratorBizImpl implements AdministratorBiz {
 
     @Override
     public boolean changePassword(Administrator administrator, String newPassword) {
-        newPassword = Md5Util.MD5(newPassword);
+        newPassword = Md5Util.md5(newPassword);
         int i = administratorDao.changePassword(administrator, newPassword);
         System.out.println(i);
         return i > 0;

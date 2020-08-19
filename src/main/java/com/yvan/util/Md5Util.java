@@ -22,7 +22,7 @@ public class Md5Util {
      * @return uuid
      */
     @NotNull
-    public static String generateUUID() {
+    public static String generateUuid() {
 
         return UUID.randomUUID().toString()
                 .replaceAll("-", "").substring(0, 32);
@@ -32,12 +32,12 @@ public class Md5Util {
      * 生成 md5 的方法
      *
      * @param data 数据
-     * @return MD5 加密后的结果
+     * @return md5 加密后的结果
      */
     @Nullable
-    public static String MD5(@NotNull String data) {
+    public static String md5(@NotNull String data) {
         try {
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            MessageDigest md5 = MessageDigest.getInstance("md5");
             byte[] array = md5.digest(data.getBytes(StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             for (byte item : array) {

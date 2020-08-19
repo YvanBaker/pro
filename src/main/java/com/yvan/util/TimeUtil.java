@@ -14,7 +14,7 @@ import java.util.Date;
  * @Date 2020/8/18 10:36
  */
 public class TimeUtil {
-    private static final long DAY = 86400000;
+    public static final long DAY = 86400000;
 
     /**
      * 获取时间几天后的时间 long

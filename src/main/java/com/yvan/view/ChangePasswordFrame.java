@@ -95,7 +95,7 @@ public class ChangePasswordFrame extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "未知原因修改失败！！！");
                 return;
             }
-            administrator.setPassword(Md5Util.MD5(newPassword));
+            administrator.setPassword(Md5Util.md5(newPassword));
             JOptionPane.showMessageDialog(this, "恭喜修改成功，请小心保存密码！！！");
             resetButtonActionPerformed(e);
             return;
@@ -117,7 +117,7 @@ public class ChangePasswordFrame extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "未知原因修改失败！！！");
             return;
         }
-        user.setPassword(Md5Util.MD5(newPassword));
+        user.setPassword(Md5Util.md5(newPassword));
         JOptionPane.showMessageDialog(this, "恭喜修改成功，请小心保存密码！！！");
         resetButtonActionPerformed(e);
     }

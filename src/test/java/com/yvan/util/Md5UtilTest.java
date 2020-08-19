@@ -11,12 +11,12 @@ import junit.framework.TestCase;
 public class Md5UtilTest extends TestCase {
 
     public void testMD5() {
-        System.out.println(Md5Util.MD5("123"));
+        System.out.println(Md5Util.md5("123"));
         assertTrue( true);
     }
 
     public void testGenerateUUID() {
-        System.out.println(Md5Util.generateUUID());
+        System.out.println(Md5Util.generateUuid());
         assertTrue( true);
     }
 }

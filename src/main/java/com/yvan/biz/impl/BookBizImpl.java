@@ -34,8 +34,12 @@ public class BookBizImpl implements BookBiz {
     }
 
     @Override
-    public boolean add(Book book) {
-        return false;
+    public boolean add(@NotNull Book book) {
+        Book dataBook = bookDao.findByNameAuthor(book.getBookName(), book.getAuthor());
+        if (dataBook != null) {
+            return false;
+        }
+        return bookDao.save(book);
     }
 
     @Override
