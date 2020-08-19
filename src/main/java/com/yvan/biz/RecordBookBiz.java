@@ -41,6 +41,14 @@ public interface RecordBookBiz {
     List<RecordView> showBorrowNotReturnRecord(User user);
 
     /**
+     * 查询没还的记录
+     *
+     * @param user 用户
+     * @return 记录集合
+     */
+    List<RecordView> findReturn(User user);
+
+    /**
      * 根据 字符串 查询没有还的记录
      *
      * @param user 用户
@@ -48,6 +56,15 @@ public interface RecordBookBiz {
      * @return 记录集合
      */
     List<RecordView> findNotReturnByString(User user, String str);
+
+    /**
+     * 根据 字符串 查询还的记录
+     *
+     * @param user 用户
+     * @param str  字符串
+     * @return 记录集合
+     */
+    List<RecordView> findReturnByString(User user, String str);
 
     /**
      * 续借书的业务逻辑

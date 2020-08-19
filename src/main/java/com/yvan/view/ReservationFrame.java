@@ -50,6 +50,19 @@ public class ReservationFrame extends JInternalFrame {
     }
 
     /**
+     * 不合法检测
+     *
+     * @return false 合法
+     */
+    public boolean isNotLegal() {
+        if (StringUtil.isNotLegal(strTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "用户名存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 设置表格数据
      */
     private void setTable() {
@@ -106,6 +119,9 @@ public class ReservationFrame extends JInternalFrame {
         // TODO add your code here
         if (StringUtil.isNull(strTextField.getText())) {
             strTextField.setText("");
+        }
+        if (isNotLegal()) {
+            return;
         }
         bookList = bookBiz.findCountZoneByString(strTextField.getText(), user);
         if (bookList.size() == 0) {
@@ -194,24 +210,22 @@ public class ReservationFrame extends JInternalFrame {
 
             //---- bookInfo ----
             bookInfo.setModel(new DefaultTableModel(
-                    new Object[][]{
-                    },
-                    new String[]{
-                            "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u6536\u85cf"
-                    }
+                new Object[][] {
+                },
+                new String[] {
+                    "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u6536\u85cf"
+                }
             ) {
-                Class<?>[] columnTypes = new Class<?>[]{
-                        Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Boolean.class
+                Class<?>[] columnTypes = new Class<?>[] {
+                    Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Boolean.class
                 };
-                boolean[] columnEditable = new boolean[]{
-                        false, false, false, false, false, false, true
+                boolean[] columnEditable = new boolean[] {
+                    false, false, false, false, false, false, true
                 };
-
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
                 }
-
                 @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return columnEditable[columnIndex];
@@ -225,14 +239,10 @@ public class ReservationFrame extends JInternalFrame {
                 public void ancestorAdded(AncestorEvent e) {
                     bookInfoAncestorAdded(e);
                 }
-
                 @Override
-                public void ancestorMoved(AncestorEvent e) {
-                }
-
+                public void ancestorMoved(AncestorEvent e) {}
                 @Override
-                public void ancestorRemoved(AncestorEvent e) {
-                }
+                public void ancestorRemoved(AncestorEvent e) {}
             });
             bookInfo.addPropertyChangeListener(new PropertyChangeListener() {
                 @Override
@@ -251,42 +261,42 @@ public class ReservationFrame extends JInternalFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                .addContainerGap(130, Short.MAX_VALUE)
-                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 923, GroupLayout.PREFERRED_SIZE)
-                                .addGap(112, 112, 112))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(206, 206, 206)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(datePicker, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
-                                        .addComponent(strTextField, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE))
-                                .addGap(86, 86, 86)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addComponent(reservationButton)
-                                        .addComponent(inquireButton))
-                                .addContainerGap(355, Short.MAX_VALUE))
+            contentPaneLayout.createParallelGroup()
+                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                    .addContainerGap(130, Short.MAX_VALUE)
+                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 923, GroupLayout.PREFERRED_SIZE)
+                    .addGap(112, 112, 112))
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(206, 206, 206)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                        .addComponent(datePicker, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                        .addComponent(strTextField, GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE))
+                    .addGap(86, 86, 86)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addComponent(reservationButton)
+                        .addComponent(inquireButton))
+                    .addContainerGap(355, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
-                contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addContainerGap(49, Short.MAX_VALUE)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(inquireButton))
-                                .addGap(23, 23, 23)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(reservationButton)
-                                        .addComponent(datePicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
-                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
-                                .addGap(39, 39, 39))
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addContainerGap(49, Short.MAX_VALUE)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(inquireButton))
+                    .addGap(23, 23, 23)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(reservationButton)
+                        .addComponent(datePicker, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(label2, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+                    .addGap(30, 30, 30)
+                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
+                    .addGap(39, 39, 39))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }

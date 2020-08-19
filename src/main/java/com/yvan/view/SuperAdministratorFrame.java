@@ -14,7 +14,10 @@ import com.yvan.util.TimeUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Timestamp;
 
 /**
@@ -148,7 +151,6 @@ public class SuperAdministratorFrame extends JFrame {
      * @param e 事件
      */
     private void reservatioMenuItemActionPerformed(ActionEvent e) {
-        // TODO add your code here
         ReservationFrame reservationFrame = new ReservationFrame(user);
         reservationFrame.pack();
         reservationFrame.setVisible(true);
@@ -156,9 +158,27 @@ public class SuperAdministratorFrame extends JFrame {
     }
 
 
+    /**
+     * 登录时发生的响应
+     *
+     * @param e 事件
+     */
     private void thisWindowOpened(WindowEvent e) {
         Timestamp time = TimeUtil.getTime();
 
+    }
+
+    /**
+     * 点击评论的响应
+     *
+     * @param e 事件
+     */
+    private void commentMenuItemActionPerformed(ActionEvent e) {
+        // TODO add your code here
+        CommentFrame commentFrame = new CommentFrame(user);
+        commentFrame.pack();
+        commentFrame.setVisible(true);
+        desktopPane.add(commentFrame);
     }
 
     /**
@@ -181,6 +201,7 @@ public class SuperAdministratorFrame extends JFrame {
         borrowBookMenuItem = new JMenuItem();
         returnBookMenuItem = new JMenuItem();
         reservatioMenuItem = new JMenuItem();
+        commentMenuItem = new JMenuItem();
         menu4 = new JMenu();
         menuItem6 = new JMenuItem();
         desktopPane = new JDesktopPane();
@@ -317,6 +338,17 @@ public class SuperAdministratorFrame extends JFrame {
                     }
                 });
                 menu3.add(reservatioMenuItem);
+
+                //---- commentMenuItem ----
+                commentMenuItem.setText("\u8bc4\u8bba");
+                commentMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u8bc4\u8bba.png")));
+                commentMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        commentMenuItemActionPerformed(e);
+                    }
+                });
+                menu3.add(commentMenuItem);
             }
             menuBar1.add(menu3);
 
@@ -375,6 +407,7 @@ public class SuperAdministratorFrame extends JFrame {
     private JMenuItem borrowBookMenuItem;
     private JMenuItem returnBookMenuItem;
     private JMenuItem reservatioMenuItem;
+    private JMenuItem commentMenuItem;
     private JMenu menu4;
     private JMenuItem menuItem6;
     private JDesktopPane desktopPane;

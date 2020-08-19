@@ -7,6 +7,7 @@ import com.yvan.entity.Book;
 import com.yvan.entity.Collection;
 import com.yvan.entity.User;
 import com.yvan.util.TimeUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,7 @@ public class CollectionBizImpl implements CollectionBiz {
     }
 
     @Override
-    public boolean updateDel(User user, Book book, boolean flag) {
+    public boolean updateDel(@NotNull User user, @NotNull Book book, boolean flag) {
         Collection dataCollection = collectionDao.findByBidUid(book.getId(), user.getId());
         if (dataCollection == null) {
             collectionDao.save(user.getId(), book.getId(), TimeUtil.getTime());

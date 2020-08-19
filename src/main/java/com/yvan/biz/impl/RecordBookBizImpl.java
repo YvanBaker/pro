@@ -15,7 +15,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Yvan
@@ -105,11 +107,37 @@ public class RecordBookBizImpl implements RecordBookBiz {
     }
 
     @Override
+    public List<RecordView> findReturn(@NotNull User user) {
+        List<RecordView> dateRecord = recordDao.findAllByUid(user.getId());
+        List<RecordView> resRecord = new ArrayList<>();
+        for (RecordView recordView : dateRecord) {
+            if (recordView.isReturn()) {
+                resRecord.add(recordView);
+            }
+        }
+        Set<RecordView> recordViews = new HashSet<>(resRecord);
+        resRecord = new ArrayList<>(recordViews);
+        return resRecord;
+    }
+
+    @Override
     public List<RecordView> findNotReturnByString(@NotNull User user, String str) {
         List<RecordView> dataRecord = recordDao.findAllByStr(user.getId(), str);
         List<RecordView> resRecord = new ArrayList<>();
         for (RecordView recordView : dataRecord) {
             if (!recordView.isReturn()) {
+                resRecord.add(recordView);
+            }
+        }
+        return resRecord;
+    }
+
+    @Override
+    public List<RecordView> findReturnByString(@NotNull User user, String str) {
+        List<RecordView> dataRecord = recordDao.findAllByStr(user.getId(), str);
+        List<RecordView> resRecord = new ArrayList<>();
+        for (RecordView recordView : dataRecord) {
+            if (recordView.isReturn()) {
                 resRecord.add(recordView);
             }
         }

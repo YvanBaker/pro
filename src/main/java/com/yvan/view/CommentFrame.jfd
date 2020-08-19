@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :p:29:p, par t {seq {comp label1:::p::p, space s:::p, comp strTextField:::p:305:p, space s:::p, comp inquireButton:::p::p, space :p:26:p, comp returnButton:::p:128:p, space :p:26:p, comp renewButton:::p::p, space :p:11:p}, comp scrollPane1:::p:889:p}, space ::27:x}}"
-			"$verticalGroup": "par l {seq l {space :p:42:p, par b {comp label1::b:p:38:p, comp strTextField::b:p::p, comp inquireButton::b:p::p, comp renewButton::b:p::p, comp returnButton::b:p::p}, space :p:36:p, comp scrollPane1:::p:528:p, space ::71:x}}"
+			"$horizontalGroup": "par l {seq l {space :p:109:p, comp label1:::p::p, space :p:53:p, comp strTextField:::p:362:p, space ::94:x, comp inquireButton:::p::p, space :p:93:p}, seq t {space ::39:x, comp scrollPane1:::p:781:p, space ::50:x}, seq l {space :p:83:p, comp label2:::p:92:p, space s:::p, par l {seq {comp enterButton:::p::p, space :p:213:p, comp ResetButton:::p::p}, comp scrollPane2:::p:408:p}, space ::269:x}}"
+			"$verticalGroup": "par l {seq l {space :p:20:p, par l {par b {comp label1::b:p:38:p, comp strTextField::b:p::p}, seq l {space :4:4:p, comp inquireButton:::p::p}}, space :p:41:p, comp scrollPane1:::p:229:p, par l {seq {space :p:46:p, comp scrollPane2:::p:121:p}, seq l {space :p:76:p, comp label2:::p:54:p}}, space ::92:x, par b {comp enterButton::b:p::p, comp ResetButton::b:p::p}, space :p:28:p}}"
 		} ) {
 			name: "this"
 			"visible": true
@@ -13,7 +13,7 @@ new FormModel {
 			"maximizable": true
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
-				"text": "借阅记录查询："
+				"text": "查询："
 				"font": new java.awt.Font( "楷体", 1, 16 )
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/图书管理.png" )
 			} )
@@ -24,35 +24,28 @@ new FormModel {
 				name: "inquireButton"
 				"text": "查询"
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/查询.png" )
-				"font": &Font0 new java.awt.Font( "楷体", 1, 16 )
+				"font": new java.awt.Font( "楷体", 1, 16 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "inquireButtonActionPerformed", true ) )
 			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
 				name: "scrollPane1"
 				add( new FormComponent( "javax.swing.JTable" ) {
 					name: "bookInfo"
-					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector {
+						add( new java.util.Vector {
+							add( null )
+							add( null )
+						} )
+					}, new java.util.Vector {
 						add( "书名" )
 						add( "作者" )
-						add( "借阅时间" )
-						add( "交押金金额" )
-						add( "是否续借过" )
 					}, new java.util.Vector {
 						add( null )
 						add( null )
-						add( null )
-						add( null )
-						add( class java.lang.Boolean )
 					}, new java.util.Vector {
 						add( false )
 						add( false )
-						add( false )
-						add( false )
-						add( false )
 					}, new java.util.Vector {
-						add( null )
-						add( null )
-						add( null )
 						add( null )
 						add( null )
 					} )
@@ -62,22 +55,30 @@ new FormModel {
 					addEvent( new FormEvent( "javax.swing.event.AncestorListener", "ancestorAdded", "bookInfoAncestorAdded", true ) )
 				} )
 			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "returnButton"
-				"text": "归还图书"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/图书归还.png" )
-				"font": #Font0
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "returnButtonActionPerformed", true ) )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "评论："
+				"font": new java.awt.Font( "楷体", 1, 20 )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane2"
+				add( new FormComponent( "javax.swing.JTextArea" ) {
+					name: "collectionTextArea"
+				} )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "renewButton"
-				"text": "续借"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/续期.png" )
-				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "renewButtonActionPerformed", true ) )
+				name: "enterButton"
+				"text": "确认"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "enterButtonActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "ResetButton"
+				"text": "重置"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "resetButtonActionPerformed", true ) )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
-			"size": new java.awt.Dimension( 945, 735 )
+			"size": new java.awt.Dimension( 870, 665 )
 		} )
 	}
 }

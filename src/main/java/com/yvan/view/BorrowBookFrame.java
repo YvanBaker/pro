@@ -6,11 +6,14 @@ package com.yvan.view;
 
 import com.yvan.biz.BookBiz;
 import com.yvan.biz.CollectionBiz;
+import com.yvan.biz.CommentBiz;
 import com.yvan.biz.RecordBookBiz;
 import com.yvan.biz.impl.BookBizImpl;
 import com.yvan.biz.impl.CollectionBizImpl;
+import com.yvan.biz.impl.CommentBizImpl;
 import com.yvan.biz.impl.RecordBookBizImpl;
 import com.yvan.entity.Book;
+import com.yvan.entity.Comment;
 import com.yvan.entity.User;
 import com.yvan.util.StringUtil;
 
@@ -24,6 +27,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -34,6 +38,7 @@ public class BorrowBookFrame extends JInternalFrame {
     private final BookBiz bookBiz = new BookBizImpl();
     private final RecordBookBiz recordBookBiz = new RecordBookBizImpl();
     private final CollectionBiz collectionBiz = new CollectionBizImpl();
+    private final CommentBiz commentBiz = new CommentBizImpl();
     private User user;
     private List<Book> bookList;
 
@@ -47,6 +52,19 @@ public class BorrowBookFrame extends JInternalFrame {
     }
 
     /**
+     * 不合法检测
+     *
+     * @return false 合法
+     */
+    public boolean isNotLegal() {
+        if (StringUtil.isNotLegal(strTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "输入不合法，如 and,or或#,*");
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 点击查询的响应
      *
      * @param e 事件
@@ -54,6 +72,9 @@ public class BorrowBookFrame extends JInternalFrame {
     private void inquireButtonActionPerformed(ActionEvent e) {
         if (StringUtil.isNull(strTextField.getText())) {
             strTextField.setText("");
+        }
+        if (isNotLegal()) {
+            return;
         }
         bookList = bookBiz.findByString(strTextField.getText(), user);
         if (bookList.size() == 0) {
@@ -154,12 +175,34 @@ public class BorrowBookFrame extends JInternalFrame {
     }
 
     /**
-     * 点击预约时响应
+     * 选择表格是的响应
      *
      * @param e 事件
      */
-    private void reservationButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
+    private void bookInfoMouseClicked(MouseEvent e) {
+        if (bookInfo.getSelectedRow() == -1) {
+            return;
+        }
+        List<Comment> comments = commentBiz.getContent(bookList.get(bookInfo.getSelectedRow()));
+        ArrayList<String> contents = new ArrayList<>();
+        for (Comment comment : comments) {
+            contents.add(comment.getContent());
+        }
+        final String[] v = contents.toArray(new String[0]);
+
+        commentList.setModel(new AbstractListModel<String>() {
+            String[] values = v;
+
+            @Override
+            public int getSize() {
+                return values.length;
+            }
+
+            @Override
+            public String getElementAt(int i) {
+                return values[i];
+            }
+        });
     }
 
 
@@ -175,7 +218,8 @@ public class BorrowBookFrame extends JInternalFrame {
         scrollPane1 = new JScrollPane();
         bookInfo = new JTable();
         borrowButton = new JButton();
-        reservationButton = new JButton();
+        scrollPane2 = new JScrollPane();
+        commentList = new JList<>();
 
         //======== this ========
         setVisible(true);
@@ -205,7 +249,6 @@ public class BorrowBookFrame extends JInternalFrame {
             //---- bookInfo ----
             bookInfo.setModel(new DefaultTableModel(
                 new Object[][] {
-                    {null, null, null, null, null, null, null, null},
                 },
                 new String[] {
                     "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u5728\u9986\u6570\u91cf", "\u6536\u85cf"
@@ -245,6 +288,12 @@ public class BorrowBookFrame extends JInternalFrame {
                     bookInfoPropertyChange(e);
                 }
             });
+            bookInfo.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    bookInfoMouseClicked(e);
+                }
+            });
             scrollPane1.setViewportView(bookInfo);
         }
 
@@ -259,16 +308,13 @@ public class BorrowBookFrame extends JInternalFrame {
             }
         });
 
-        //---- reservationButton ----
-        reservationButton.setText("\u9884\u7ea6");
-        reservationButton.setIcon(new ImageIcon(getClass().getResource("/img/\u501f\u4e66.png")));
-        reservationButton.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
-        reservationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                reservationButtonActionPerformed(e);
-            }
-        });
+        //======== scrollPane2 ========
+        {
+
+            //---- commentList ----
+            commentList.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
+            scrollPane2.setViewportView(commentList);
+        }
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
@@ -280,30 +326,31 @@ public class BorrowBookFrame extends JInternalFrame {
                             .addGap(84, 84, 84)
                             .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
                             .addGap(31, 31, 31)
-                            .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
-                            .addGap(35, 35, 35)
-                            .addComponent(inquireButton)
-                            .addGap(53, 53, 53)
-                            .addComponent(borrowButton)
-                            .addGap(43, 43, 43)
-                            .addComponent(reservationButton))
+                            .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
+                            .addGap(48, 48, 48)
+                            .addComponent(inquireButton, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+                            .addGap(59, 59, 59)
+                            .addComponent(borrowButton, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE))
                         .addGroup(contentPaneLayout.createSequentialGroup()
                             .addGap(37, 37, 37)
-                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 923, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(110, Short.MAX_VALUE))
+                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 923, GroupLayout.PREFERRED_SIZE)
+                            .addGap(34, 34, 34)
+                            .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(50, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
                     .addGap(40, 40, 40)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(reservationButton)
-                        .addComponent(borrowButton)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                         .addComponent(inquireButton)
-                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(borrowButton)
+                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(scrollPane2))
                     .addGap(40, 40, 40))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
@@ -317,6 +364,7 @@ public class BorrowBookFrame extends JInternalFrame {
     private JScrollPane scrollPane1;
     private JTable bookInfo;
     private JButton borrowButton;
-    private JButton reservationButton;
+    private JScrollPane scrollPane2;
+    private JList<String> commentList;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

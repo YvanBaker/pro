@@ -2,6 +2,7 @@ package com.yvan.entity;
 
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 /**
  * record view 视图实体类
@@ -147,5 +148,23 @@ public class RecordView {
 
     public void setReturn(boolean aReturn) {
         isReturn = aReturn;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof RecordView)) {
+            return false;
+        }
+        RecordView that = (RecordView) o;
+        return Objects.equals(getBookName(), that.getBookName()) &&
+                Objects.equals(getAuthor(), that.getAuthor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBookName(), getAuthor());
     }
 }

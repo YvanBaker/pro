@@ -39,6 +39,19 @@ public class ReturnBookFrame extends JInternalFrame {
     }
 
     /**
+     * 不合法检测
+     *
+     * @return false 合法
+     */
+    public boolean isNotLegal() {
+        if (StringUtil.isNotLegal(strTextField.getText())) {
+            JOptionPane.showMessageDialog(this, "用户名存在敏感词汇或字符，如 and,or或#,*");
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * 设置表格的值
      */
     private void setTable() {
@@ -61,12 +74,15 @@ public class ReturnBookFrame extends JInternalFrame {
      * @param e 事件
      */
     private void inquireButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         if (StringUtil.isNull(strTextField.getText())) {
             strTextField.setText("");
         }
+        if (isNotLegal()){
+            return;
+        }
         recordViewList = recordBookBiz.findNotReturnByString(user, strTextField.getText());
         if (recordViewList.size() == 0) {
+            setTable();
             JOptionPane.showMessageDialog(this, "查询不到记录，或者该书籍已经还了 ！！");
             return;
         }
@@ -89,7 +105,6 @@ public class ReturnBookFrame extends JInternalFrame {
      * @param e 事件
      */
     private void returnButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         if (bookInfo.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "请选择要还的书 ！！");
             return;
@@ -243,9 +258,9 @@ public class ReturnBookFrame extends JInternalFrame {
                             .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(inquireButton)
-                            .addGap(18, 18, 18)
+                            .addGap(26, 26, 26)
                             .addComponent(returnButton, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
-                            .addGap(34, 34, 34)
+                            .addGap(26, 26, 26)
                             .addComponent(renewButton)
                             .addGap(11, 11, 11))
                         .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 889, GroupLayout.PREFERRED_SIZE))
@@ -259,8 +274,8 @@ public class ReturnBookFrame extends JInternalFrame {
                         .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
                         .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(inquireButton)
-                        .addComponent(returnButton)
-                        .addComponent(renewButton))
+                        .addComponent(renewButton)
+                        .addComponent(returnButton))
                     .addGap(36, 36, 36)
                     .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(71, Short.MAX_VALUE))

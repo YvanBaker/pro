@@ -164,6 +164,9 @@ public class BookUpData extends JInternalFrame {
     private void bookInfoMouseClicked(MouseEvent e) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         Date publicationData = null;
+        if (bookInfo.getSelectedRow() == -1){
+            return;
+        }
         DefaultTableModel bookInfoModel = (DefaultTableModel) bookInfo.getModel();
         int id = (int) bookInfoModel.getValueAt(bookInfo.getSelectedRow(), 0);
         String bookName = (String) bookInfoModel.getValueAt(bookInfo.getSelectedRow(), 1);
