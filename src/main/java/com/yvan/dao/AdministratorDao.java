@@ -3,6 +3,7 @@ package com.yvan.dao;
 import com.yvan.entity.Administrator;
 
 /**
+ * @Description 操作 Administrator表（管理员） 的 dao 层
  * @author Yvan
  */
 public interface AdministratorDao {

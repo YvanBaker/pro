@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author Yvan
- * @Description Collection 表的 数据操作层
+ * @Description Collection表（收藏） 的 dao层
  * @Classname CollectionDao
  * @Date 2020/8/18 13:11
  */

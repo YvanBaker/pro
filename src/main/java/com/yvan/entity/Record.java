@@ -1,6 +1,8 @@
 package com.yvan.entity;
 
 
+import java.sql.Timestamp;
+
 public class Record {
 
   private int id;
@@ -14,8 +16,20 @@ public class Record {
   private boolean isRenew;
   private boolean isReturn;
 
+    public Record(int id, int uid, int bid, Timestamp lendTime, Timestamp returnTime, float deposit, float returnTerm, Timestamp actualTime, boolean isRenew, boolean isReturn) {
+        this.id = id;
+        this.uid = uid;
+        this.bid = bid;
+        this.lendTime = lendTime;
+        this.returnTime = returnTime;
+        this.deposit = deposit;
+        this.returnTerm = returnTerm;
+        this.actualTime = actualTime;
+        this.isRenew = isRenew;
+        this.isReturn = isReturn;
+    }
 
-  public int getId() {
+    public int getId() {
     return id;
   }
 

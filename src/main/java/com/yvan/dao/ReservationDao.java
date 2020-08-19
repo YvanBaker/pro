@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author Yvan
- * @Description Reservation 表的数据操作层
+ * @Description Reservation表（预约） 的 dao层
  * @Classname ReservationDao
  * @Date 2020/8/18 23:00
  */
@@ -24,7 +24,16 @@ public interface ReservationDao {
     int save(int uid, int bid, Timestamp time);
 
     /**
+     * 根据 bid 查询 预约记录
+     *
+     * @param bid bid
+     * @return Reservation 记录
+     */
+    List<Reservation> findByBid(int bid);
+
+    /**
      * 更加 uid 和 bid 查询 预约记录
+     *
      * @param uid uid
      * @param bid bid
      * @return Reservation 集合

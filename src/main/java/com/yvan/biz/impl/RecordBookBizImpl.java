@@ -3,13 +3,13 @@ package com.yvan.biz.impl;
 import com.yvan.biz.RecordBookBiz;
 import com.yvan.dao.BookDao;
 import com.yvan.dao.RecordDao;
+import com.yvan.dao.ReservationDao;
 import com.yvan.dao.UserDao;
 import com.yvan.dao.impl.BookDaoImpl;
 import com.yvan.dao.impl.RecordDaoImpl;
+import com.yvan.dao.impl.ReservationDaoImpl;
 import com.yvan.dao.impl.UserDaoImpl;
-import com.yvan.entity.Book;
-import com.yvan.entity.RecordView;
-import com.yvan.entity.User;
+import com.yvan.entity.*;
 import com.yvan.util.TimeUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,6 +27,7 @@ public class RecordBookBizImpl implements RecordBookBiz {
     private final BookDao bookDao = new BookDaoImpl();
     private final UserDao userDao = new UserDaoImpl();
     private final RecordDao recordDao = new RecordDaoImpl();
+    private final ReservationDao reservationDao = new ReservationDaoImpl();
 
     @Override
     public synchronized int borrow(@NotNull Book book, User user) {
@@ -69,7 +70,7 @@ public class RecordBookBizImpl implements RecordBookBiz {
     }
 
     @Override
-    public synchronized boolean returnBook(RecordView record, User user) {
+    public synchronized boolean returnBook(@NotNull RecordView record, User user) {
         int res = recordDao.updateIsReturn(record.getId(), true);
         if (res <= 0) {
             return false;
@@ -104,7 +105,7 @@ public class RecordBookBizImpl implements RecordBookBiz {
     }
 
     @Override
-    public List<RecordView> findNotReturnByString(User user, String str) {
+    public List<RecordView> findNotReturnByString(@NotNull User user, String str) {
         List<RecordView> dataRecord = recordDao.findAllByStr(user.getId(), str);
         List<RecordView> resRecord = new ArrayList<>();
         for (RecordView recordView : dataRecord) {
@@ -116,9 +117,28 @@ public class RecordBookBizImpl implements RecordBookBiz {
     }
 
     @Override
-    public boolean renewBook(RecordView record, User user) {
-
-        return false;
+    public int renewBook(@NotNull RecordView record, User user) {
+        Record dataRecord = recordDao.findAllById(record.getId());
+        if (dataRecord.getIsRenew()){
+            return 1;
+        }
+        if (TimeUtil.timeLessCurrent(dataRecord.getReturnTime())){
+            return 2;
+        }
+        List<Reservation> dataReservation = reservationDao.findByBid(record.getBid());
+        for (Reservation reservation : dataReservation) {
+            if (reservation.isFulfill()){
+                continue;
+            }
+            User bUser = userDao.findAllById(reservation.getId());
+            if (bUser.getSumMoney() > user.getSumMoney()){
+                return 3;
+            }
+        }
+        recordDao.updateRenewTrue(record.getId());
+        long time = TimeUtil.getDay(dataRecord.getReturnTime(),7);
+        recordDao.updateReturnTime(record.getId(),new Timestamp(time));
+        return 4;
     }
 
 }

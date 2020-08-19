@@ -1,5 +1,6 @@
 package com.yvan.dao;
 
+import com.yvan.entity.Record;
 import com.yvan.entity.RecordView;
 
 import java.sql.Timestamp;
@@ -7,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Yvan
- * @Description 操作借书表的dao层
+ * @Description 操作 Record表（借书） 的 dao 层
  * @Classname RecordDao
  * @Date 2020/8/17 10:04
  */
@@ -24,6 +25,14 @@ public interface RecordDao {
      * @return 条数
      */
     int save(int bookId, int userId, Timestamp lendTime, Timestamp returnTime, float deposit);
+
+    /**
+     * 根据id查询信息
+     *
+     * @param id id
+     * @return record 记录
+     */
+    Record findAllById(int id);
 
     /**
      * 根据 用户id 查询记录

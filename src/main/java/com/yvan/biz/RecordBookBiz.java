@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author Yvan
- * @Description 借书的业务逻辑
+ * @Description 借书的 业务逻辑
  * @Classname RecordBookBiz
  * @Date 2020/8/17 10:00
  */
@@ -54,7 +54,7 @@ public interface RecordBookBiz {
      *
      * @param record 记录
      * @param user   用户
-     * @return false 失败
+     * @return 1 已经续借过； 2 超时  ; 3 有充钱更多的人预约了 ；4 成功
      */
-    boolean renewBook(RecordView record, User user);
+    int renewBook(RecordView record, User user);
 }

@@ -29,6 +29,28 @@ public class ReservationDaoImpl extends BaseDao implements ReservationDao {
     }
 
     @Override
+    public List<Reservation> findByBid(int bid) {
+        String sql = SqlUtil.select("id,uid,bid,fulfill","reservation","bid = ?");
+        List<Object> list = new ArrayList<>();
+        list.add(bid);
+        executeQuery(sql,list);
+        List<Reservation> resReservation = new ArrayList<>();
+        try{
+            while (rs.next()){
+                int id = rs.getInt("id");
+                int uid = rs.getInt("uid");
+                boolean fulfill = rs.getBoolean("fulfill");
+                resReservation.add(new Reservation(id,uid,bid,fulfill));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return resReservation;
+    }
+
+    @Override
     public List<Reservation> findByUidBid(int uid, int bid) {
         String sql = SqlUtil.select("id,uid,bid,fulfill","reservation","uid = ? and bid = ?");
         List<Object> list = new ArrayList<>();

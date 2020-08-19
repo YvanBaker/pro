@@ -1,6 +1,7 @@
 package com.yvan.dao.impl;
 
 import com.yvan.dao.RecordDao;
+import com.yvan.entity.Record;
 import com.yvan.entity.RecordView;
 import com.yvan.util.SqlUtil;
 import org.jetbrains.annotations.NotNull;
@@ -64,12 +65,42 @@ public class RecordDaoImpl extends BaseDao implements RecordDao {
     }
 
     @Override
+    public Record findAllById(int id) {
+        String table = "record";
+        String field = "uid,bid,lend_time,return_time,deposit,return_term,actual_time,is_renew,is_return";
+        String term = "id = ?";
+        String sql = SqlUtil.select(field, table, term);
+        List<Object> list = new ArrayList<>();
+        list.add(id);
+        Record resRecord = null;
+        executeQuery(sql, list);
+        try {
+            while (rs.next()) {
+                int uid = rs.getInt("uid");
+                int bid = rs.getInt("bid");
+                Timestamp lendTime = rs.getTimestamp("lend_time");
+                Timestamp returnTime = rs.getTimestamp("return_time");
+                float deposit = rs.getFloat("deposit");
+                float returnTerm = rs.getFloat("return_term");
+                Timestamp actualTime = rs.getTimestamp("actual_time");
+                boolean isRenew = rs.getBoolean("is_renew");
+                boolean isReturn = rs.getBoolean("is_return");
+                resRecord = new Record(id, uid, bid, lendTime, returnTime, deposit, returnTerm, actualTime, isRenew, isReturn);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return resRecord;
+    }
+
+    @Override
     public List<RecordView> findAllByUid(int uid) {
         String table = "recordView";
         String field = "id,uid,bid,name,book_name,author,lend_time,return_time,deposit,return_term,actual_time,is_renew,is_return";
         String term = "uid = ?";
         String sql = SqlUtil.select(field, table, term);
-        List<RecordView> recordViews = new ArrayList<>();
         List<Object> list = new ArrayList<>();
         list.add(uid);
         executeQuery(sql, list);

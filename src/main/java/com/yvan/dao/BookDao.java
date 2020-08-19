@@ -5,6 +5,7 @@ import com.yvan.entity.Book;
 import java.util.List;
 
 /**
+ * @Description 操作 Book表（书） 的 dao 层
  * @author Yvan
  */
 

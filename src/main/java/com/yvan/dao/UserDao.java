@@ -3,6 +3,7 @@ package com.yvan.dao;
 import com.yvan.entity.User;
 
 /**
+ * @Description 操作 User表（用户） 的 dao 层
  * @author Yvan
  */
 

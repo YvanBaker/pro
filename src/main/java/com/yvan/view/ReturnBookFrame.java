@@ -66,7 +66,7 @@ public class ReturnBookFrame extends JInternalFrame {
             strTextField.setText("");
         }
         recordViewList = recordBookBiz.findNotReturnByString(user, strTextField.getText());
-        if (recordViewList == null) {
+        if (recordViewList.size() == 0) {
             JOptionPane.showMessageDialog(this, "查询不到记录，或者该书籍已经还了 ！！");
             return;
         }
@@ -90,7 +90,7 @@ public class ReturnBookFrame extends JInternalFrame {
      */
     private void returnButtonActionPerformed(ActionEvent e) {
         // TODO add your code here
-        if (bookInfo.getSelectedRow() == -1){
+        if (bookInfo.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(this, "请选择要还的书 ！！");
             return;
         }
@@ -103,6 +103,37 @@ public class ReturnBookFrame extends JInternalFrame {
         inquireButtonActionPerformed(e);
     }
 
+    /**
+     * 点击续借的响应
+     *
+     * @param e 事件
+     */
+    private void renewButtonActionPerformed(ActionEvent e) {
+        if (bookInfo.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(this, "请选择要续借的书 ！！");
+            return;
+        }
+        int i = recordBookBiz.renewBook(recordViewList.get(bookInfo.getSelectedRow()), user);
+        switch (i) {
+            case 1:
+                JOptionPane.showMessageDialog(this, "该书以及续借过了 ！！");
+                inquireButtonActionPerformed(e);
+                return;
+            case 2:
+                JOptionPane.showMessageDialog(this, "已经超过可以续借的时间，请还书 ！！");
+                return;
+            case 3:
+                JOptionPane.showMessageDialog(this, "该书比较热门，不可以续借 ！！");
+                return;
+            case 4:
+                JOptionPane.showMessageDialog(this, "续借成功 ！！");
+                inquireButtonActionPerformed(e);
+                return;
+            default:
+        }
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -112,7 +143,7 @@ public class ReturnBookFrame extends JInternalFrame {
         scrollPane1 = new JScrollPane();
         bookInfo = new JTable();
         returnButton = new JButton();
-        button = new JButton();
+        renewButton = new JButton();
 
         //======== this ========
         setVisible(true);
@@ -189,29 +220,35 @@ public class ReturnBookFrame extends JInternalFrame {
             }
         });
 
-        //---- button ----
-        button.setText("\u7eed\u501f");
+        //---- renewButton ----
+        renewButton.setText("\u7eed\u501f");
+        renewButton.setIcon(new ImageIcon(getClass().getResource("/img/\u7eed\u671f.png")));
+        renewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                renewButtonActionPerformed(e);
+            }
+        });
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup()
+                    .addGap(29, 29, 29)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(67, 67, 67)
                             .addComponent(label1)
                             .addGap(18, 18, 18)
                             .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
-                            .addGap(40, 40, 40)
+                            .addGap(18, 18, 18)
                             .addComponent(inquireButton)
-                            .addGap(35, 35, 35)
-                            .addComponent(returnButton, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
-                            .addGap(28, 28, 28)
-                            .addComponent(button))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 889, GroupLayout.PREFERRED_SIZE)))
+                            .addGap(18, 18, 18)
+                            .addComponent(returnButton, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+                            .addGap(34, 34, 34)
+                            .addComponent(renewButton)
+                            .addGap(11, 11, 11))
+                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 889, GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(27, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
@@ -223,7 +260,7 @@ public class ReturnBookFrame extends JInternalFrame {
                         .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addComponent(inquireButton)
                         .addComponent(returnButton)
-                        .addComponent(button))
+                        .addComponent(renewButton))
                     .addGap(36, 36, 36)
                     .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(71, Short.MAX_VALUE))
@@ -239,6 +276,6 @@ public class ReturnBookFrame extends JInternalFrame {
     private JScrollPane scrollPane1;
     private JTable bookInfo;
     private JButton returnButton;
-    private JButton button;
+    private JButton renewButton;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

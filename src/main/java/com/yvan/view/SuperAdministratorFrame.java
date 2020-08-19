@@ -10,11 +10,12 @@ import com.yvan.biz.impl.AdministratorBizImpl;
 import com.yvan.biz.impl.UserBizImpl;
 import com.yvan.entity.Administrator;
 import com.yvan.entity.User;
+import com.yvan.util.TimeUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.sql.Timestamp;
 
 /**
  * @author unknown
@@ -154,6 +155,12 @@ public class SuperAdministratorFrame extends JFrame {
         desktopPane.add(reservationFrame);
     }
 
+
+    private void thisWindowOpened(WindowEvent e) {
+        Timestamp time = TimeUtil.getTime();
+
+    }
+
     /**
      * 自动生成窗体的代码
      */
@@ -182,6 +189,12 @@ public class SuperAdministratorFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("\u7ba1\u7406\u5458\u4e3b\u754c\u9762");
         setIconImage(new ImageIcon(getClass().getResource("/img/logo.png")).getImage());
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                thisWindowOpened(e);
+            }
+        });
         Container contentPane = getContentPane();
 
         //======== menuBar1 ========

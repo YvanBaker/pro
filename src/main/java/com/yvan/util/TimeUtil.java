@@ -74,12 +74,32 @@ public class TimeUtil {
     }
 
     /**
+     * 小于当前时间
+     *
+     * @param date 时间
+     * @return true 小于当前时间
+     */
+    public static boolean timeLessCurrent(@NotNull Timestamp date) {
+        return date.getTime() <= System.currentTimeMillis();
+    }
+
+    /**
      * 大于当前时间
      *
      * @param date 时间
      * @return 大于当前时间
      */
     public static boolean timeMoreCurrent(@NotNull Date date) {
+        return date.getTime() >= System.currentTimeMillis();
+    }
+
+    /**
+     * 大于当前时间
+     *
+     * @param date 时间
+     * @return 大于当前时间
+     */
+    public static boolean timeMoreCurrent(@NotNull Timestamp date) {
         return date.getTime() >= System.currentTimeMillis();
     }
 

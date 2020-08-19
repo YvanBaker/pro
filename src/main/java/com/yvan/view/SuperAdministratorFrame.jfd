@@ -11,6 +11,7 @@ new FormModel {
 			"defaultCloseOperation": 3
 			"title": "管理员主界面"
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/img/logo.png" )
+			addEvent( new FormEvent( "java.awt.event.WindowListener", "windowOpened", "thisWindowOpened", true ) )
 			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class javax.swing.JDesktopPane ) ) {
 				name: "desktopPane"
 			} )
