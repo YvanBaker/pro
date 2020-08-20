@@ -1,0 +1,96 @@
+JFDML JFormDesigner: "7.0.2.4.305" Java: "11.0.6" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:81:p, par l {seq {comp scrollPane1:::p:725:p, space ::44:x}, seq l {comp label1:::p::p, space :p:27:p, comp strTextField:::p:281:p, space :p:41:p, comp inquireButton:::p::p, space ::26:x, comp initializeButton:::p:158:p, space ::43:x}}}, seq l {space :p:172:p, par l {seq {comp label2:::p:90:p, space :p:38:p, comp scrollPane2:::p:338:p, space ::212:x}, seq {comp freezeButton:::p::p, space ::255:x, comp unfreezeButton:::p::p, space :p:179:p}}}}"
+			"$verticalGroup": "par l {seq l {space :p:43:p, par b {comp label1::b:p:38:p, comp strTextField::b:p::p, comp inquireButton::b:p::p, comp initializeButton::b:p::p}, space s:::p, comp scrollPane1:::p:308:p, par l {seq {space s:::p, comp scrollPane2:::p:115:p, space ::34:x}, seq t {space ::70:x, comp label2:::p:32:p, space :p:65:p}}, par b {comp unfreezeButton::b:p::p, comp freezeButton::b:p::p}, space :p:26:p}}"
+		} ) {
+			name: "this"
+			"visible": true
+			"title": "普通用户管理"
+			"closable": true
+			"maximizable": true
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "用户查询："
+				"font": new java.awt.Font( "楷体", 1, 16 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/用户查询.png" )
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "strTextField"
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "inquireButton"
+				"text": "查询"
+				"icon": &SwingIcon0 new com.jformdesigner.model.SwingIcon( 0, "/img/查询.png" )
+				"font": &Font0 new java.awt.Font( "楷体", 1, 16 )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "inquireButtonActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "initializeButton"
+				"text": "初始化密码"
+				"icon": #SwingIcon0
+				"font": #Font0
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "initializeButtonActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "freezeButton"
+				"text": "冻结用户"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/冻结.png" )
+				"font": #Font0
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "freezeButtonActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "unfreezeButton"
+				"text": "解冻用户"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/解冻.png" )
+				"font": #Font0
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "unfreezeButtonActionPerformed", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane1"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "userTable"
+					"model": new com.jformdesigner.model.SwingTableModel( new java.util.Vector, new java.util.Vector {
+						add( "id" )
+						add( "用户名" )
+						add( "冻结状态" )
+					}, new java.util.Vector {
+						add( null )
+						add( class java.lang.Object )
+						add( class java.lang.Boolean )
+					}, new java.util.Vector {
+						add( null )
+						add( false )
+						add( false )
+					}, new java.util.Vector {
+						add( null )
+						add( null )
+						add( null )
+					} )
+					"minimumSize": sfield com.jformdesigner.model.FormObject NULL_VALUE
+					"fillsViewportHeight": true
+					"selectionMode": 0
+					addEvent( new FormEvent( "javax.swing.event.AncestorListener", "ancestorAdded", "userTableAncestorAdded", true ) )
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "原因："
+				"font": new java.awt.Font( "楷体", 1, 18 )
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/消息.png" )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane2"
+				add( new FormComponent( "javax.swing.JEditorPane" ) {
+					name: "editorPane1"
+				} )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 850, 650 )
+		} )
+	}
+}

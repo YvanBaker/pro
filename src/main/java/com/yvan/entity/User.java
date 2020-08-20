@@ -2,6 +2,7 @@ package com.yvan.entity;
 
 
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class User {
 
@@ -14,9 +15,14 @@ public class User {
     private double sumMoney;
     private boolean del;
     private java.sql.Timestamp creatData;
-    private boolean freeze;
+    private String freeze;
+    private Timestamp freezeTime;
 
-    public User(int id, String name, String password, float point, double balance, int level,  boolean del,double sumMoney, boolean freeze) {
+    public User(int id) {
+        this.id = id;
+    }
+
+    public User(int id, String name, String password, float point, double balance, int level, boolean del, double sumMoney) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -25,10 +31,9 @@ public class User {
         this.level = level;
         this.sumMoney = sumMoney;
         this.del = del;
-        this.freeze = freeze;
     }
 
-    public User(int id, String name, String password, float point, double balance, int level, double sumMoney, boolean del, Timestamp creatData, boolean freeze) {
+    public User(int id, String name, String password, float point, double balance, int level, double sumMoney, boolean del, Timestamp creatData) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -38,7 +43,6 @@ public class User {
         this.sumMoney = sumMoney;
         this.del = del;
         this.creatData = creatData;
-        this.freeze = freeze;
     }
 
     public User(int id, String name, String password, float point, double balance, int level, double sumMoney) {
@@ -49,6 +53,11 @@ public class User {
         this.balance = balance;
         this.level = level;
         this.sumMoney = sumMoney;
+    }
+
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 
     public int getId() {
@@ -132,12 +141,40 @@ public class User {
     }
 
 
-    public boolean getFreeze() {
+    public String getFreeze() {
         return freeze;
     }
 
-    public void setFreeze(boolean freeze) {
+    public void setFreeze(String freeze) {
         this.freeze = freeze;
     }
 
+    public boolean isDel() {
+        return del;
+    }
+
+    public Timestamp getFreezeTime() {
+        return freezeTime;
+    }
+
+    public void setFreezeTime(Timestamp freezeTime) {
+        this.freezeTime = freezeTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return getId() == user.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }

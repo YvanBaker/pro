@@ -13,9 +13,10 @@ public interface AdministratorDao {
      * 数据操作层
      *
      * @param name 查询的名字
+     * @param type 类型
      * @return 查询出的用户
      */
-    Administrator findByName(String name);
+    Administrator findByName(String name,String type);
 
     /**
      * 根据 id 查询数据

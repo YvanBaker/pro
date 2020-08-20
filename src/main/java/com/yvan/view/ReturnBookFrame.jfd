@@ -11,6 +11,7 @@ new FormModel {
 			"visible": true
 			"closable": true
 			"maximizable": true
+			"title": "还书"
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "借阅记录查询："

@@ -4,6 +4,7 @@ import com.yvan.biz.AdministratorBiz;
 import com.yvan.dao.AdministratorDao;
 import com.yvan.dao.impl.AdministratorDaoImpl;
 import com.yvan.entity.Administrator;
+import com.yvan.entity.UserType;
 import com.yvan.util.Md5Util;
 
 import java.sql.Timestamp;
@@ -17,20 +18,20 @@ public class AdministratorBizImpl implements AdministratorBiz {
 
 
     @Override
-    public boolean registered(String name, String password, String type) {
-        Administrator administrator = administratorDao.findByName(name);
-        if (administrator.getType().equals(type)) {
+    public boolean registered(String name, String password, UserType type) {
+        Administrator administrator = administratorDao.findByName(name, type.getType());
+        if (administrator != null) {
             return false;
         }
         password = Md5Util.md5(password);
         Timestamp data = new Timestamp(System.currentTimeMillis());
-        administrator = new Administrator(name, password, type, false, data);
+        administrator = new Administrator(name, password, type.getType(), false, data);
         return administratorDao.save(administrator) > 0;
     }
 
     @Override
     public Administrator login(String name, String password, String type) {
-        Administrator administrator = administratorDao.findByName(name);
+        Administrator administrator = administratorDao.findByName(name, type);
         if (administrator == null) {
             return null;
         }

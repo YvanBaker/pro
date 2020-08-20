@@ -10,11 +10,13 @@ import com.yvan.entity.Administrator;
 import com.yvan.entity.User;
 import com.yvan.entity.UserType;
 import com.yvan.util.StringUtil;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 /**
@@ -127,11 +129,14 @@ public class Login extends JFrame {
             user = null;
             return;
         }
-        if (user.getFreeze()) {
+        if (!StringUtil.isNull(user.getFreeze())) {
             StringBuffer stringBuffer = new StringBuffer();
-            stringBuffer.append("账号因欠款");
-            stringBuffer.append(user.getPoint());
-            stringBuffer.append("，已经被冻结，请及时充值！！");
+            stringBuffer.append("账号在：");
+            stringBuffer.append(user.getFreezeTime());
+            stringBuffer.append("\n");
+            stringBuffer.append("因：");
+            stringBuffer.append(user.getFreeze());
+            stringBuffer.append(" 被冻结。\n解冻请联系管理员解冻\n邮箱：xxxxxxx@xx.xxx\n手机：12345678912");
             JOptionPane.showMessageDialog(this, stringBuffer);
             return;
         }
@@ -161,12 +166,6 @@ public class Login extends JFrame {
         new SuperAdministratorFrame(administrator).setVisible(true);
     }
 
-    private void loginButtonKeyPressed(KeyEvent e) {
-        if (KeyEvent.getKeyText(e.getKeyCode()).compareToIgnoreCase("enter") == 0) {
-            loginButtonActionPerformed();
-        }
-    }
-
 
     /**
      * 登录点击响应
@@ -176,6 +175,18 @@ public class Login extends JFrame {
     private void loginButtonActionPerformed(ActionEvent e) {
         loginButtonActionPerformed();
     }
+
+    /**
+     * 登录 响应 enter事件
+     *
+     * @param e 事件
+     */
+    private void loginButtonKeyPressed(@NotNull KeyEvent e) {
+        if (KeyEvent.getKeyText(e.getKeyCode()).compareToIgnoreCase("enter") == 0) {
+            loginButtonActionPerformed();
+        }
+    }
+
 
     /**
      * 自动生成的窗体代码
@@ -245,6 +256,12 @@ public class Login extends JFrame {
                 loginButtonActionPerformed(e);
             }
         });
+        loginButton.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                loginButtonKeyPressed(e);
+            }
+        });
 
         //---- registeredButton ----
         registeredButton.setText("\u6ce8\u518c");
@@ -260,54 +277,54 @@ public class Login extends JFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(203, 203, 203)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(title, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
-                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addComponent(loginButton)
-                                .addGap(52, 52, 52)
-                                .addComponent(registeredButton)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                                .addComponent(resetButton))
-                            .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(label2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(label1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(userNameTextField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                    .addComponent(typeComboBox, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))))
-                    .addContainerGap(165, Short.MAX_VALUE))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                .addGap(203, 203, 203)
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addComponent(title, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                                        .addComponent(loginButton)
+                                                        .addGap(52, 52, 52)
+                                                        .addComponent(registeredButton)
+                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                                                        .addComponent(resetButton))
+                                                .addGroup(contentPaneLayout.createSequentialGroup()
+                                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(label2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(label1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addGap(18, 18, 18)
+                                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(userNameTextField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                                                .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                                                                .addComponent(typeComboBox, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))))
+                                .addContainerGap(165, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGap(61, 61, 61)
-                    .addComponent(title)
-                    .addGap(62, 62, 62)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label1)
-                        .addComponent(userNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(46, 46, 46)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label2)
-                        .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGap(44, 44, 44)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label3)
-                        .addComponent(typeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                            .addComponent(loginButton)
-                            .addComponent(registeredButton))
-                        .addComponent(resetButton, GroupLayout.Alignment.TRAILING))
-                    .addGap(68, 68, 68))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(title)
+                                .addGap(62, 62, 62)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label1)
+                                        .addComponent(userNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(46, 46, 46)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label2)
+                                        .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addGap(44, 44, 44)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label3)
+                                        .addComponent(typeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                .addComponent(loginButton)
+                                                .addComponent(registeredButton))
+                                        .addComponent(resetButton, GroupLayout.Alignment.TRAILING))
+                                .addGap(68, 68, 68))
         );
         pack();
         setLocationRelativeTo(getOwner());

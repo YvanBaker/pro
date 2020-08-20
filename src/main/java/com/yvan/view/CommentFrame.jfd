@@ -4,13 +4,14 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:109:p, comp label1:::p::p, space :p:53:p, comp strTextField:::p:362:p, space ::94:x, comp inquireButton:::p::p, space :p:93:p}, seq t {space ::39:x, comp scrollPane1:::p:781:p, space ::50:x}, seq l {space :p:83:p, comp label2:::p:92:p, space s:::p, par l {seq {comp enterButton:::p::p, space :p:213:p, comp ResetButton:::p::p}, comp scrollPane2:::p:408:p}, space ::269:x}}"
-			"$verticalGroup": "par l {seq l {space :p:20:p, par l {par b {comp label1::b:p:38:p, comp strTextField::b:p::p}, seq l {space :4:4:p, comp inquireButton:::p::p}}, space :p:41:p, comp scrollPane1:::p:229:p, par l {seq {space :p:46:p, comp scrollPane2:::p:121:p}, seq l {space :p:76:p, comp label2:::p:54:p}}, space ::92:x, par b {comp enterButton::b:p::p, comp ResetButton::b:p::p}, space :p:28:p}}"
+			"$horizontalGroup": "par l {seq l {space :p:109:p, comp label1:::p::p, space :p:53:p, comp strTextField:::p:362:p, space ::94:x, comp inquireButton:::p::p, space :p:93:p}, seq t {space ::39:x, comp scrollPane1:::p:781:p, space ::50:x}, seq l {space :p:83:p, comp label2:::p:92:p, space s:::p, par l {seq {comp enterButton:::p::p, space :p:213:p, comp ResetButton:::p::p}, comp scrollPane2:::p:434:p}, space ::243:x}}"
+			"$verticalGroup": "par l {seq l {space :p:20:p, par l {par b {comp label1::b:p:38:p, comp strTextField::b:p::p}, seq l {space :4:4:p, comp inquireButton:::p::p}}, space :p:41:p, comp scrollPane1:::p:229:p, par l {seq {space :p:76:p, comp label2:::p:54:p}, seq l {space :p:39:p, comp scrollPane2:::p:157:p}}, space ::63:x, par b {comp enterButton::b:p::p, comp ResetButton::b:p::p}, space :p:28:p}}"
 		} ) {
 			name: "this"
 			"visible": true
 			"closable": true
 			"maximizable": true
+			"title": "评论"
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "查询："
@@ -60,12 +61,6 @@ new FormModel {
 				"text": "评论："
 				"font": new java.awt.Font( "楷体", 1, 20 )
 			} )
-			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "scrollPane2"
-				add( new FormComponent( "javax.swing.JTextArea" ) {
-					name: "collectionTextArea"
-				} )
-			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "enterButton"
 				"text": "确认"
@@ -75,6 +70,12 @@ new FormModel {
 				name: "ResetButton"
 				"text": "重置"
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "resetButtonActionPerformed", true ) )
+			} )
+			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+				name: "scrollPane2"
+				add( new FormComponent( "javax.swing.JEditorPane" ) {
+					name: "textEditorPane"
+				} )
 			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )

@@ -74,7 +74,7 @@ public class ChangePasswordFrame extends JInternalFrame {
      * @param e 事件
      */
     private void enterButtonActionPerformed(ActionEvent e) {
-        String oldPassword = oldPassdwordTextField.getText();
+        String oldPassword = Md5Util.md5(oldPassdwordTextField.getText());
         String newPassword = String.valueOf(newPasswordField.getPassword());
         String enterPassword = String.valueOf(enterPasswordField.getPassword());
         if (administrator != null) {
@@ -86,7 +86,8 @@ public class ChangePasswordFrame extends JInternalFrame {
                 JOptionPane.showMessageDialog(this, "两次输入的密码不一致，请重新确认！！！");
                 return;
             }
-            if (oldPassword.equals(newPassword)) {
+            System.out.println();
+            if (oldPassword.equals(Md5Util.md5(newPassword))) {
                 JOptionPane.showMessageDialog(this, "原密码和新密码一致！！！");
                 return;
             }
@@ -139,6 +140,8 @@ public class ChangePasswordFrame extends JInternalFrame {
         //======== this ========
         setVisible(true);
         setTitle("\u4fee\u6539\u5bc6\u7801");
+        setClosable(true);
+        setMaximizable(true);
         Container contentPane = getContentPane();
 
         //---- label1 ----

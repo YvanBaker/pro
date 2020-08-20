@@ -2,12 +2,21 @@ package com.yvan.dao;
 
 import com.yvan.entity.User;
 
+import java.util.List;
+
 /**
- * @Description 操作 User表（用户） 的 dao 层
  * @author Yvan
+ * @Description 操作 User表（用户） 的 dao 层
  */
 
 public interface UserDao {
+
+    /**
+     * 查找所有用户
+     *
+     * @return 所有用户
+     */
+    List<User> findAll();
 
     /**
      * 根据用户名查找用户
@@ -17,6 +26,14 @@ public interface UserDao {
      * @return 找到返回 User对象 ，没找到返回 null
      */
     User findByName(String name);
+
+    /**
+     * 根据名字模糊查询
+     *
+     * @param name 模糊名字
+     * @return 用户列表
+     */
+    List<User> fuzzyFindByName(String name);
 
     /**
      * 根据 id 查找数据
@@ -59,7 +76,7 @@ public interface UserDao {
     /**
      * 修改 余额
      *
-     * @param id id
+     * @param id      id
      * @param balance 修改后的余额
      * @return 条数
      */

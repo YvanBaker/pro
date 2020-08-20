@@ -34,6 +34,7 @@ import java.util.Vector;
 /**
  * @author unknown
  */
+@SuppressWarnings("All")
 public class BorrowBookFrame extends JInternalFrame {
     private final BookBiz bookBiz = new BookBizImpl();
     private final RecordBookBiz recordBookBiz = new RecordBookBizImpl();
@@ -158,7 +159,6 @@ public class BorrowBookFrame extends JInternalFrame {
         inquireButtonActionPerformed(e);
     }
 
-
     /**
      * 点击收藏时响应
      *
@@ -205,7 +205,6 @@ public class BorrowBookFrame extends JInternalFrame {
         });
     }
 
-
     /**
      * 自动生成的窗体代码
      */
@@ -219,12 +218,13 @@ public class BorrowBookFrame extends JInternalFrame {
         bookInfo = new JTable();
         borrowButton = new JButton();
         scrollPane2 = new JScrollPane();
-        commentList = new JList<>();
+        commentList = new JList();
 
         //======== this ========
         setVisible(true);
         setClosable(true);
         setMaximizable(true);
+        setTitle("\u501f\u4e66");
         Container contentPane = getContentPane();
 
         //---- label1 ----
@@ -248,22 +248,24 @@ public class BorrowBookFrame extends JInternalFrame {
 
             //---- bookInfo ----
             bookInfo.setModel(new DefaultTableModel(
-                new Object[][] {
-                },
-                new String[] {
-                    "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u5728\u9986\u6570\u91cf", "\u6536\u85cf"
-                }
+                    new Object[][]{
+                    },
+                    new String[]{
+                            "\u4e66\u540d", "\u4f5c\u8005", "\u51fa\u7248\u793e", "\u51fa\u7248\u65e5\u671f", "\u7c7b\u578b", "\u4e66\u7c4d\u62bc\u91d1", "\u5728\u9986\u6570\u91cf", "\u6536\u85cf"
+                    }
             ) {
-                Class<?>[] columnTypes = new Class<?>[] {
-                    Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Integer.class, Boolean.class
+                Class<?>[] columnTypes = new Class<?>[]{
+                        Object.class, Object.class, Object.class, Object.class, Object.class, Float.class, Integer.class, Boolean.class
                 };
-                boolean[] columnEditable = new boolean[] {
-                    false, false, false, false, false, false, false, true
+                boolean[] columnEditable = new boolean[]{
+                        false, false, false, false, false, false, false, true
                 };
+
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
                 }
+
                 @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return columnEditable[columnIndex];
@@ -277,10 +279,14 @@ public class BorrowBookFrame extends JInternalFrame {
                 public void ancestorAdded(AncestorEvent e) {
                     bookInfoAncestorAdded(e);
                 }
+
                 @Override
-                public void ancestorMoved(AncestorEvent e) {}
+                public void ancestorMoved(AncestorEvent e) {
+                }
+
                 @Override
-                public void ancestorRemoved(AncestorEvent e) {}
+                public void ancestorRemoved(AncestorEvent e) {
+                }
             });
             bookInfo.addPropertyChangeListener(new PropertyChangeListener() {
                 @Override
@@ -319,39 +325,39 @@ public class BorrowBookFrame extends JInternalFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addGroup(contentPaneLayout.createParallelGroup()
+                contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(84, 84, 84)
-                            .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
-                            .addGap(31, 31, 31)
-                            .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
-                            .addGap(48, 48, 48)
-                            .addComponent(inquireButton, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
-                            .addGap(59, 59, 59)
-                            .addComponent(borrowButton, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(37, 37, 37)
-                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 923, GroupLayout.PREFERRED_SIZE)
-                            .addGap(34, 34, 34)
-                            .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(50, Short.MAX_VALUE))
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(84, 84, 84)
+                                                .addComponent(label1, GroupLayout.PREFERRED_SIZE, 107, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(31, 31, 31)
+                                                .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 367, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(48, 48, 48)
+                                                .addComponent(inquireButton, GroupLayout.PREFERRED_SIZE, 112, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(59, 59, 59)
+                                                .addComponent(borrowButton, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(37, 37, 37)
+                                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 923, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(34, 34, 34)
+                                                .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 236, GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(50, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addGap(40, 40, 40)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(inquireButton)
-                        .addComponent(borrowButton)
-                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(scrollPane2))
-                    .addGap(40, 40, 40))
+                contentPaneLayout.createParallelGroup()
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(inquireButton)
+                                        .addComponent(borrowButton)
+                                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 528, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(scrollPane2))
+                                .addGap(40, 40, 40))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -365,6 +371,6 @@ public class BorrowBookFrame extends JInternalFrame {
     private JTable bookInfo;
     private JButton borrowButton;
     private JScrollPane scrollPane2;
-    private JList<String> commentList;
+    private JList commentList;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

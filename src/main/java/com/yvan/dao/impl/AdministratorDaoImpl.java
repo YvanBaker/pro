@@ -16,17 +16,17 @@ import java.util.List;
 public class AdministratorDaoImpl extends BaseDao implements AdministratorDao {
 
     @Override
-    public Administrator findByName(String name) {
+    public Administrator findByName(String name,String type) {
         Administrator administrator = null;
-        String sql = "select id,name,password,type,del from administrator where name = ?";
+        String sql = "select id,name,password,type,del from administrator where name = ? and type = ?";
         List<Object> list = new ArrayList<>();
         list.add(name);
+        list.add(type);
         executeQuery(sql, list);
         try {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String password = rs.getString("password");
-                String type = rs.getString("type");
                 boolean del = rs.getBoolean("del");
                 administrator = new Administrator(id, name, password, type, del);
             }

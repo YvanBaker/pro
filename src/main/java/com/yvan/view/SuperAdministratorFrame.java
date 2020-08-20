@@ -110,10 +110,10 @@ public class SuperAdministratorFrame extends JFrame {
     private void changePasswordMenuItemActionPerformed(ActionEvent e) {
         ChangePasswordFrame changePasswordFrame;
         if (administrator != null) {
-            administrator = administratorBiz.updateAdministrator(administrator.getId());
+//            administrator = administratorBiz.updateAdministrator(administrator.getId());
             changePasswordFrame = new ChangePasswordFrame(administrator);
         } else {
-            user = userBiz.updateUser(user.getId());
+//            user = userBiz.updateUser(user.getId());
             changePasswordFrame = new ChangePasswordFrame(user);
         }
         changePasswordFrame.pack();
@@ -182,6 +182,25 @@ public class SuperAdministratorFrame extends JFrame {
     }
 
     /**
+     * 点击管理员注册的响应
+     *
+     * @param e 事件
+     */
+    private void adminMenuItem3ActionPerformed(ActionEvent e) {
+        AdminRegisteredFrame adminRegisteredFrame = new AdminRegisteredFrame();
+        adminRegisteredFrame.pack();
+        adminRegisteredFrame.setVisible(true);
+        desktopPane.add(adminRegisteredFrame);
+    }
+
+    private void menuItem4ActionPerformed(ActionEvent e) {
+        UserManageFrame userManageFrame = new UserManageFrame();
+        userManageFrame.pack();
+        userManageFrame.setVisible(true);
+        desktopPane.add(userManageFrame);
+    }
+
+    /**
      * 自动生成窗体的代码
      */
     private void initComponents() {
@@ -193,7 +212,7 @@ public class SuperAdministratorFrame extends JFrame {
         backToLogin = new JMenuItem();
         exit = new JMenuItem();
         menu2 = new JMenu();
-        menuItem3 = new JMenuItem();
+        adminMenuItem = new JMenuItem();
         menuItem4 = new JMenuItem();
         menu3 = new JMenu();
         addBook = new JMenuItem();
@@ -268,12 +287,24 @@ public class SuperAdministratorFrame extends JFrame {
                 menu2.setFont(new Font("\u6977\u4f53", Font.BOLD, 16));
                 menu2.setIcon(new ImageIcon(getClass().getResource("/img/\u7528\u6237\u7ba1\u7406.png")));
 
-                //---- menuItem3 ----
-                menuItem3.setText("\u7ba1\u7406\u5458\u6ce8\u518c");
-                menu2.add(menuItem3);
+                //---- adminMenuItem ----
+                adminMenuItem.setText("\u7ba1\u7406\u5458\u6ce8\u518c");
+                adminMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        adminMenuItem3ActionPerformed(e);
+                    }
+                });
+                menu2.add(adminMenuItem);
 
                 //---- menuItem4 ----
                 menuItem4.setText("\u666e\u901a\u7528\u6237\u7ba1\u7406");
+                menuItem4.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        menuItem4ActionPerformed(e);
+                    }
+                });
                 menu2.add(menuItem4);
             }
             menuBar1.add(menu2);
@@ -399,7 +430,7 @@ public class SuperAdministratorFrame extends JFrame {
     private JMenuItem backToLogin;
     private JMenuItem exit;
     private JMenu menu2;
-    private JMenuItem menuItem3;
+    private JMenuItem adminMenuItem;
     private JMenuItem menuItem4;
     private JMenu menu3;
     private JMenuItem addBook;

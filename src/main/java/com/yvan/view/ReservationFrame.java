@@ -176,6 +176,7 @@ public class ReservationFrame extends JInternalFrame {
         setVisible(true);
         setClosable(true);
         setMaximizable(true);
+        setTitle("\u9884\u7ea6");
         Container contentPane = getContentPane();
 
         //---- label1 ----

@@ -11,6 +11,7 @@ new FormModel {
 			"visible": true
 			"closable": true
 			"maximizable": true
+			"title": "预约"
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "书籍查询："

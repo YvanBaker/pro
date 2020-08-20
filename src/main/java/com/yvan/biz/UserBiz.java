@@ -1,6 +1,9 @@
 package com.yvan.biz;
 
+import com.yvan.entity.Freeze;
 import com.yvan.entity.User;
+
+import java.util.Map;
 
 /**
  * @author Yvan
@@ -42,4 +45,27 @@ public interface UserBiz {
      * @return user对象
      */
     User updateUser(int id);
+
+    /**
+     * 获取一个 用户 和 冻结 记录的映射关系
+     *
+     * @return 用户 和 冻结 的列表
+     */
+    Map<User, Freeze> userFreezeList();
+
+    /**
+     * 查找 用户 和 冻结 记录的映射关系
+     *
+     * @param str 字符串
+     * @return 用户 和 冻结 的列表
+     */
+    Map<User, Freeze> userFreezeList(String str);
+
+    /**
+     * 初始化用户密码
+     *
+     * @param id 用户 id
+     * @return true 密码 改为 123456
+     */
+    boolean initializePassword(int id);
 }

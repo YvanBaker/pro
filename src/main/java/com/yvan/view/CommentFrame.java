@@ -72,7 +72,7 @@ public class CommentFrame extends JInternalFrame {
      * @param e 时间
      */
     private void resetButtonActionPerformed(ActionEvent e) {
-        collectionTextArea.setText("");
+        textEditorPane.setText("");
     }
 
     /**
@@ -87,11 +87,11 @@ public class CommentFrame extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "请选择一条记录！！！");
             return;
         }
-        if (StringUtil.isNull(collectionTextArea.getText())) {
+        if (StringUtil.isNull(textEditorPane.getText())) {
             JOptionPane.showMessageDialog(this, "评论为空！！！");
             return;
         }
-        String content = collectionTextArea.getText();
+        String content = textEditorPane.getText();
 
 
         boolean flag = commentBiz.createComment(user, recordViewList.get(bookInfo.getSelectedRow()), content);
@@ -111,15 +111,16 @@ public class CommentFrame extends JInternalFrame {
         scrollPane1 = new JScrollPane();
         bookInfo = new JTable();
         label2 = new JLabel();
-        scrollPane2 = new JScrollPane();
-        collectionTextArea = new JTextArea();
         enterButton = new JButton();
         ResetButton = new JButton();
+        scrollPane2 = new JScrollPane();
+        textEditorPane = new JEditorPane();
 
         //======== this ========
         setVisible(true);
         setClosable(true);
         setMaximizable(true);
+        setTitle("\u8bc4\u8bba");
         Container contentPane = getContentPane();
 
         //---- label1 ----
@@ -143,17 +144,16 @@ public class CommentFrame extends JInternalFrame {
 
             //---- bookInfo ----
             bookInfo.setModel(new DefaultTableModel(
-                    new Object[][]{
-                            {null, null},
-                    },
-                    new String[]{
-                            "\u4e66\u540d", "\u4f5c\u8005"
-                    }
+                new Object[][] {
+                    {null, null},
+                },
+                new String[] {
+                    "\u4e66\u540d", "\u4f5c\u8005"
+                }
             ) {
-                boolean[] columnEditable = new boolean[]{
-                        false, false
+                boolean[] columnEditable = new boolean[] {
+                    false, false
                 };
-
                 @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return columnEditable[columnIndex];
@@ -167,14 +167,10 @@ public class CommentFrame extends JInternalFrame {
                 public void ancestorAdded(AncestorEvent e) {
                     bookInfoAncestorAdded(e);
                 }
-
                 @Override
-                public void ancestorMoved(AncestorEvent e) {
-                }
-
+                public void ancestorMoved(AncestorEvent e) {}
                 @Override
-                public void ancestorRemoved(AncestorEvent e) {
-                }
+                public void ancestorRemoved(AncestorEvent e) {}
             });
             scrollPane1.setViewportView(bookInfo);
         }
@@ -182,11 +178,6 @@ public class CommentFrame extends JInternalFrame {
         //---- label2 ----
         label2.setText("\u8bc4\u8bba\uff1a");
         label2.setFont(new Font("\u6977\u4f53", Font.BOLD, 20));
-
-        //======== scrollPane2 ========
-        {
-            scrollPane2.setViewportView(collectionTextArea);
-        }
 
         //---- enterButton ----
         enterButton.setText("\u786e\u8ba4");
@@ -206,59 +197,64 @@ public class CommentFrame extends JInternalFrame {
             }
         });
 
+        //======== scrollPane2 ========
+        {
+            scrollPane2.setViewportView(textEditorPane);
+        }
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-                contentPaneLayout.createParallelGroup()
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(109, 109, 109)
+                    .addComponent(label1)
+                    .addGap(53, 53, 53)
+                    .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 362, GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                    .addComponent(inquireButton)
+                    .addGap(93, 93, 93))
+                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                    .addContainerGap(39, Short.MAX_VALUE)
+                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 781, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(50, Short.MAX_VALUE))
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(83, 83, 83)
+                    .addComponent(label2, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(109, 109, 109)
-                                .addComponent(label1)
-                                .addGap(53, 53, 53)
-                                .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 362, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
-                                .addComponent(inquireButton)
-                                .addGap(93, 93, 93))
-                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                .addContainerGap(39, Short.MAX_VALUE)
-                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 781, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(50, Short.MAX_VALUE))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(83, 83, 83)
-                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(enterButton)
-                                                .addGap(213, 213, 213)
-                                                .addComponent(ResetButton))
-                                        .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(269, Short.MAX_VALUE))
+                            .addComponent(enterButton)
+                            .addGap(213, 213, 213)
+                            .addComponent(ResetButton))
+                        .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 434, GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(243, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
-                contentPaneLayout.createParallelGroup()
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                                .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addGap(4, 4, 4)
-                                                .addComponent(inquireButton)))
-                                .addGap(41, 41, 41)
-                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addGap(46, 46, 46)
-                                                .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addGap(76, 76, 76)
-                                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(enterButton)
-                                        .addComponent(ResetButton))
-                                .addGap(28, 28, 28))
+                            .addGap(4, 4, 4)
+                            .addComponent(inquireButton)))
+                    .addGap(41, 41, 41)
+                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(76, 76, 76)
+                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 54, GroupLayout.PREFERRED_SIZE))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addGap(39, 39, 39)
+                            .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(enterButton)
+                        .addComponent(ResetButton))
+                    .addGap(28, 28, 28))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -271,9 +267,9 @@ public class CommentFrame extends JInternalFrame {
     private JScrollPane scrollPane1;
     private JTable bookInfo;
     private JLabel label2;
-    private JScrollPane scrollPane2;
-    private JTextArea collectionTextArea;
     private JButton enterButton;
     private JButton ResetButton;
+    private JScrollPane scrollPane2;
+    private JEditorPane textEditorPane;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

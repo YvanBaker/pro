@@ -1,6 +1,7 @@
 package com.yvan.biz;
 
 import com.yvan.entity.Administrator;
+import com.yvan.entity.UserType;
 
 /**
  * @author Yvan
@@ -15,7 +16,8 @@ public interface AdministratorBiz {
      * @param type     类型
      * @return true 成功注册
      */
-    boolean registered(String name, String password, String type);
+    boolean registered(String name, String password, UserType type);
+
 
     /**
      * 管理员登录的业务逻辑

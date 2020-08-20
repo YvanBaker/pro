@@ -164,6 +164,7 @@ public class ReturnBookFrame extends JInternalFrame {
         setVisible(true);
         setClosable(true);
         setMaximizable(true);
+        setTitle("\u8fd8\u4e66");
         Container contentPane = getContentPane();
 
         //---- label1 ----
