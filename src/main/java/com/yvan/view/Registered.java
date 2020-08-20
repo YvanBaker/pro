@@ -56,7 +56,6 @@ public class Registered extends JFrame {
      * @param e 点击的按钮
      */
     private void resetButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         userNameTextField.setText("");
         passwordField.setText("");
         enterPasswordField.setText("");

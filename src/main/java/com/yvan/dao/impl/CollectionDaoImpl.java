@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @author Yvan
- * @Description TODO
+ * @Description CollectionDao 的 实现类
  * @Classname CollectionDaoImpl
  * @Date 2020/8/18 13:15
  */

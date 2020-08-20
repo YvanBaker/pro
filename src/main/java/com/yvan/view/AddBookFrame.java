@@ -135,7 +135,6 @@ public class AddBookFrame extends JInternalFrame {
      * @param e 点击事件
      */
     private void resetButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         bookNameTextField.setText("");
         authorTextField.setText("");
         pressTextField.setText("");

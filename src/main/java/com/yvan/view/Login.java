@@ -37,7 +37,6 @@ public class Login extends JFrame {
      * @param e 点击的按钮
      */
     private void resetButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         userNameTextField.setText("");
         passwordField.setText("");
         typeComboBox.setSelectedIndex(0);
@@ -50,7 +49,6 @@ public class Login extends JFrame {
      * @param e 点击的按钮
      */
     private void registeredButtonActionPerformed(ActionEvent e) {
-        // TODO add your code here
         new Registered().setVisible(true);
     }
 

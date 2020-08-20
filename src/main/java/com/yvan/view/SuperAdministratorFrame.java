@@ -174,7 +174,6 @@ public class SuperAdministratorFrame extends JFrame {
      * @param e 事件
      */
     private void commentMenuItemActionPerformed(ActionEvent e) {
-        // TODO add your code here
         CommentFrame commentFrame = new CommentFrame(user);
         commentFrame.pack();
         commentFrame.setVisible(true);

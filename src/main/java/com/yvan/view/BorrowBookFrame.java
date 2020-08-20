@@ -165,7 +165,6 @@ public class BorrowBookFrame extends JInternalFrame {
      * @param e 事件
      */
     private void bookInfoPropertyChange(PropertyChangeEvent e) {
-        // TODO add your code here
         if (bookInfo.getSelectedRow() == -1) {
             return;
         }

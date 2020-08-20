@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 /**
  * @author Yvan
- * @Description TODO
+ * @Description RecordDaoImpl 的 测试类
  * @Classname RecordDaoImplTest
  * @Date 2020/8/17 10:52
  */

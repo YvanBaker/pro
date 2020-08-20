@@ -4,10 +4,13 @@
 
 package com.yvan.view;
 
+import com.yvan.biz.FreezeBiz;
 import com.yvan.biz.UserBiz;
+import com.yvan.biz.impl.FreezeBizImpl;
 import com.yvan.biz.impl.UserBizImpl;
 import com.yvan.entity.Freeze;
 import com.yvan.entity.User;
+import com.yvan.util.StringUtil;
 
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
@@ -28,6 +31,7 @@ import java.util.Vector;
  */
 public class UserManageFrame extends JInternalFrame {
     private final UserBiz userBiz = new UserBizImpl();
+    private final FreezeBiz freezeBiz = new FreezeBizImpl();
     private Map<User, Freeze> userFreezeMap = new HashMap<>();
 
     public UserManageFrame() {
@@ -82,10 +86,37 @@ public class UserManageFrame extends JInternalFrame {
     }
 
     private void freezeButtonActionPerformed(ActionEvent e) {
-
+        int row = userTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "请先选择一个用户！！");
+            return;
+        }
+        String reason = reasonEditorPane.getText();
+        if (StringUtil.isNull(reason)) {
+            JOptionPane.showMessageDialog(this, "请说明冻结原因！！");
+            return;
+        }
+        DefaultTableModel userTableModel = (DefaultTableModel) userTable.getModel();
+        int uid = (int) userTableModel.getValueAt(row, 0);
+        boolean flag = (boolean) userTableModel.getValueAt(row, 2);
+        if (flag) {
+            JOptionPane.showMessageDialog(this, "用户已经冻结，无需重复冻结！！");
+            reasonEditorPane.setText("");
+            return;
+        }
+        flag = freezeBiz.freezeUser(uid, reason);
+        if (!flag) {
+            JOptionPane.showMessageDialog(this, "未知原因导致冻结失败，请重试！！！");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "冻结成功！！！");
+        userTableModel.setValueAt(true, row, 2);
+        reasonEditorPane.setText("");
     }
 
     private void unfreezeButtonActionPerformed(ActionEvent e) {
+        //TODO add your code here
+
     }
 
     private void inquireButtonActionPerformed(ActionEvent e) {
@@ -114,7 +145,7 @@ public class UserManageFrame extends JInternalFrame {
         userTable = new JTable();
         label2 = new JLabel();
         scrollPane2 = new JScrollPane();
-        editorPane1 = new JEditorPane();
+        reasonEditorPane = new JEditorPane();
 
         //======== this ========
         setVisible(true);
@@ -227,7 +258,7 @@ public class UserManageFrame extends JInternalFrame {
 
         //======== scrollPane2 ========
         {
-            scrollPane2.setViewportView(editorPane1);
+            scrollPane2.setViewportView(reasonEditorPane);
         }
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
@@ -303,6 +334,6 @@ public class UserManageFrame extends JInternalFrame {
     private JTable userTable;
     private JLabel label2;
     private JScrollPane scrollPane2;
-    private JEditorPane editorPane1;
+    private JEditorPane reasonEditorPane;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

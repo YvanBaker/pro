@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 /**
  * @author Yvan
- * @Description TODO
+ * @Description StringUtil 的 测试类
  * @Classname StringUtilTest
  * @Date 2020/8/17 20:02
  */

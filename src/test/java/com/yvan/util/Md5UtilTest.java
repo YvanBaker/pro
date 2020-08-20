@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 
 /**
  * @author Yvan
- * @Description TODO
+ * @Description Md5Util 的 测试类
  * @Classname Md5UtilTest
  * @Date 2020/8/17 19:01
  */
