@@ -1,6 +1,8 @@
 package com.yvan.entity;
 
 
+import java.sql.Timestamp;
+
 /**
  * @author Yvan
  */
@@ -9,13 +11,21 @@ public class Reservation {
     private int id;
     private int uid;
     private int bid;
-    private String time;
+    private Timestamp time;
     private boolean fulfill;
 
     public Reservation(int id, int uid, int bid, boolean fulfill) {
         this.id = id;
         this.uid = uid;
         this.bid = bid;
+        this.fulfill = fulfill;
+    }
+
+    public Reservation(int id, int uid, int bid, Timestamp time, boolean fulfill) {
+        this.id = id;
+        this.uid = uid;
+        this.bid = bid;
+        this.time = time;
         this.fulfill = fulfill;
     }
 
@@ -46,11 +56,11 @@ public class Reservation {
     }
 
 
-    public String getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 

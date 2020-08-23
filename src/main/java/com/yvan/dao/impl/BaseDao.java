@@ -25,7 +25,9 @@ public class BaseDao {
         this.conn = JdbcUtil.getConn();
     }
 
-
+    /**
+     * 关闭所有流
+     */
     protected void closeAll() {
         if (conn != null) {
             try {
@@ -55,7 +57,6 @@ public class BaseDao {
      *
      * @param sql  sql语句
      * @param list 参数列表
-     *
      */
     protected void executeQuery(String sql, @NotNull List<Object> list) {
         getConn();
@@ -71,7 +72,7 @@ public class BaseDao {
         }
     }
 
-    protected void executeQuery(String sql){
+    protected void executeQuery(String sql) {
         getConn();
         try {
             ps = conn.prepareStatement(sql);

@@ -68,4 +68,13 @@ public interface UserBiz {
      * @return true 密码 改为 123456
      */
     boolean initializePassword(int id);
+
+    /**
+     * 用户充值
+     *
+     * @param user 用户
+     * @param money 金额
+     * @return true 成功
+     */
+    User recharge(User user, int money);
 }

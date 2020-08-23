@@ -5,11 +5,15 @@
 package com.yvan.view;
 
 import com.yvan.biz.AdministratorBiz;
+import com.yvan.biz.ReservationBiz;
 import com.yvan.biz.UserBiz;
 import com.yvan.biz.impl.AdministratorBizImpl;
+import com.yvan.biz.impl.ReservationBizImpl;
 import com.yvan.biz.impl.UserBizImpl;
 import com.yvan.entity.Administrator;
+import com.yvan.entity.Book;
 import com.yvan.entity.User;
+import com.yvan.entity.UserType;
 import com.yvan.util.TimeUtil;
 
 import javax.swing.*;
@@ -19,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author unknown
@@ -28,6 +33,7 @@ public class SuperAdministratorFrame extends JFrame {
     private User user;
     private final AdministratorBiz administratorBiz = new AdministratorBizImpl();
     private final UserBiz userBiz = new UserBizImpl();
+    private final ReservationBiz reservationBiz = new ReservationBizImpl();
 
     public SuperAdministratorFrame() {
         initComponents();
@@ -110,10 +116,8 @@ public class SuperAdministratorFrame extends JFrame {
     private void changePasswordMenuItemActionPerformed(ActionEvent e) {
         ChangePasswordFrame changePasswordFrame;
         if (administrator != null) {
-//            administrator = administratorBiz.updateAdministrator(administrator.getId());
             changePasswordFrame = new ChangePasswordFrame(administrator);
         } else {
-//            user = userBiz.updateUser(user.getId());
             changePasswordFrame = new ChangePasswordFrame(user);
         }
         changePasswordFrame.pack();
@@ -157,7 +161,6 @@ public class SuperAdministratorFrame extends JFrame {
         desktopPane.add(reservationFrame);
     }
 
-
     /**
      * 登录时发生的响应
      *
@@ -165,7 +168,19 @@ public class SuperAdministratorFrame extends JFrame {
      */
     private void thisWindowOpened(WindowEvent e) {
         Timestamp time = TimeUtil.getTime();
-
+        if (user == null) {
+            return;
+        }
+        List<Book> reservation = reservationBiz.findReservation(user);
+        if (reservation == null || reservation.isEmpty()){
+            return;
+        }
+        StringBuffer str = new StringBuffer("您预约的：\n");
+        for (Book book : reservation) {
+            str.append(book.getBookName()+"\n");
+        }
+        str.append("已经有库存了,请假借阅！！！");
+        JOptionPane.showMessageDialog(this, str);
     }
 
     /**
@@ -192,11 +207,28 @@ public class SuperAdministratorFrame extends JFrame {
         desktopPane.add(adminRegisteredFrame);
     }
 
-    private void menuItem4ActionPerformed(ActionEvent e) {
+    /**
+     * 点击用户管理的响应
+     *
+     * @param e 事件
+     */
+    private void userManageMenuItemActionPerformed(ActionEvent e) {
         UserManageFrame userManageFrame = new UserManageFrame();
         userManageFrame.pack();
         userManageFrame.setVisible(true);
         desktopPane.add(userManageFrame);
+    }
+
+    /**
+     * 点击充值的响应
+     *
+     * @param e 事件
+     */
+    private void rechargeMenuItemActionPerformed(ActionEvent e) {
+        RechargeFrame rechargeFrame = new RechargeFrame(user);
+        rechargeFrame.pack();
+        rechargeFrame.setVisible(true);
+        desktopPane.add(rechargeFrame);
     }
 
     /**
@@ -212,7 +244,8 @@ public class SuperAdministratorFrame extends JFrame {
         exit = new JMenuItem();
         menu2 = new JMenu();
         adminMenuItem = new JMenuItem();
-        menuItem4 = new JMenuItem();
+        userManageMenuItem = new JMenuItem();
+        rechargeMenuItem = new JMenuItem();
         menu3 = new JMenu();
         addBook = new JMenuItem();
         showBookMenuItem = new JMenuItem();
@@ -288,6 +321,8 @@ public class SuperAdministratorFrame extends JFrame {
 
                 //---- adminMenuItem ----
                 adminMenuItem.setText("\u7ba1\u7406\u5458\u6ce8\u518c");
+                adminMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u7ba1\u7406\u5458.png")));
+                adminMenuItem.setVisible(false);
                 adminMenuItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -296,15 +331,29 @@ public class SuperAdministratorFrame extends JFrame {
                 });
                 menu2.add(adminMenuItem);
 
-                //---- menuItem4 ----
-                menuItem4.setText("\u666e\u901a\u7528\u6237\u7ba1\u7406");
-                menuItem4.addActionListener(new ActionListener() {
+                //---- userManageMenuItem ----
+                userManageMenuItem.setText("\u666e\u901a\u7528\u6237\u7ba1\u7406");
+                userManageMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u7528\u6237.png")));
+                userManageMenuItem.setVisible(false);
+                userManageMenuItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        menuItem4ActionPerformed(e);
+                        userManageMenuItemActionPerformed(e);
                     }
                 });
-                menu2.add(menuItem4);
+                menu2.add(userManageMenuItem);
+
+                //---- rechargeMenuItem ----
+                rechargeMenuItem.setText("\u7528\u6237\u5145\u503c");
+                rechargeMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u5145\u503c.png")));
+                rechargeMenuItem.setVisible(false);
+                rechargeMenuItem.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        rechargeMenuItemActionPerformed(e);
+                    }
+                });
+                menu2.add(rechargeMenuItem);
             }
             menuBar1.add(menu2);
 
@@ -317,6 +366,7 @@ public class SuperAdministratorFrame extends JFrame {
                 //---- addBook ----
                 addBook.setText("\u6dfb\u52a0\u56fe\u4e66");
                 addBook.setIcon(new ImageIcon(getClass().getResource("/img/\u6dfb\u52a0.png")));
+                addBook.setVisible(false);
                 addBook.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -328,6 +378,7 @@ public class SuperAdministratorFrame extends JFrame {
                 //---- showBookMenuItem ----
                 showBookMenuItem.setText("\u67e5\u770b\u56fe\u4e66");
                 showBookMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u67e5\u770b.png")));
+                showBookMenuItem.setVisible(false);
                 showBookMenuItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -339,6 +390,7 @@ public class SuperAdministratorFrame extends JFrame {
                 //---- borrowBookMenuItem ----
                 borrowBookMenuItem.setText("\u501f\u4e66");
                 borrowBookMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u501f\u4e66.png")));
+                borrowBookMenuItem.setVisible(false);
                 borrowBookMenuItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -350,6 +402,7 @@ public class SuperAdministratorFrame extends JFrame {
                 //---- returnBookMenuItem ----
                 returnBookMenuItem.setText("\u8fd8\u4e66");
                 returnBookMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u56fe\u4e66\u5f52\u8fd8.png")));
+                returnBookMenuItem.setVisible(false);
                 returnBookMenuItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -361,6 +414,7 @@ public class SuperAdministratorFrame extends JFrame {
                 //---- reservatioMenuItem ----
                 reservatioMenuItem.setText("\u9884\u7ea6");
                 reservatioMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u9884\u7ea6.png")));
+                reservatioMenuItem.setVisible(false);
                 reservatioMenuItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -372,6 +426,7 @@ public class SuperAdministratorFrame extends JFrame {
                 //---- commentMenuItem ----
                 commentMenuItem.setText("\u8bc4\u8bba");
                 commentMenuItem.setIcon(new ImageIcon(getClass().getResource("/img/\u8bc4\u8bba.png")));
+                commentMenuItem.setVisible(false);
                 commentMenuItem.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -408,7 +463,7 @@ public class SuperAdministratorFrame extends JFrame {
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
-                .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 1888, Short.MAX_VALUE)
+                .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 1883, Short.MAX_VALUE)
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -419,6 +474,21 @@ public class SuperAdministratorFrame extends JFrame {
         pack();
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
+        if (administrator != null){
+            if (UserType.SUPERADMINISTRATOR.equals(administrator.getType())){
+                adminMenuItem.setVisible(true);
+            }
+            userManageMenuItem.setVisible(true);
+            addBook.setVisible(true);
+            showBookMenuItem.setVisible(true);
+        }
+        if (user != null){
+            rechargeMenuItem.setVisible(true);
+            borrowBookMenuItem.setVisible(true);
+            returnBookMenuItem.setVisible(true);
+            reservatioMenuItem.setVisible(true);
+            commentMenuItem.setVisible(true);
+        }
     }
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
@@ -430,7 +500,8 @@ public class SuperAdministratorFrame extends JFrame {
     private JMenuItem exit;
     private JMenu menu2;
     private JMenuItem adminMenuItem;
-    private JMenuItem menuItem4;
+    private JMenuItem userManageMenuItem;
+    private JMenuItem rechargeMenuItem;
     private JMenu menu3;
     private JMenuItem addBook;
     private JMenuItem showBookMenuItem;

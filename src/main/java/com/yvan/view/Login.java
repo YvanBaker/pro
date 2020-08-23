@@ -9,8 +9,8 @@ import com.yvan.biz.impl.UserBizImpl;
 import com.yvan.entity.Administrator;
 import com.yvan.entity.User;
 import com.yvan.entity.UserType;
+import com.yvan.util.CodeUtil;
 import com.yvan.util.StringUtil;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +23,19 @@ import java.awt.event.KeyEvent;
  * @author unknown
  */
 public class Login extends JFrame {
+    private static final int COUNT = 5;
+
     private Administrator administrator;
     private User user;
+    /**
+     * 点击登录的次数
+     **/
+    private int count = 0;
+
+    /**
+     * 验证码 text
+     */
+    private String code;
 
     public Login() {
         initComponents();
@@ -66,6 +77,15 @@ public class Login extends JFrame {
             JOptionPane.showMessageDialog(this, StringUtil.isNullString("密码"));
             return true;
         }
+        if (count > COUNT) {
+            if (StringUtil.isNull(codeTextField.getText())) {
+                JOptionPane.showMessageDialog(this, StringUtil.isNullString("验证码"));
+                CodeUtil codeUtil = new CodeUtil();
+                codeImagelabel.setIcon(new ImageIcon(codeUtil.getImage()));
+                code = codeUtil.getText();
+                return true;
+            }
+        }
         return false;
     }
 
@@ -86,8 +106,18 @@ public class Login extends JFrame {
      * 点击登录按钮响应事件
      */
     private void loginButtonActionPerformed() {
+        count++;
         String userName = userNameTextField.getText();
         String password = String.valueOf(passwordField.getPassword());
+        String inputCode = codeTextField.getText();
+        if (count == COUNT) {
+            codeImagelabel.setVisible(true);
+            codeTextField.setVisible(true);
+            codeLabel.setVisible(true);
+            CodeUtil codeUtil = new CodeUtil();
+            codeImagelabel.setIcon(new ImageIcon(codeUtil.getImage()));
+            code = codeUtil.getText();
+        }
         if (isNull()) {
             return;
         }
@@ -98,16 +128,18 @@ public class Login extends JFrame {
         if (type != null) {
             switch (type) {
                 case USER:
-                    userLogin(userName, password);
+                    userLogin(userName, password, inputCode);
                     break;
                 case ADMINISTRATOR:
                 case SUPERADMINISTRATOR:
-                    administratorLogin(userName, password, type.getType());
+                    administratorLogin(userName, password, type.getType(), inputCode);
                     break;
                 default:
                     break;
             }
         }
+
+
     }
 
     /**
@@ -116,7 +148,15 @@ public class Login extends JFrame {
      * @param userName 用户名
      * @param password 用户密码
      */
-    private void userLogin(String userName, String password) {
+    private void userLogin(String userName, String password, String inputCode) {
+        if (count > COUNT && !code.equalsIgnoreCase(inputCode)) {
+            JOptionPane.showMessageDialog(this, "验证码错误，重新输入！！！");
+            CodeUtil codeUtil = new CodeUtil();
+            codeImagelabel.setIcon(new ImageIcon(codeUtil.getImage()));
+            code = codeUtil.getText();
+            codeTextField.setText("");
+            return;
+        }
         user = new UserBizImpl().login(userName, password);
         if (user == null) {
             JOptionPane.showMessageDialog(this, "账户或密码错误！！");
@@ -149,7 +189,14 @@ public class Login extends JFrame {
      * @param password 密码
      * @param type     类型
      */
-    private void administratorLogin(String userName, String password, String type) {
+    private void administratorLogin(String userName, String password, String type, String inputCode) {
+        if (count > COUNT && !code.equalsIgnoreCase(inputCode)) {
+            JOptionPane.showMessageDialog(this, "验证码错误，重新输入！！！");
+            CodeUtil codeUtil = new CodeUtil();
+            codeImagelabel.setIcon(new ImageIcon(codeUtil.getImage()));
+            code = codeUtil.getText();
+            return;
+        }
         administrator = new AdministratorBizImpl().login(userName, password, type);
         if (administrator == null) {
             JOptionPane.showMessageDialog(this, "账户或密码错误！！");
@@ -163,7 +210,6 @@ public class Login extends JFrame {
         this.dispose();
         new SuperAdministratorFrame(administrator).setVisible(true);
     }
-
 
     /**
      * 登录点击响应
@@ -179,12 +225,11 @@ public class Login extends JFrame {
      *
      * @param e 事件
      */
-    private void loginButtonKeyPressed(@NotNull KeyEvent e) {
+    private void loginButtonKeyPressed(KeyEvent e) {
         if (KeyEvent.getKeyText(e.getKeyCode()).compareToIgnoreCase("enter") == 0) {
             loginButtonActionPerformed();
         }
     }
-
 
     /**
      * 自动生成的窗体代码
@@ -202,6 +247,9 @@ public class Login extends JFrame {
         resetButton = new JButton();
         loginButton = new JButton();
         registeredButton = new JButton();
+        codeLabel = new JLabel();
+        codeImagelabel = new JLabel();
+        codeTextField = new JTextField();
 
         //======== this ========
         setFont(new Font("\u9ed1\u4f53", Font.BOLD, 16));
@@ -272,6 +320,18 @@ public class Login extends JFrame {
             }
         });
 
+        //---- codeLabel ----
+        codeLabel.setText("\u9a8c\u8bc1\u7801\uff1a");
+        codeLabel.setFont(new Font("\u6977\u4f53", Font.BOLD, 14));
+        codeLabel.setIcon(new ImageIcon(getClass().getResource("/img/\u9a8c\u8bc1\u7801.png")));
+        codeLabel.setVisible(false);
+
+        //---- codeImagelabel ----
+        codeImagelabel.setVisible(false);
+
+        //---- codeTextField ----
+        codeTextField.setVisible(false);
+
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
@@ -280,31 +340,37 @@ public class Login extends JFrame {
                                 .addGap(203, 203, 203)
                                 .addGroup(contentPaneLayout.createParallelGroup()
                                         .addComponent(title, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
-                                                .addGroup(contentPaneLayout.createSequentialGroup()
-                                                        .addComponent(loginButton)
-                                                        .addGap(52, 52, 52)
-                                                        .addComponent(registeredButton)
-                                                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                                                        .addComponent(resetButton))
-                                                .addGroup(contentPaneLayout.createSequentialGroup()
-                                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(label2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(label1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                        .addGap(18, 18, 18)
-                                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(userNameTextField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                                                .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                                                .addComponent(typeComboBox, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))))
-                                .addContainerGap(165, Short.MAX_VALUE))
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                                .addComponent(loginButton)
+                                                                .addGap(52, 52, 52)
+                                                                .addComponent(registeredButton)
+                                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                                                                .addComponent(resetButton))
+                                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                                .addGroup(contentPaneLayout.createParallelGroup()
+                                                                        .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                                .addComponent(label2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                .addComponent(label1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                .addComponent(label3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                        .addComponent(codeLabel))
+                                                                .addGap(18, 18, 18)
+                                                                .addGroup(contentPaneLayout.createParallelGroup()
+                                                                        .addComponent(userNameTextField, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                                                                        .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                                                                        .addComponent(typeComboBox, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                                                                        .addComponent(codeTextField, GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(codeImagelabel, GroupLayout.PREFERRED_SIZE, 134, GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(224, Short.MAX_VALUE))
         );
         contentPaneLayout.setVerticalGroup(
                 contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
                                 .addGap(61, 61, 61)
                                 .addComponent(title)
-                                .addGap(62, 62, 62)
+                                .addGap(46, 46, 46)
                                 .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(label1)
                                         .addComponent(userNameTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -316,7 +382,17 @@ public class Login extends JFrame {
                                 .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(label3)
                                         .addComponent(typeComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                                .addGroup(contentPaneLayout.createParallelGroup()
+                                        .addGroup(contentPaneLayout.createSequentialGroup()
+                                                .addGap(30, 30, 30)
+                                                .addGroup(contentPaneLayout.createParallelGroup()
+                                                        .addComponent(codeLabel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(codeTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE))
+                                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                                                .addComponent(codeImagelabel, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(34, 34, 34)))
                                 .addGroup(contentPaneLayout.createParallelGroup()
                                         .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(loginButton)
@@ -348,5 +424,8 @@ public class Login extends JFrame {
     private JButton resetButton;
     private JButton loginButton;
     private JButton registeredButton;
+    private JLabel codeLabel;
+    private JLabel codeImagelabel;
+    private JTextField codeTextField;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

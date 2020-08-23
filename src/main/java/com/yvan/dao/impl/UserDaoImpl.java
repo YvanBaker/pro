@@ -160,4 +160,26 @@ public class UserDaoImpl extends BaseDao implements UserDao {
         closeAll();
         return res;
     }
+
+    @Override
+    public int updateLevel(int id, int level) {
+        String sql = SqlUtil.update("user", "level = ?", "id = ?");
+        List<Object> list = new ArrayList<>();
+        list.add(level);
+        list.add(id);
+        int res = executeUpdate(sql, list);
+        closeAll();
+        return res;
+    }
+
+    @Override
+    public int updateSumMoney(int id, double sumMoney) {
+        String sql = SqlUtil.update("user", "sum_money = ?", "id = ?");
+        List<Object> list = new ArrayList<>();
+        list.add(sumMoney);
+        list.add(id);
+        int res = executeUpdate(sql, list);
+        closeAll();
+        return res;
+    }
 }

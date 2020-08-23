@@ -32,6 +32,14 @@ public interface ReservationDao {
     List<Reservation> findByBid(int bid);
 
     /**
+     * 根据 uid 查询 预约记录
+     *
+     * @param uid uid
+     * @return Reservation 记录
+     */
+    List<Reservation> findByUid(int uid);
+
+    /**
      * 更加 uid 和 bid 查询 预约记录
      *
      * @param uid uid
@@ -43,9 +51,8 @@ public interface ReservationDao {
     /**
      * 更改 fulfill 字段为 true
      *
-     * @param uid uid
-     * @param bid bid
+     * @param id uid
      * @return 条数
      */
-    int updateFulfillTrue(int uid, int bid);
+    int updateFulfillTrue(int id);
 }

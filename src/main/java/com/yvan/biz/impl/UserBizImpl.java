@@ -2,12 +2,15 @@ package com.yvan.biz.impl;
 
 import com.yvan.biz.UserBiz;
 import com.yvan.dao.FreezeDao;
+import com.yvan.dao.JournalDao;
 import com.yvan.dao.UserDao;
 import com.yvan.dao.impl.FreezeDaoImpl;
+import com.yvan.dao.impl.JournalDaoImpl;
 import com.yvan.dao.impl.UserDaoImpl;
 import com.yvan.entity.Freeze;
 import com.yvan.entity.User;
 import com.yvan.util.Md5Util;
+import com.yvan.util.TimeUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.Map;
 public class UserBizImpl implements UserBiz {
     private final UserDao userDao = new UserDaoImpl();
     private final FreezeDao freezeDao = new FreezeDaoImpl();
+    private final JournalDao journalDao = new JournalDaoImpl();
 
     @Override
     public boolean registered(String name, String password) {
@@ -43,7 +47,7 @@ public class UserBizImpl implements UserBiz {
             return null;
         }
         Freeze dateFreeze = freezeDao.findFlagFalseByUid(user.getId());
-        if (dataPassword != null) {
+        if (dateFreeze != null) {
             user.setFreeze(dateFreeze.getFreezeReason());
             user.setFreezeTime(dateFreeze.getFreezeTime());
         }
@@ -77,10 +81,10 @@ public class UserBizImpl implements UserBiz {
     @Override
     public Map<User, Freeze> userFreezeList(String str) {
         List<User> dateUserList = userDao.fuzzyFindByName(str);
-        Map<User,Freeze> userFreezeMap = new HashMap<>(12);
+        Map<User, Freeze> userFreezeMap = new HashMap<>(12);
         for (User user : dateUserList) {
-            if (!user.getDel()){
-                userFreezeMap.put(user,freezeDao.findFlagFalseByUid(user.getId()));
+            if (!user.getDel()) {
+                userFreezeMap.put(user, freezeDao.findFlagFalseByUid(user.getId()));
             }
         }
         return userFreezeMap;
@@ -91,6 +95,35 @@ public class UserBizImpl implements UserBiz {
         String initializePassword = Md5Util.md5("123456");
         int i = userDao.changePassword(new User(id), initializePassword);
         return i > 0;
+    }
+
+    @Override
+    public synchronized User recharge(User user, int money) {
+        User dateUser = userDao.findAllById(user.getId());
+        if (dateUser == null) {
+            return null;
+        }
+        int i = journalDao.save(dateUser.getId(), money, TimeUtil.getTime());
+        if (i <= 0) {
+            return null;
+        }
+        float point = dateUser.getPoint() + money * 10;
+        double sumMoney = dateUser.getSumMoney() + money;
+        double balance = dateUser.getBalance() + money;
+
+        // 用户等级计算
+        double l = sumMoney / 1024;
+        int level = Math.floor(l) > 8 ? 8 : (int) Math.floor(l);
+
+        userDao.updateSumMoney(dateUser.getId(), sumMoney);
+        userDao.updatePointBalance(dateUser.getId(), point, balance);
+        userDao.updateLevel(dateUser.getId(), level);
+
+        dateUser.setBalance(balance);
+        dateUser.setLevel(level);
+        dateUser.setSumMoney(sumMoney);
+        dateUser.setPoint(point);
+        return dateUser;
     }
 
 

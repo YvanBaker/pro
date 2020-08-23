@@ -68,6 +68,11 @@ public class RecordBookBizImpl implements RecordBookBiz {
         float newPoint = user.getPoint() + 10;
         double newBalance = user.getBalance() - book.getBookDeposit();
         userDao.updatePointBalance(user.getId(), newPoint, newBalance);
+
+        List<Reservation> date = reservationDao.findByUidBid(user.getId(), book.getId());
+        for (Reservation reservation : date) {
+            reservationDao.updateFulfillTrue(reservation.getId());
+        }
         return 6;
     }
 
@@ -147,25 +152,25 @@ public class RecordBookBizImpl implements RecordBookBiz {
     @Override
     public int renewBook(@NotNull RecordView record, User user) {
         Record dataRecord = recordDao.findAllById(record.getId());
-        if (dataRecord.getIsRenew()){
+        if (dataRecord.getIsRenew()) {
             return 1;
         }
-        if (TimeUtil.timeLessCurrent(dataRecord.getReturnTime())){
+        if (TimeUtil.timeLessCurrent(dataRecord.getReturnTime())) {
             return 2;
         }
         List<Reservation> dataReservation = reservationDao.findByBid(record.getBid());
         for (Reservation reservation : dataReservation) {
-            if (reservation.isFulfill()){
+            if (reservation.isFulfill()) {
                 continue;
             }
             User bUser = userDao.findAllById(reservation.getId());
-            if (bUser.getSumMoney() > user.getSumMoney()){
+            if (bUser.getSumMoney() > user.getSumMoney()) {
                 return 3;
             }
         }
         recordDao.updateRenewTrue(record.getId());
-        long time = TimeUtil.getDay(dataRecord.getReturnTime(),7);
-        recordDao.updateReturnTime(record.getId(),new Timestamp(time));
+        long time = TimeUtil.getDay(dataRecord.getReturnTime(), 7);
+        recordDao.updateReturnTime(record.getId(), new Timestamp(time));
         return 4;
     }
 

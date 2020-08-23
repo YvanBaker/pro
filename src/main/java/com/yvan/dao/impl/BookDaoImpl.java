@@ -34,6 +34,36 @@ public class BookDaoImpl extends BaseDao implements BookDao {
     }
 
     @Override
+    public Book findById(int id) {
+        String sql = SqlUtil.select("id,book_name,author,press,publication_date,type,book_deposit,total,count,times,has_lended,del","book","id = ?");
+        Book res = null;
+        List<Object> list = new ArrayList<>();
+        list.add(id);
+        executeQuery(sql, list);
+        try{
+            while (rs.next()){
+                String bookName = rs.getString("book_name");
+                String author = rs.getString("author");
+                String press = rs.getString("press");
+                Timestamp publicationDate = rs.getTimestamp("publication_date");
+                String type = rs.getString("type");
+                float bookDeposit = rs.getFloat("book_deposit");
+                int total = rs.getInt("total");
+                int count = rs.getInt("count");
+                int times = rs.getInt("times");
+                int hasLended = rs.getInt("has_lended");
+                boolean del = rs.getBoolean("del");
+                res = new Book(id, bookName, author, press, bookDeposit, publicationDate, type, count, times, hasLended, total, del);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }finally {
+            closeAll();
+        }
+        return res;
+    }
+
+    @Override
     public Book findByNameAuthor(String bookName, String author) {
         String sql = "SELECT * FROM book where book_name = ? and author = ?";
         List<Object> list = new ArrayList<>();
@@ -79,6 +109,8 @@ public class BookDaoImpl extends BaseDao implements BookDao {
             }
         } catch (SQLException e){
             e.printStackTrace();
+        }finally {
+            closeAll();
         }
         return resList;
     }

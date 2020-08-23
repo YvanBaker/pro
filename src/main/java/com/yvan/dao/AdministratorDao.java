@@ -3,8 +3,8 @@ package com.yvan.dao;
 import com.yvan.entity.Administrator;
 
 /**
- * @Description 操作 Administrator表（管理员） 的 dao 层
  * @author Yvan
+ * @Description 操作 Administrator表（管理员） 的 dao 层
  */
 public interface AdministratorDao {
 
@@ -16,7 +16,7 @@ public interface AdministratorDao {
      * @param type 类型
      * @return 查询出的用户
      */
-    Administrator findByName(String name,String type);
+    Administrator findByName(String name, String type);
 
     /**
      * 根据 id 查询数据
@@ -39,6 +39,7 @@ public interface AdministratorDao {
     /**
      * 保存 administrator对象
      * 数据操作层
+     * name,password,type,del,create_time 成员必须有值 ， 且del 为 false
      *
      * @param administrator administrator 对象
      * @return true 成功保存

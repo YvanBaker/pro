@@ -53,6 +53,14 @@ public class FreezeDaoImpl extends BaseDao implements FreezeDao {
 
     @Override
     public int updateFlagTrue(int id, Timestamp time, String reason) {
-        return 0;
+        String sql = SqlUtil.update("freeze", "unfreeze_time = ?, unfreeze_reason = ?,flag = ?", "id = ?");
+        List<Object> list = new ArrayList<>();
+        list.add(time);
+        list.add(reason);
+        list.add(true);
+        list.add(id);
+        int res = executeUpdate(sql,list);
+        closeAll();
+        return res;
     }
 }

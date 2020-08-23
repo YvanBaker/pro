@@ -20,6 +20,13 @@ public interface BookDao {
     boolean save(Book book);
 
     /**
+     * 根据 id 查找
+     * @param id id
+     * @return book
+     */
+    Book findById(int id);
+
+    /**
      * 根据名字和作者查询一本书
      *
      * @param bookName 书名

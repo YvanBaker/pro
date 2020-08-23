@@ -4,6 +4,7 @@ import com.yvan.entity.Book;
 import com.yvan.entity.User;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Yvan
@@ -21,4 +22,12 @@ public interface ReservationBiz {
      * @return true 成功
      */
     boolean reservation(User user, Book book, Date time);
+
+    /**
+     * 查记录
+     *
+     * @param user 用户
+     * @return 条数
+     */
+    List<Book> findReservation(User user);
 }

@@ -30,17 +30,40 @@ public class ReservationDaoImpl extends BaseDao implements ReservationDao {
 
     @Override
     public List<Reservation> findByBid(int bid) {
-        String sql = SqlUtil.select("id,uid,bid,fulfill","reservation","bid = ?");
+        String sql = SqlUtil.select("id,uid,bid,fulfill", "reservation", "bid = ?");
         List<Object> list = new ArrayList<>();
         list.add(bid);
-        executeQuery(sql,list);
+        executeQuery(sql, list);
         List<Reservation> resReservation = new ArrayList<>();
-        try{
-            while (rs.next()){
+        try {
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 int uid = rs.getInt("uid");
                 boolean fulfill = rs.getBoolean("fulfill");
-                resReservation.add(new Reservation(id,uid,bid,fulfill));
+                resReservation.add(new Reservation(id, uid, bid, fulfill));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeAll();
+        }
+        return resReservation;
+    }
+
+    @Override
+    public List<Reservation> findByUid(int uid) {
+        String sql = SqlUtil.select("id,uid,bid,time,fulfill", "reservation", "uid = ?");
+        List<Object> list = new ArrayList<>();
+        list.add(uid);
+        executeQuery(sql, list);
+        List<Reservation> resReservation = new ArrayList<>();
+        try {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int bid = rs.getInt("bid");
+                Timestamp time = rs.getTimestamp("time");
+                boolean fulfill = rs.getBoolean("fulfill");
+                resReservation.add(new Reservation(id, uid, bid, time, fulfill));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,17 +75,17 @@ public class ReservationDaoImpl extends BaseDao implements ReservationDao {
 
     @Override
     public List<Reservation> findByUidBid(int uid, int bid) {
-        String sql = SqlUtil.select("id,uid,bid,fulfill","reservation","uid = ? and bid = ?");
+        String sql = SqlUtil.select("id,uid,bid,fulfill", "reservation", "uid = ? and bid = ?");
         List<Object> list = new ArrayList<>();
         list.add(uid);
         list.add(bid);
         List<Reservation> resList = new ArrayList<>();
-        executeQuery(sql,list);
+        executeQuery(sql, list);
         try {
-            while (rs.next()){
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 boolean fulfill = rs.getBoolean("fulfill");
-                resList.add(new Reservation(id,uid,bid,fulfill));
+                resList.add(new Reservation(id, uid, bid, fulfill));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,12 +94,11 @@ public class ReservationDaoImpl extends BaseDao implements ReservationDao {
     }
 
     @Override
-    public int updateFulfillTrue(int uid, int bid) {
-        String sql = SqlUtil.update("reservation", "fulfill = ?", "uid = ? and bid = ?");
+    public int updateFulfillTrue(int id) {
+        String sql = SqlUtil.update("reservation", "fulfill = ?", "id = ?");
         List<Object> list = new ArrayList<>();
         list.add(true);
-        list.add(uid);
-        list.add(bid);
+        list.add(id);
         int res = executeUpdate(sql, list);
         closeAll();
         return res;

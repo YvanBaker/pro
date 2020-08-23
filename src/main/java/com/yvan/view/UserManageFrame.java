@@ -91,11 +91,6 @@ public class UserManageFrame extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "请先选择一个用户！！");
             return;
         }
-        String reason = reasonEditorPane.getText();
-        if (StringUtil.isNull(reason)) {
-            JOptionPane.showMessageDialog(this, "请说明冻结原因！！");
-            return;
-        }
         DefaultTableModel userTableModel = (DefaultTableModel) userTable.getModel();
         int uid = (int) userTableModel.getValueAt(row, 0);
         boolean flag = (boolean) userTableModel.getValueAt(row, 2);
@@ -104,19 +99,55 @@ public class UserManageFrame extends JInternalFrame {
             reasonEditorPane.setText("");
             return;
         }
+        String reason = reasonEditorPane.getText();
+        if (StringUtil.isNull(reason)) {
+            JOptionPane.showMessageDialog(this, "请说明冻结原因！！");
+            return;
+        }
+
         flag = freezeBiz.freezeUser(uid, reason);
         if (!flag) {
             JOptionPane.showMessageDialog(this, "未知原因导致冻结失败，请重试！！！");
             return;
         }
         JOptionPane.showMessageDialog(this, "冻结成功！！！");
-        userTableModel.setValueAt(true, row, 2);
+        inquireButtonActionPerformed(e);
         reasonEditorPane.setText("");
     }
 
     private void unfreezeButtonActionPerformed(ActionEvent e) {
         //TODO add your code here
 
+        int row = userTable.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "请先选择一个用户！！");
+            return;
+        }
+
+        DefaultTableModel userTableModel = (DefaultTableModel) userTable.getModel();
+        int uid = (int) userTableModel.getValueAt(row, 0);
+        Freeze freeze = userFreezeMap.get(new User(uid));
+        boolean flag = (boolean) userTableModel.getValueAt(row, 2);
+        if (!flag) {
+            JOptionPane.showMessageDialog(this, "用户没有被冻结，无需解冻！！");
+            reasonEditorPane.setText("");
+            return;
+        }
+
+        String reason = reasonEditorPane.getText();
+        if (StringUtil.isNull(reason)) {
+            JOptionPane.showMessageDialog(this, "请说明解冻结原因！！");
+            return;
+        }
+
+        flag = freezeBiz.unfreezeUser(freeze,reason);
+        if (!flag) {
+            JOptionPane.showMessageDialog(this, "未知原因导致解冻失败，请重试！！！");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "解冻成功！！！");
+        inquireButtonActionPerformed(e);
+        reasonEditorPane.setText("");
     }
 
     private void inquireButtonActionPerformed(ActionEvent e) {
@@ -208,24 +239,22 @@ public class UserManageFrame extends JInternalFrame {
 
             //---- userTable ----
             userTable.setModel(new DefaultTableModel(
-                    new Object[][]{
-                    },
-                    new String[]{
-                            "id", "\u7528\u6237\u540d", "\u51bb\u7ed3\u72b6\u6001"
-                    }
+                new Object[][] {
+                },
+                new String[] {
+                    "id", "\u7528\u6237\u540d", "\u51bb\u7ed3\u72b6\u6001"
+                }
             ) {
-                Class<?>[] columnTypes = new Class<?>[]{
-                        Object.class, Object.class, Boolean.class
+                Class<?>[] columnTypes = new Class<?>[] {
+                    Object.class, Object.class, Boolean.class
                 };
-                boolean[] columnEditable = new boolean[]{
-                        true, false, false
+                boolean[] columnEditable = new boolean[] {
+                    true, false, false
                 };
-
                 @Override
                 public Class<?> getColumnClass(int columnIndex) {
                     return columnTypes[columnIndex];
                 }
-
                 @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return columnEditable[columnIndex];
@@ -239,14 +268,10 @@ public class UserManageFrame extends JInternalFrame {
                 public void ancestorAdded(AncestorEvent e) {
                     userTableAncestorAdded(e);
                 }
-
                 @Override
-                public void ancestorMoved(AncestorEvent e) {
-                }
-
+                public void ancestorMoved(AncestorEvent e) {}
                 @Override
-                public void ancestorRemoved(AncestorEvent e) {
-                }
+                public void ancestorRemoved(AncestorEvent e) {}
             });
             scrollPane1.setViewportView(userTable);
         }
@@ -264,60 +289,60 @@ public class UserManageFrame extends JInternalFrame {
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
-                contentPaneLayout.createParallelGroup()
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(81, 81, 81)
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 725, GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(44, Short.MAX_VALUE))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(label1)
-                                                .addGap(27, 27, 27)
-                                                .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(41, 41, 41)
-                                                .addComponent(inquireButton)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                                .addComponent(initializeButton, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(43, Short.MAX_VALUE))))
+                            .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 725, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(44, Short.MAX_VALUE))
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(172, 172, 172)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(38, 38, 38)
-                                                .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 338, GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(212, Short.MAX_VALUE))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addComponent(freezeButton)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
-                                                .addComponent(unfreezeButton)
-                                                .addGap(179, 179, 179))))
+                            .addComponent(label1)
+                            .addGap(27, 27, 27)
+                            .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, 281, GroupLayout.PREFERRED_SIZE)
+                            .addGap(41, 41, 41)
+                            .addComponent(inquireButton)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                            .addComponent(initializeButton, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(43, Short.MAX_VALUE))))
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(172, 172, 172)
+                    .addGroup(contentPaneLayout.createParallelGroup()
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+                            .addGap(38, 38, 38)
+                            .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 338, GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(212, Short.MAX_VALUE))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(freezeButton)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
+                            .addComponent(unfreezeButton)
+                            .addGap(179, 179, 179))))
         );
         contentPaneLayout.setVerticalGroup(
-                contentPaneLayout.createParallelGroup()
+            contentPaneLayout.createParallelGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
+                    .addGap(43, 43, 43)
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(inquireButton)
+                        .addComponent(initializeButton))
+                    .addGap(18, 18, 18)
+                    .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(contentPaneLayout.createParallelGroup()
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(label1, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(strTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(inquireButton)
-                                        .addComponent(initializeButton))
-                                .addGap(18, 18, 18)
-                                .addComponent(scrollPane1, GroupLayout.PREFERRED_SIZE, 308, GroupLayout.PREFERRED_SIZE)
-                                .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE))
-                                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
-                                                .addComponent(label2, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(65, 65, 65)))
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(unfreezeButton)
-                                        .addComponent(freezeButton))
-                                .addGap(26, 26, 26))
+                            .addGap(18, 18, 18)
+                            .addComponent(scrollPane2, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                            .addComponent(label2, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+                            .addGap(65, 65, 65)))
+                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(unfreezeButton)
+                        .addComponent(freezeButton))
+                    .addGap(26, 26, 26))
         );
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }

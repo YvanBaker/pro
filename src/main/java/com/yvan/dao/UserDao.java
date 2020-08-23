@@ -81,4 +81,21 @@ public interface UserDao {
      * @return 条数
      */
     int updateBalance(int id, double balance);
+
+    /**
+     * 修改 level 字段
+     *
+     * @param id    id
+     * @param level 等级
+     * @return 条数
+     */
+    int updateLevel(int id, int level);
+
+    /**
+     * 修改 总金额
+     * @param id id
+     * @param sumMoney 金额
+     * @return 条数
+     */
+    int updateSumMoney(int id, double sumMoney);
 }

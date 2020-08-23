@@ -16,6 +16,10 @@ public class Administrator {
     private boolean del;
     private Timestamp createTime;
 
+    public Administrator(int id) {
+        this.id = id;
+    }
+
     public Administrator(String name, String password, String type, boolean del, Timestamp createTime) {
         this.name = name;
         this.password = password;

@@ -1,0 +1,61 @@
+JFDML JFormDesigner: "7.0.2.4.305" Java: "11.0.6" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+			"$horizontalGroup": "par l {seq l {space :p:20:p, par l {seq {comp label2:::p::p, space :::p, comp levelLabel:::p::p}, seq {comp label1:::p::p, space s:::p, comp balanceLabel:::p::p}}, space ::661:x}, seq t {space ::331:x, par l {seq t {comp moneyComboBox:::p:227:p, space :p:252:p}, seq t {comp imageLabel:::p::p, space :p:216:p}, seq t {comp rechargeButton:::p::p, space :p:312:p}}}}"
+			"$verticalGroup": "par l {seq t {par l {seq {space :p:30:p, par b {comp label1::b:p::p, comp balanceLabel::b:p::p}, space :p:39:p}, seq t {space :::p, comp moneyComboBox:::p::p, space u:::p}}, par b {comp label2::b:p::p, comp levelLabel::b:p::p}, space :p:10:p, comp imageLabel:::p::p, space :p:61:p, comp rechargeButton:::p::p, space ::78:x}}"
+		} ) {
+			name: "this"
+			"visible": true
+			"closable": true
+			"maximizable": true
+			"title": "充值"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "imageLabel"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/pay6.png" )
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "rechargeButton"
+				"text": "充值"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "rechargeButtonActionPerformed", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JComboBox" ) {
+				name: "moneyComboBox"
+				"model": new javax.swing.DefaultComboBoxModel {
+					selectedItem: "6"
+					addElement( "6" )
+					addElement( "30" )
+					addElement( "68" )
+					addElement( "128" )
+					addElement( "198" )
+					addElement( "328" )
+					addElement( "648" )
+				}
+				addEvent( new FormEvent( "java.awt.event.ItemListener", "itemStateChanged", "moneyComboBoxItemStateChanged", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "用户余额："
+				"font": new java.awt.Font( "楷体", 1, 16 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label2"
+				"text": "用户vip等级："
+				"font": new java.awt.Font( "楷体", 1, 16 )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "balanceLabel"
+				addEvent( new FormEvent( "javax.swing.event.AncestorListener", "ancestorAdded", "balanceLabelAncestorAdded", true ) )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "levelLabel"
+				addEvent( new FormEvent( "javax.swing.event.AncestorListener", "ancestorAdded", "levelLabelAncestorAdded", true ) )
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 820, 580 )
+		} )
+	}
+}

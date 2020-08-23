@@ -149,7 +149,7 @@ public class BookUpData extends JInternalFrame {
      */
     private void inquireButtonActionPerformed(ActionEvent e) {
         bookList = bookBiz.findByString(strTextField.getText());
-        if (bookList == null) {
+        if (bookList.isEmpty()) {
             JOptionPane.showMessageDialog(this, "查询不到该书籍！！");
             return;
         }

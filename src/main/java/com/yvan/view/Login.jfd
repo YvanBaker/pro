@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq l {space :p:203:p, par l {comp title:::p:390:p, par t:l::p {seq {comp loginButton:::p::p, space :p:52:p, comp registeredButton:::p::p, space ::65:x, comp resetButton:::p::p}, seq {par l:::p {comp label2::l:::x, comp label1::l:::x, comp label3::l:::x}, space s:::p, par l:::p {comp userNameTextField::::250:x, comp passwordField::::250:x, comp typeComboBox::l::250:x}}}}, space ::165:x}}"
-			"$verticalGroup": "par l {seq l {space :p:61:p, comp title:::p::p, space :p:62:p, par b {comp label1::b:p::p, comp userNameTextField::b:p::p}, space :p:46:p, par b {comp label2::b:p::p, comp passwordField::b:p::p}, space :p:44:p, par b {comp label3::b:p::p, comp typeComboBox::b:p::p}, space ::52:x, par l {par b:t {comp loginButton::b:p::p, comp registeredButton::b:p::p}, comp resetButton::t:p::p}, space :p:68:p}}"
+			"$horizontalGroup": "par l {seq l {space :p:203:p, par l {comp title::l:p:390:p, seq l {par t:::p {seq {comp loginButton:::p::p, space :p:52:p, comp registeredButton:::p::p, space ::65:x, comp resetButton:::p::p}, seq t {par l {par l:l::p {comp label2::l:::x, comp label1::l:::x, comp label3::l:::x}, comp codeLabel::l:p::p}, space s:::p, par l {comp userNameTextField::::260:x, comp passwordField::::260:x, comp typeComboBox::l::260:x, comp codeTextField::::0:x}}}, space s:::p, comp codeImagelabel:::p:134:p}}, space ::224:x}}"
+			"$verticalGroup": "par l {seq l {space :p:61:p, comp title:::p::p, space :p:46:p, par b {comp label1::b:p::p, comp userNameTextField::b:p::p}, space :p:46:p, par b {comp label2::b:p::p, comp passwordField::b:p::p}, space :p:44:p, par b {comp label3::b:p::p, comp typeComboBox::b:p::p}, par l {seq {space :p:30:p, par l {comp codeLabel:::p:30:p, comp codeTextField::l:p::p}, space ::88:x}, seq t {space ::84:x, comp codeImagelabel:::p:57:p, space :p:34:p}}, par l {par b:t {comp loginButton::b:p::p, comp registeredButton::b:p::p}, comp resetButton::t:p::p}, space :p:68:p}}"
 		} ) {
 			name: "this"
 			"font": new java.awt.Font( "黑体", 1, 16 )
@@ -33,7 +33,7 @@ new FormModel {
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label3"
 				"text": "账号类型："
-				"font": new java.awt.Font( "楷体", 1, 14 )
+				"font": &Font0 new java.awt.Font( "楷体", 1, 14 )
 				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/usertype.png" )
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
@@ -71,9 +71,24 @@ new FormModel {
 				"font": new java.awt.Font( "楷体", 1, 16 )
 				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "registeredButtonActionPerformed", true ) )
 			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "codeLabel"
+				"text": "验证码："
+				"font": #Font0
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/img/验证码.png" )
+				"visible": false
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "codeImagelabel"
+				"visible": false
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "codeTextField"
+				"visible": false
+			} )
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 10, 0 )
-			"size": new java.awt.Dimension( 760, 550 )
+			"size": new java.awt.Dimension( 820, 600 )
 		} )
 	}
 }
