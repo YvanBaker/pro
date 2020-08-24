@@ -56,6 +56,10 @@ public class CommentFrame extends JInternalFrame {
         }
     }
 
+    /**
+     * 点击查询的响应
+     * @param e 事件
+     */
     private void inquireButtonActionPerformed(ActionEvent e) {
         String str = strTextField.getText();
         if (str == null) {

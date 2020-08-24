@@ -26,6 +26,20 @@ import java.util.Set;
  * @Date 2020/8/17 10:02
  */
 public class RecordBookBizImpl implements RecordBookBiz {
+    /**
+     * 借阅天数
+     */
+    private final int DAY = 7;
+    /**
+     * 收取书籍的百分比
+     */
+    private final float PROPORTION = (float) 0.3;
+
+    /**
+     * 利率
+     */
+    private final float INTEREST = (float) 0.1;
+
     private final BookDao bookDao = new BookDaoImpl();
     private final UserDao userDao = new UserDaoImpl();
     private final RecordDao recordDao = new RecordDaoImpl();
@@ -55,9 +69,11 @@ public class RecordBookBizImpl implements RecordBookBiz {
 
         Timestamp lendTime = new Timestamp(System.currentTimeMillis());
         //七天后时间
-        long time = TimeUtil.getDay(lendTime, 7);
+        long time = TimeUtil.getDay(lendTime, DAY);
         Timestamp returnTime = new Timestamp(time);
-        int i = recordDao.save(book.getId(), user.getId(), lendTime, returnTime, book.getBookDeposit());
+        // 押金
+        float deposit = book.getBookDeposit() * PROPORTION;
+        int i = recordDao.save(book.getId(), user.getId(), lendTime, returnTime, deposit);
         if (i <= 0) {
             return 5;
         }
@@ -66,7 +82,7 @@ public class RecordBookBizImpl implements RecordBookBiz {
         bookDao.updateHasLended(book.getId(), book.getHasLended() + 1);
 
         float newPoint = user.getPoint() + 10;
-        double newBalance = user.getBalance() - book.getBookDeposit();
+        double newBalance = user.getBalance() - deposit;
         userDao.updatePointBalance(user.getId(), newPoint, newBalance);
 
         List<Reservation> date = reservationDao.findByUidBid(user.getId(), book.getId());
@@ -89,13 +105,23 @@ public class RecordBookBizImpl implements RecordBookBiz {
         int count = bookDao.findCountById(bid);
         int times = bookDao.findTimesById(bid);
 
+        // 退还押金计算
+        float deposit;
+        if (returnTime.getTime() <= record.getReturnTime().getTime()) {
+            deposit = record.getDeposit();
+        } else {
+            int day = (int) ((returnTime.getTime() - record.getReturnTime().getTime()) / TimeUtil.DAY);
+            day = (day > 10) ? 10 : day;
+            deposit = record.getDeposit() * (1 - day * INTEREST);
+        }
+
         recordDao.updateActualTime(id, returnTime);
-        recordDao.updateReturnTerm(id, record.getDeposit());
+        recordDao.updateReturnTerm(id, deposit);
 
         bookDao.updateCount(bid, count + 1);
         bookDao.updateTimes(bid, times - 1);
 
-        userDao.updateBalance(uid, user.getBalance() + record.getDeposit());
+        userDao.updateBalance(uid, user.getBalance() + deposit);
         return true;
     }
 

@@ -177,7 +177,7 @@ public class SuperAdministratorFrame extends JFrame {
         }
         StringBuffer str = new StringBuffer("您预约的：\n");
         for (Book book : reservation) {
-            str.append(book.getBookName()+"\n");
+            str.append(book.getBookName()).append("\n");
         }
         str.append("已经有库存了,请假借阅！！！");
         JOptionPane.showMessageDialog(this, str);
@@ -475,7 +475,7 @@ public class SuperAdministratorFrame extends JFrame {
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
         if (administrator != null){
-            if (UserType.SUPERADMINISTRATOR.equals(administrator.getType())){
+            if (administrator.getType().equals(UserType.SUPERADMINISTRATOR.toString())){
                 adminMenuItem.setVisible(true);
             }
             userManageMenuItem.setVisible(true);

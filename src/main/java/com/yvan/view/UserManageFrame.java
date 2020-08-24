@@ -85,6 +85,10 @@ public class UserManageFrame extends JInternalFrame {
         }
     }
 
+    /**
+     * 冻结用户的响应
+     * @param e 事件
+     */
     private void freezeButtonActionPerformed(ActionEvent e) {
         int row = userTable.getSelectedRow();
         if (row == -1) {
@@ -115,9 +119,11 @@ public class UserManageFrame extends JInternalFrame {
         reasonEditorPane.setText("");
     }
 
+    /**
+     * 解冻用户的响应
+     * @param e 事件
+     */
     private void unfreezeButtonActionPerformed(ActionEvent e) {
-        //TODO add your code here
-
         int row = userTable.getSelectedRow();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "请先选择一个用户！！");
