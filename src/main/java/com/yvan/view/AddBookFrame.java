@@ -111,6 +111,7 @@ public class AddBookFrame extends JInternalFrame {
             JOptionPane.showMessageDialog(this, "书籍数量不能少于一本！！");
             return;
         }
+        
         Date publicationDate = publicationDatePicker.getDate();
         String type = typeTextField.getText();
         float bookDeposit;

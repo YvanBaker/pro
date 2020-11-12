@@ -12,8 +12,7 @@ import com.yvan.entity.Collection;
 import com.yvan.entity.Reservation;
 import com.yvan.entity.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Yvan
@@ -31,17 +30,17 @@ public class LikeBizImpl implements LikeBiz {
     @Override
     public List<Book> like(User user) {
         List<Collection> dataBook = collectionDao.findByUid(user.getId());
-        List<Book> res = new ArrayList<>();
+        Set<Book> res = new HashSet<>();
         for (Collection collection : dataBook) {
             res.add(bookDao.findById(collection.getBid()));
         }
         if (res.size() > SIZE) {
-            return res;
+            return new ArrayList<>(res);
         }
         List<Reservation> dataReservation = reservationDao.findByUid(user.getId());
         for (Reservation reservation : dataReservation) {
             res.add(bookDao.findById(reservation.getBid()));
         }
-        return res;
+        return new ArrayList<>(res);
     }
 }

@@ -18,16 +18,29 @@ public class CodeUtil {
     private int w = 70;
     private int h = 35;
     private Random r = new Random();
-    // {"宋体", "华文楷体", "黑体", "华文新魏", "华文隶书", "微软雅黑", "楷体_GB2312"}
+
+    /**
+     * {"宋体", "华文楷体", "黑体", "华文新魏", "华文隶书", "微软雅黑", "楷体_GB2312"}
+     */
     private String[] fontNames = {"宋体", "华文楷体", "黑体", "微软雅黑", "楷体_GB2312"};
-    // 可选字符
+    /**
+     * 可选字符
+     */
     private String codes = "23456789abcdefghjkmnopqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ";
-    // 背景色
+    /**
+     * 背景色
+     */
     private Color bgColor = new Color(255, 255, 255);
-    // 验证码上的文本
+    /**
+     * 验证码上的文本
+     */
     private String text;
 
-    // 生成随机的颜色
+    /**
+     * 生成随机的颜色
+     *
+     * @return 颜色
+     */
     private Color randomColor() {
         int red = r.nextInt(150);
         int green = r.nextInt(150);
@@ -135,6 +148,7 @@ public class CodeUtil {
 
     /**
      * 返回验证码图片上的文本
+     *
      * @return str
      */
     public String getText() {

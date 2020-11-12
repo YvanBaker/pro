@@ -4,14 +4,8 @@
 
 package com.yvan.view;
 
-import com.yvan.biz.BookBiz;
-import com.yvan.biz.CollectionBiz;
-import com.yvan.biz.CommentBiz;
-import com.yvan.biz.RecordBookBiz;
-import com.yvan.biz.impl.BookBizImpl;
-import com.yvan.biz.impl.CollectionBizImpl;
-import com.yvan.biz.impl.CommentBizImpl;
-import com.yvan.biz.impl.RecordBookBizImpl;
+import com.yvan.biz.*;
+import com.yvan.biz.impl.*;
 import com.yvan.entity.Book;
 import com.yvan.entity.Comment;
 import com.yvan.entity.User;
@@ -40,6 +34,7 @@ public class BorrowBookFrame extends JInternalFrame {
     private final RecordBookBiz recordBookBiz = new RecordBookBizImpl();
     private final CollectionBiz collectionBiz = new CollectionBizImpl();
     private final CommentBiz commentBiz = new CommentBizImpl();
+    private final LikeBiz likeBiz = new LikeBizImpl();
     private User user;
     private List<Book> bookList;
 
@@ -92,6 +87,7 @@ public class BorrowBookFrame extends JInternalFrame {
      */
     private void bookInfoAncestorAdded(AncestorEvent e) {
         bookList = bookBiz.findAll(user);
+//        likeBiz.like(user);
         if (bookList.isEmpty()) {
             System.out.println("没有查到书籍");
         }

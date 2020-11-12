@@ -47,6 +47,7 @@ public class RecordBookBizImpl implements RecordBookBiz {
 
     @Override
     public synchronized int borrow(@NotNull Book book, User user) {
+        user = userDao.findAllById(user.getId());
         Integer count = bookDao.findCountById(book.getId());
         if (count == null) {
             return 1;
@@ -54,7 +55,7 @@ public class RecordBookBizImpl implements RecordBookBiz {
         if (count <= 0) {
             return 2;
         }
-        if (book.getBookDeposit() > user.getBalance()) {
+        if (book.getBookDeposit() * PROPORTION > user.getBalance()) {
             return 3;
         }
 
